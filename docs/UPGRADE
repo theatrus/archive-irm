@@ -1,0 +1,86 @@
+We try and make upgrades as painless as possible, but there is still a
+certain amount of pain and suffering involved.
+
+If you're upgrading from a version of IRM prior to 1.4.0, see toward the
+bottom of this file.
+
+Before you upgrade
+--------------------
+
+Make a backup copy of your complete IRM installation tree, and make a dump
+of the IRM database(s) using mysqldump.  This way, if our upgrade procedures
+aren't perfect, you can revert easily enough.
+
+In fact, it's better (for your sanity, at least) to upgrade in a non-live
+directory *first*, and then once that part is working, switch the upgraded
+directory to your active location.  This way, if there's a problem during
+the upgrade, you have no downtime.
+
+Generic Upgrading Process
+----------------------------
+
+* Make a spare copy of any non-config file you may have locally modified
+	(local patches, layout changes, whatever).
+
+* Untar or copy the latest version of IRM over the top of the current
+	location.
+	
+* Visit admin.php using your web browser and select each of your databases
+	for upgrade.
+
+* If you're upgrading from a version prior to 1.5.0:
+
+	+ copy config/database.ini.dist to config/database.ini, and restrict
+	it's read permissions to your webserver user (for security);
+	
+	+ Modify config/database.ini to match the configuration parameters
+	you need for your database(s);
+
+	+ If you use LDAP, copy config/ldap.ini.dist to config/ldap.ini, and
+	edit config/ldap.ini to match the LDAP parameters for your directory
+	servers;
+
+	+ Remove include/config.inc.php, as it is no longer needed;
+
+	+ Install the PEAR MDB package either using the pear command (pear
+	install -o mdb) or download it from
+	http://pear.php.net/package/MDB/download and extract it somewhere in
+	your include_path -- note, however, that manually installing MDB
+	will require you to install several dependent packages by hand.  If
+	you have root access, somewhere like /usr/share/php is usually a
+	good idea, otherwise you can place MDB.php and the MDB directory in
+	the root of your IRM installation.
+	
+* If you're upgrading from a version prior to 1.5.1:
+
+	+ If you use LDAP, copy config/ldap.ini.dist to config/ldap.ini, and
+	edit config/ldap.ini to match the LDAP parameters for your directory
+	servers;
+
+	+ Remove include/config.inc.php, as it is no longer needed.
+
+* Manually reapply whatever changes you have locally made to your IRM
+	installation (if any).  You can save yourself this hassle by
+	submitting your changes for inclusion in the official releases of
+	IRM.
+
+* Visit admin.php (in the root of your IRM installtion) with your web
+	browser and upgrade all of your databases to the latest version.
+
+Upgrades from versions prior to 1.4.0
+---------------------------------------
+
+The new frontpage allows a guest user to easily look through the FAQ and to
+enter a new work request.  This works perfectly under fresh installs (unless
+you decide to change the password on the guest account), but will not
+necessarily work if you are upgrading from an older version of IRM.  To get
+the front page to work properly, make sure that there is a user named
+"IRMConnect" with the password "irmconnect".
+
+The software section of IRM underwent some major surgery for the 1.4.0
+release.  Do NOT upgrade to the current version of IRM if you depend on the
+data in your software tables, part of the upgrade process includes deleting
+some of the information in the software tables.
+
+For more help with either of these issues, please post to
+irm-discuss@lists.sf.net.

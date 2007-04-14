@@ -1,0 +1,486 @@
+#!/bin/sh
+
+# BAz iRM -- a set of commands to work with the IRM revision control archives
+#
+# For help, run 'barm help'.
+#
+
+# Master archive name.  Do not change this!
+MASTER="irm-pqm@hezmatt.org--2005"
+
+function main
+{
+	CMD="$1"
+	shift
+	
+	if ! function_exists "cmd_$CMD"; then
+		echo "Unknown command ($CMD)  try $(basename $0) help"
+		exit 1
+	fi
+
+	if [ "$1" = "-h" ]; then
+		if function_exists "cmd_$CMD_help"; then
+			cmd_${CMD}_help
+			exit 0
+		else
+			echo "I don't have any help about '$CMD'; sorry about that"
+			exit 1
+		fi
+	fi
+
+	cmd_$CMD "$@"
+	
+	exit $?
+}
+
+function get_latest_trunk
+{
+	baz browse --versions "${MASTER}/irm--trunk" | tail -n 1
+}
+
+function get_branch_version
+{
+	baz parse-package-name -v "$1"
+}
+
+function get_trunk_version
+{
+	get_branch_version $(get_latest_trunk)
+}
+
+function get_ancestor
+{
+	baz ancestry | head -n 4 | tail -n 1
+}
+
+function check_baz_version
+{
+	if [ -z "$(command -v baz)" ]; then
+		echo "The baz command could not be found.  Please place baz in your path"
+		exit 1
+	fi
+	
+	if ! baz -V | grep -q '^Bazaar version 1\.5'; then
+		echo "The barm command requires bazaar version 1.5 (or a pre-release thereof)."
+		echo "Please upgrade your copy of baz."
+		exit 1
+	fi
+}
+
+function write_config
+{
+	cat << EOF > $HOME/.barmrc
+# Your e-mail address, including your name.  Keep the format as it is, or
+# demons may fly out of your nose.
+EMAIL="Jane User <user@host.com>"
+
+# Your local archive.  It should be in the form "your@email.address--irm"
+ARCHIVE="your@email.address--irm"
+
+# A directory in which to put your local archive
+ARCHIVEDIR="$HOME/.arch-ives"
+
+# A mirror location.  Make it somewhere web-accessable.  See
+# http://www.stackworks.net/wiki/moin.cgi/IrmInArch for more info on this
+# parameter.
+#MIRRORLOCATION="sftp://user@www.host.com/home/user/public_html/arch"
+
+EOF
+}
+
+function function_exists
+{
+	if declare -F | grep -q "$1"; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+function cmd_help
+{
+	cat << EOF
+
+Valid subcommands
+-------------------
+
+init	-- Setup archives and metadata
+
+branch	-- Create a new branch from the development trunk
+get	-- Retrieve a branch from the local archive for editing
+
+push	-- Send a patch or branch to the PQM (requires authorization)
+pull	-- Retrieve all new changes from the PQM into the current working copy
+lub	-- List Unmerged Branches in your archive
+
+bump	-- Retarget a branch against a new trunk version
+
+mirror	-- Synchronise mirror with master archive
+
+EOF
+}
+
+function cmd_help_help
+{
+	cmd_help
+}
+
+function cmd_branch_help
+{
+	cat << EOF
+create a branch from the development trunk
+
+Usage: $(basename $0) branch [branch-root] <new-name>
+
+[branch-root] should be a full branch name; current trunk will be used if not
+specified
+
+<new-name> is the name of the new branch (just the name)
+EOF
+}
+
+function cmd_branch
+{
+	if [ -z "$2" ]; then
+		EXISTING=$(get_latest_trunk)
+		SRCARCHIVE="$MASTER"
+		NEWBRANCH="$1"
+	else
+		EXISTING="$1"
+		SRCARCHIVE="$MASTER"
+		NEWBRANCH="$2"
+	fi
+	
+	EXISTING=${EXISTING// /}
+	
+	if [ -z "$NEWBRANCH" ]; then
+		echo "No new branch given"
+		echo "Try $(basename $0) branch -h"
+		exit 1
+	fi
+	VER=$(baz parse-package-name -v $EXISTING)
+		
+	if [ -z "$VER" ]; then
+		echo "No version in $EXISTING"
+		exit 1
+	fi
+
+	echo "Going to make a branch of $SRCARCHIVE/$EXISTING called irm--$NEWBRANCH--$VER"
+		
+	baz branch "$SRCARCHIVE/$EXISTING" "$ARCHIVE/irm--$NEWBRANCH--$VER"
+	baz get "${ARCHIVE}/irm--$NEWBRANCH--$VER" "$NEWBRANCH"
+		
+	rm -f testbranch
+	ln -s "$NEWBRANCH" testbranch
+}
+
+function cmd_get_help
+{
+	cat << EOF
+Retrieve the latest revision of a specified branch.
+
+Usage: $(basename $0) get <branch> [ver]
+
+<branch> should be just a branch name.
+
+[ver] is the version of the branch to retrieve.  If left empty, this will
+	default to the latest version of the branch available.
+EOF
+}
+
+function cmd_get
+{
+	BRANCH="$1"
+	VER="$2"
+		
+	if [ -z $VER ]; then
+		VER=$(get_trunk_version)
+	fi
+
+	if [ -z "$BRANCH" ]; then
+		echo "No branch specified!"
+		exit 1
+	fi
+		
+	if [ -z $VER ]; then
+		echo "No version given and no trunk version found"
+		exit 1
+	fi
+		
+	baz get $ARCHIVE/irm--$BRANCH--$VER $BRANCH
+	rm -f testbranch
+	ln -s "$BRANCH" testbranch
+}
+
+function cmd_push_help
+{	
+	cat << EOF
+Send a set of changes to the PQM integration branch.
+
+Usage: $(basename $0) push [source] [description]
+
+[source] is a full branch identifier to take the changes from; the default
+	is to push the current working tree to the PQM.
+
+[description] is a string describing the changes to the PQM; if none is given,
+	you will be prompted for it.  Remember to enclose your summary in
+	quotes.
+EOF
+}
+
+function cmd_push
+{
+	if baz valid-package-name -tv "$1" 2>/dev/null; then
+		SRC="$1"
+		DESC="$2"
+	elif baz valid-package-name -tv "$2" 2>/dev/null; then
+		SRC="$2"
+		DESC="$1"
+	else
+		SRC=""
+		DESC="$1"
+	fi
+
+	if [ -z "$SRC" ]; then
+		SRC=$(baz tree-version)
+	fi
+		
+	if [ -z "$DESC" ]; then
+		read -p "Please describe these changes: " DESC
+	fi
+
+	UPSTREAM=$(cat $(baz tree-root)/\{arch\}/=upstream)
+		
+	if echo $SRC | egrep -q '(patch|version|versionfix)-[[:digit:]]+$'; then
+		# We've been handed a single patch -- replay it!
+		PUSHCMD="replay $SRC $UPSTREAM"
+	else
+		PUSHCMD="star-merge $SRC $UPSTREAM"
+	fi
+		
+	echo $PUSHCMD | gpg --clearsign | mail -s "$DESC" irm-pqm@hezmatt.org
+}
+
+function cmd_pull_help
+{
+	cat << EOF
+Merge changes from the PQM integration branch into the current working tree.
+
+Usage: $(basename $0) pull
+EOF
+}
+
+function cmd_pull
+{
+	if ! baz status >/dev/null; then
+		echo "You have uncommitted changes in your tree.  Please commit before continuing"
+		exit 1
+	fi
+		
+	UPSTREAM=$(cat $(baz tree-root)/\{arch\}/=upstream)
+		
+	baz merge "$UPSTREAM" || true
+	if [ -e '{arch}/+rejects-exist' ]; then
+		# Give the user a chance to correct the conflicts.
+		# With thanks to dpatch-edit-patch for the cool idea
+		# of a subshell.
+		echo "There were conflicts between the master archive and your changes."
+		echo
+		echo "I will now drop you into a subshell so you can correct the conflicts before"
+		echo "committing."
+		echo
+		echo "If you would like to abort this process, exit the shell so it returns an"
+		echo "exit code of 230.  This is typically done by running the command 'exit 230'."
+		$SHELL && EXITVAL="0" || EXITVAL="$?"
+		if [ "$EXITVAL" = "230" ]; then
+			echo "Shell returned 230; aborting"
+			popd
+			rm -rf $WORKDIR
+			exit 1
+		fi
+		find . -name \*.orig -or -name \*.rej | xargs rm -f
+		baz resolved --all
+	fi
+
+	if baz status >/dev/null; then
+		echo "No new changes"
+		exit 0
+	fi
+
+	baz commit -s "Pulled new changes from $UPSTREAM"
+}
+
+function cmd_rc_help
+{
+	cat << EOF
+Create a new release candidate branch.  Only useful to the release manager.
+
+Usage: $(basename $0) rc <version>
+EOF
+}
+	
+function cmd_rc
+{
+	if [ "$ARCHIVE" != "mpalmer@hezmatt.org--irm-2004" ]; then
+		echo "This command is only of use to the RM"
+		exit 0;
+	fi
+	VER="$1"
+
+	baz branch $( baz tree-id ) "$ARCHIVE/irm--release-candidates--$VER"
+	cd ..
+	baz get "$ARCHIVE/irm--release-candidates--$VER" "rc$VER"
+}
+
+function cmd_lub_help
+{
+	cat << EOF
+List Unmerged Branches in your local IRM archive.
+
+Performs a browse over your local archive, listing all branches which
+have patches that aren't present in the current upstream PQM branch.
+
+Primarily useful to see which branches you still have under active
+development, and provide a hint as to which branches you still need
+to push to the PQM.
+
+Usage: $(basename $0) lub
+EOF
+}
+
+function cmd_lub
+{
+	PQM=$(get_latest_trunk)
+	PQM=${MASTER}/${PQM// /}
+	PQMVER=$(baz parse-package-name -v $PQM)
+	branches=$(baz browse --versions --no-tree-view --regex "${ARCHIVE}/.*${PQMVER}")
+	for b in $branches; do
+		baz missing --from $PQM $b | grep -q "^$ARCHIVE" && echo $b
+	done
+}
+
+function cmd_bump_help
+{
+	cat << EOF
+Retarget an ongoing line of development against a new PQM version branch.
+
+Usage: $(basename $0) bump <branch> <from-version> <to-version>
+EOF
+}
+
+function cmd_bump
+{
+	BRANCH="$1"
+	FROM="$2"
+	TO="$3"
+
+	if [ "$#" != "3" ]; then
+		echo "Incorrect argument count!"
+		echo "Usage: irm bump <branch> <from-version> <to-version>"
+		exit 1
+	fi
+		
+	WORKDIR=$( mktemp -d )
+		
+	pushd "$WORKDIR"
+	baz branch "$MASTER/irm--trunk--$TO" "$ARCHIVE/irm--$BRANCH--$TO"
+		
+	baz get "$ARCHIVE/irm--$BRANCH--$TO" "$BRANCH"
+	cd "$BRANCH"
+	mergeoutput=$(mktemp)
+	baz merge --star-merge --two-way -r	\
+		"$MASTER/irm--trunk--$FROM"	\
+		"$ARCHIVE/irm--$BRANCH--$FROM"	\
+		|| true
+	if [ -e '{arch}/+rejects-exist' ]; then
+		# Give the user a chance to correct the conflicts.
+		# With thanks to dpatch-edit-patch for the cool idea
+		# of a subshell.
+		echo "There were conflicts in the merge between the new trunk and your changes."
+		echo
+		echo "I will now drop you into a subshell so you can correct the conflicts before"
+		echo "committing."
+		echo
+		echo "If you would like to abort this process, exit the shell so it returns an"
+		echo "exit code of 230.  This is typically done by running the command 'exit 230'."
+		$SHELL && EXITVAL="0" || EXITVAL="$?"
+		if [ "$EXITVAL" = "230" ]; then
+			echo "Shell returned 230; aborting"
+			popd
+			rm -rf $WORKDIR
+			exit 1
+		fi
+		find . -name \*.orig -or -name \*.rej | xargs rm -f
+		baz resolved --all
+	fi
+
+	baz commit -s "Updated $BRANCH for version $TO"
+		
+	popd
+		
+	rm -rf "$WORKDIR"
+}
+
+function cmd_init_help
+{
+	cat << EOF
+Do some basic initialisation of the IRM development environment.
+
+Usage: $(basename $0) init
+EOF
+}
+
+function cmd_init
+{
+	if [ -d "$HOME/.arch-params" ]; then
+		echo "You appear to already have a working Arch setup.  Aborting."
+		exit 0
+	fi
+	baz my-id "$EMAIL"
+	baz register-archive "http://www.hezmatt.org/~mpalmer/arch/$MASTER"
+	if [ ! -d "$ARCHIVEDIR" ]; then
+		mkdir "$ARCHIVEDIR"
+	fi
+	baz make-archive "$ARCHIVE" "$ARCHIVEDIR/$ARCHIVE"
+	baz my-default-archive "$ARCHIVE"
+		
+	if [ -n "$MIRRORLOCATION" ]; then
+		baz make-archive --listing --mirror "$ARCHIVE" "$MIRRORLOCATION"
+	fi
+}
+
+function cmd_move
+{
+	baz make-archive --listing --mirror "$ARCHIVE" "$MIRRORLOCATION"
+}
+function cmd_mirror_help
+{
+	cat << EOF
+Update a existing mirror of your IRM development work.
+
+Usage: $(basename $0) mirror
+EOF
+}
+
+function cmd_mirror
+{
+	if [ -n "$MIRRORLOCATION" ]; then
+		baz archive-mirror "$ARCHIVE"
+	else
+		echo "No mirror location defined."
+	fi
+}
+
+if [ -f $HOME/.barmrc ]; then
+	. $HOME/.barmrc
+else
+	write_config
+	echo "No barm config found.  A template config file has been written to"
+	echo "$HOME/.barmrc.  Please edit this file for your local configuration."
+	exit 1
+fi
+
+check_baz_version
+
+main "$@"
+

@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+echo "Fuzz:"
+for i in po/*.po; do
+	echo -n "$i: "
+	grep 'fuzzy' $i | wc -l
+done
+
+echo
+echo "Stats:"
+postats po/*.po

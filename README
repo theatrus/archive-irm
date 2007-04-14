@@ -1,0 +1,17 @@
+Welcome to IRM!
+
+All of the documentation for IRM is location in the docs directory of this
+installation.  Please browse there for more information.  Of particular
+interest:
+
+INSTALL -- complete installation instructions for the first-time IRM user.
+
+UPGRADE -- important points to note when performing an upgrade from a
+	previous version of IRM to this one.
+
+RELEASE_NOTES -- Useful bits of information about this release of IRM, such
+	as important new features or critical bugfixes.  You should read
+	this with each new release of IRM.
+
+There are also several other files of interest to users and developers in
+the docs directory.

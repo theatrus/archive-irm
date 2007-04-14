@@ -1,0 +1,90 @@
+                          IRM INSTALL INSTRUCTIONS
+                         --------------------------
+
+If Things Go Wrong
+------------------
+
+Before we start, it is important that you know what to do if things go
+wrong.  First, check the FAQ (in this directory), if that doesn't help,
+e-mail irm-discuss@lists.sf.net, and we'll try to help you out.  Give as
+much useful information as you can, such as your OS, PHP, and Webserver
+details and versions, as well as which version of IRM you are running.
+
+
+Requirements
+------------
+
+To install and run IRM, you will need the following:
+
+* Webserver:  Apache is recomended, but others can work if you know how to
+	configure them.  www.apache.org.
+
+* PHP: You will need at least PHP 4.1.x, with the MySQL module enabled
+	either as an extension or compiled into your PHP binary.
+
+	If you want SNMP or LDAP support, you will need to have the relevant
+	module enabled.
+
+* Core PEAR: Preferably a fairly new version.  But PEAR doesn't really have
+	released versions, so it's best just to upgrade to the latest
+	version of PEAR (using "pear upgrade -o PEAR").
+
+* The PEAR MDB package, version 1.3.0 or later (earlier versions are buggy). 
+	Many pre-packaged PHP installations either do not come with MDB, or
+	have older versions.  Please ensure that your MDB is up to date.
+
+	You can either install MDB via the PEAR command
+	(pear install -o mdb), or by downloading it manually from
+	http://pear.php.net/package/MDB/download and placing it somewhere in
+	your include_path.  Note, however, that a manual download will
+	likely require several other packages to be manually installed
+	properly.  If you have root access, somewhere like /usr/share/php is
+	usually a good idea, otherwise you can place MDB.php and the MDB
+	directory in the root of your IRM installation.
+
+* If you want SNMP support, you will also need UCD SNMP installed.  See
+	ucd-snmp.ucdavis.edu, or your distribution's package archive.
+
+* If you want to use the new DHTML sidebar menu, you will need to install
+	the PEAR TreeMenu package.  You can probably install it by running
+	
+		pear install -o html_treemenu
+
+
+Installing
+----------
+
+By now you probably have already extracted IRM by gzip and tar.  If not, I'm
+surprised you've managed to read these instructions so far...
+
+Make sure that everything in this distribution tarball is placed in a
+location that the webserver can access, either within the "document root" of
+your installation, or else referenced by an Alias directive (or equivalent).
+
+Next, setup the Database(s) that you want to use.  Typically, this will
+involve the use of mysqladmin or similar to create the database, and a GRANT
+command to give permissions to the database user.  For more information,
+consult your MySQL manual.
+
+Copy the file config/database.ini.dist to config/database.ini, and edit
+config/database.ini to define the location, name, username, password, and
+other information for your database.  The required format is documented in
+database.ini.
+
+If you want to get user information from LDAP, you should copy
+config/ldap.ini.dist to config/ldap.ini and edit it to suit your needs. 
+
+Point your web browser to admin.php within your IRM install.  For example,
+if you installed IRM at http://www.schoenefeld.org/irm, point your web
+browser to http://www.schoenefeld.org/irm/admin.php and follow the
+instructions on the page.  After you complete this step, be sure to remove
+the admin.php file for security reasons.
+
+You are almost there!  Open your web browser to the irm directory, log in
+with 'Admin' as the user and 'admin' as the password.  Next, click on the
+"Setup" link at the top of the page, then click on "Configure IRM" in order
+to configure IRM to suit your needs.
+
+Finally, go through the list of pre-defined accounts and either remove the
+ones you don't need, or set their passwords to strong values.  Please do not
+leave the default accounts active with their default passwords.

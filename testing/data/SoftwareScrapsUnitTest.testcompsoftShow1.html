@@ -1,0 +1,21 @@
+<TABLE BORDER=1 WIDTH=100%>
+<TR BGCOLOR=#BBBBB>
+<th colspan=3>Installed Software</th>
+</TR>
+<tr >
+<TD><i><A HREF="/_irmtest/users/software-info.php?ID=2">Hello, I'm number two</A></i>, 1 license(s).</TD>
+<td><font color="red">license key not found</font></td>
+<td WIDTH=10%><A HREF="/_irmtest/users/computers-software-del.php?ID=215">[Delete]</A></TD>
+</TR>
+<tr >
+<TD><i><A HREF="/_irmtest/users/software-info.php?ID=1">Whee!</A></i>, 1 license(s).</TD>
+<td>Won</td>
+<td WIDTH=10%><A HREF="/_irmtest/users/computers-software-del.php?ID=111">[Delete]</A></TD>
+</TR>
+<tr >
+<TD COLSPAN=2><form method=post action="/_irmtest/users/computers-software-add.php"><input type=hidden name=cID value=1>Add software <SELECT NAME=sID SIZE=1>
+<OPTION VALUE=2>Hello, I'm number two</OPTION>
+<OPTION VALUE=3>Not For Me 1.2</OPTION>
+<OPTION VALUE=1>Whee!</OPTION>
+</SELECT>
+ to computer, using <input type="text" name="reqdliccnt" size="3" value="1"> license(s).</TD><TD><input type=submit value="Add"></form></TD></TR></TABLE>

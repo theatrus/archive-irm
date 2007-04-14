@@ -1,0 +1,100 @@
+This is a (currently incomplete) list of people who have contributed code to
+IRM.  If you are not on this list and should be, please contact me and I'll
+add you in.
+
+Fulvio Civitareale
+	- LDAP bugfix
+	- Brazilian Portuguese translation.
+
+Haemiwan z Fathony
+	- Indonesian Translation
+
+Eran Gilon
+	- Device-by-IP report
+
+Quentin Hartman
+	- Make computers-info show all/current/no tracking
+
+Christoph Maser
+	- Gettext conversion.
+	- Lots of SNMP tidy ups.
+	- German translation.
+
+Dave Maxwell
+	- Software installation and tracking detail reports
+
+Matthew Palmer
+	- Current release manager; MDB conversion; random minor code here and there.
+
+Franck Rakotonindrainy
+	- Gettext conversion.
+	- French translation.
+
+Yann Ramin
+	- Started the IRM project, and provided most of the code up until the 1.5.0 release.
+
+Bodor Sandor
+	- Hungarian Translation.
+
+Keith Schoenefeld
+	- Responsible for the initial tracking implementation.
+
+Martin Stevens
+	- Javascript-sortable tracking table.
+	- HTML Cleanup
+	- CSS Implementation
+	- Device Development
+	- Location List Report
+	- Random bug squashing
+
+James Susanka
+	- Register globals workaround
+
+David Stevens
+	- PHPDoc Documentation 
+	- Install process cleanup
+
+Francisco Barroso
+	- Templates Patch
+	- Bug Hunter
+	- Translation strings
+	- Spanish Translation
+
+Eran Gilon
+	- PC List Report
+
+Antonio Gallardo
+	- Initial Spanish Translatiom
+
+Lieuda Nasertdinova
+	- Fixed style sheet problem
+
+Classes pulled from http://www.phpclasses.org
+	- pop3 by Manuel Lemos
+	- hildegard by Achim Schmidt
+
+Patrick Rieux
+	- patch for files upload bug
+
+Micheal Gower
+	- email info and formatting cleanup
+
+Amit U Sinha
+	- Fixed contact details in templates
+	- Tracking on software
+	- Bug fixes galore
+
+Lee Mathers
+	- Fixed invalid header
+
+Kondo
+	- Japanese Translation
+	- Location List report sorting
+
+Parkview
+	- favicon.ico
+Andy
+	- funky.css
+-- 
+Martin Stevens
+July 2006

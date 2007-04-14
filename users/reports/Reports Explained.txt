@@ -1,0 +1,83 @@
+################################################################################
+#  Additional IRM Reports
+#
+#  Authors:
+#  Bruce Luhrs
+#  Andy McBride
+#################################################################################
+
+"Standard" IRM Reports
+- - - - - - - - - - - - 
+All Devices by IP Address - iplist.php
+All Devices by Location - locationlist.php
+Default Report - default.php
+PC List - pclist.php
+Software Install Report - software.php
+Search Tracking - tracking-detail.php
+Tracking Report - tracking.php
+Tracking Summary - tracking-summary.php
+
+
+Additional Reports
+- - - - - - - - -
+All IP Addresses - List with Octet Mask - portlistoct3.php
+This report is MUCH more complex.  It looks through the Computers and Networks 
+tables and and grabs information. Because we use the Ports of Computer sto track
+IP information, we ignore the IP field of the computer and network table. 
+For network devices we have defined the id of "0" as the linking connection. 
+Therefore any "0" ID in the ports section of the network device is also grabbed.
+We have added an Octet filter because we have 1000's of IP addresses and this allows
+us to narrow our searches using octet masks.
+
+Computers IP Report - Sorted by Address - iplist2.php
+This report is for computers only.  The IP info from the main computers table,
+as well as the ports information associated with the computer is used.
+It's a handy report if you are just looking for computer info. 
+The list is sorted by the computers' IP addresses.
+
+Computers IP Report - Sorted by Name - ipreport2.php
+Same as the other Computers IP Report, expect this one is sorted by
+system name.
+
+Duplicate IP Addresses Report - dupiprep.php
+A very handy report for tracking down duplicate IP addresses.  It first sorts
+IP addresses by IP then compares them.  The report generated indicates which
+systems are listed as having the same IP Address. As mentioned before, we use
+the Ports section for all of our IP info.  This report will not work with the
+IP field (but could be modified to do so.) 
+
+Name List --- namelist.php
+Pretty simple report. Simply grabs all the system names and spits them out 
+in alphabetical order.  Their ID's indicate whether they are a network device
+or a computer system.
+
+Port Map Report - portmap.php
+Ever wonder where all those wires go that are coming out of the 172 port switch?
+Well that is why we wrote this report. Basically it takes all the connections and
+tells you what they are connected to for any given network device. It displays the
+actual port name instead of just giving the ID.
+
+Racks Report - racks.php (and racks-report.php)
+This one is very specific to our needs. This report will tell you all the systems
+(computers and network devices) that are in any given location (we identify them
+as racks). Therefore if you select Rack 192 you will see all of the systems in that
+rack including their network information.
+We also have an additional, very customized, section in this report that lists
+system according to "groups".  That additional functionality is NOT included because
+we store a system's group membership information in the "Other Serial Number" field.
+Any text that you put in the Other Serial Number filed and enclose in parens ( ) will
+generate a select in the groups drop down. This allows us to associate systems using
+a free form system. I designed this after I discovered that the groups feature did not
+cover network devices. 
+
+Systems - systems.php
+Simple system count that shows all the computers and network devices by type.  It also
+shows the total number of network ports.
+
+
+
+include/reports.inc.php (and users/reports-index.php)
+- - - - - - - - - - - - - - - - - - - - - - - - - - -
+A special pair of $report_list entries in include/reports.inc.php, combined with
+some added code in users/reports-index.php, provide the means of adding an
+Additional Reports header on the IRM Reports page.

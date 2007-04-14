@@ -1,0 +1,26 @@
+dn: o=_irmtest
+objectClass: organization
+o: _irmtest
+
+dn: ou=people,o=_irmtest
+objectClass: organizationalUnit
+ou: people
+
+dn: uid=Admin,ou=people,o=_irmtest
+objectClass: inetOrgPerson
+uid: Admin
+sn: Almighty
+cn: The Almighty
+telephoneNumber: 777
+roomNumber: upstairs
+userPassword: nothingmuch
+
+dn: uid=j_ho,ou=people,o=_irmtest
+objectClass: inetOrgPerson
+uid: j_ho
+cn: J. Ho
+sn: Ho
+telephoneNumber: 123 4567
+mail: j_ho@example.com
+roomNumber: 1X25
+userPassword: bootycall

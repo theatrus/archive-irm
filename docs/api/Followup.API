@@ -1,0 +1,105 @@
+Class Name: Followup
+
+Description:
+This class handles followup information that is added to a Tracking object after the tracking object is entered into the database.
+
+Variables:
+
+	$ID - Stores the Followup ID (ID in the followups table);
+	$TrackingID - Stores the ID of the Tracking object (tracking in the followups table, and ID in the tracking table)
+	$Author - The username of the person who entered the followup (author in the followups table)
+	$FollowupInfo - The actual followup information (contents in the followups table)
+	$DateEntered - The date that the followup was added (date in the followups table)
+
+Constructor:
+	
+	function Followup($ID=0)
+	
+	Description: Accepts one value, the Followup ID.  If the Followup ID is supplied, the constructor sets the ID variable, then calls the "retrieve()" function to populate the rest of the fields in the object with information from the database.  If a followup ID is not supplied, one is created automatically when the when the tracking is added to the database by the "add()" function.
+
+Member Functions:
+	
+	function retrieve()
+
+	Description: Uses the current "ID" to populate the rest of the variables in the object with the proper values from the database.
+
+	function add()
+	
+	Description: Adds the object information to the database.  After the object has been added, the value of the member variable "ID" is set.
+
+	function displayAddForm()
+
+	Description: This function displays table row with the text area where a user can type in a new followup.
+
+
+	function delete()
+
+	Description: This function deletes the current Followup from the database.
+
+	function getID()
+
+	Description: Returns the value of the member variable "ID"
+
+	function getTrackingID()
+
+	Description: Returns the value of the member variable "TrackingID"
+
+	function getAuthor()
+
+	Description: Returns the value of the member variable "Author"
+
+	function getFollowupInfo()
+
+	Description: Returns the value of the member variable "FollowupInfo"
+
+	function getDateEntered()
+
+	Description: Returns the value of the member variable "DateEntered"
+
+	function setID($sID)
+
+	Description: Sets the value of the member variable "ID" to the value of $sID
+
+	function setTrackingID($tID)
+
+	Description: Sets the value of the member variable "TrackingID" to the value of $tID
+
+	function setAuthor($sAuthor)
+
+	Description: Sets the value of the member variable "Author" to the value of $sAuthor
+
+	function setFollowupInfo($sFI)
+
+	Description: Sets the value of the member variable "FollowupInfo" to the value of $FI
+
+	function setDateEntered($DE)
+
+	Description: Sets the value of the member variable "DateEntered" to the value of $DE
+
+	function resetDateEntered()
+
+	Description: Sets the value of the member variable "DateEntered" tot he current date and time.
+
+	function displayHeader()
+
+	Description: Prints out the table start HTML tag and a single header row with descriptions of all the fields.  Required before the use of the member function "display()".
+
+	function displayFooter()
+
+	Description: Prints out the table stop HTML tag. Required after the final use of the member function "display()".
+
+	function display()
+
+	Description: Prints out the information stored in this followup in an easy to read format.  Must preceed first use with a call to the member function "displayHeader()", and must call member function "displayFooter()" after last use to properly open and close the table.
+
+	function commit()
+
+	Description: Commits any changes in the current object to the database.
+	
+	function getByTrackingID($tID)
+
+	Description: Searches the followups table for all followups that were added to Tracking with the Tracking ID stored in "$tID".  Returns an array containing the ID value of each of the followups added to that Tracking.
+
+	function addBody($mail)
+
+	Description: Adds the information stored in this object to the body of an email message.  Commonly (only?) called from the Tracking->sendEmail() function to print out information required to send out tracking updates.

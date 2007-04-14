@@ -1,0 +1,218 @@
+*********************************************************************************************************
+  Class SDTO - Simple DateTime Object 
+			   A simple way to handle times and dates and to convert between 
+			   System and SQL Formats	
+
+  (C) 2001-2004 Christian Hansel, CVH, chris@cpi-service.com
+
+  Distributed under GPL, may be distributed, modified and utilized if Copyright 
+  notice is maintained and manual is provided and author is notified of modifications
+
+  Please support our development by sending remarks or comments or suggestions
+	  
+********************************************************************************************************
+
+Manual / Hints for Usage 
+
+
+This class shall simplify the way you work with dates and times in PHP and MySQL.
+
+It's main purpose is to convert between Unix/PHP and MySQL Formats and to make simple
+time calculations or String Conversions.
+
+This little manual shall give you an overview how to work with this class.
+
+
+_______________________________________
+1. Creating the Object
+_______________________________________
+
+As Simple as That:
+
+	$dto = new SimpleDateTimeObject ();  
+	
+to produce an Object with the Current System Time;
+
+OR :
+	$dto = new SimpleDateTimeObject ($time);  	
+
+to produce an Object with the provided Timestamp (Seconds since 1-1-1970);
+
+___________________________________________________
+2. Setting the Object to a specific MySQL DateTime
+___________________________________________________
+
+If you're working with Databse table where you store dates in MySQL Timestamps
+or DateTimes or similar Formats you can set the Objects BaseTime to this 
+by using the SetMySQLDateTime() function :
+	
+			$dto->setMySQLDateTime("20040524100000");
+			
+OR if working with fetchresults: 
+
+	    	$dto->setMySQLDateTime($dbrow['posttime']);
+
+HINT :
+					$time = $dto->setMySQLDateTime("20040524100000");
+is identical to		$time = mktime(10,0,0,5,24,2004);
+
+_____________________________________________________
+3. Simple Calculations
+_____________________________________________________
+
+Example: You have a given time and wish to Add X 
+
+	$dto = new SimpleDateTimeObject ();  
+
+	$dto->setMySQLDateTime("20040524100000");
+	print $dto->getString("M-d-Y H:i");			// Output May-24-2004 10:00
+	$dto->add(array("hours"=>2, "days"=>5));
+	print $dto->getString("M-d-Y H:i");			// Output May-29-2004 12:00
+	
+in combination with the Object's Time2Array function you can first parse a 
+a TimeString in MYSQL's Time Format and then add this value 
+This can be useful for instance when you have Timzone information stored in your DB:
+
+	$time = $row['user_timezone'] ; // assumed value is "01:00:00"
+	$dto->setMySQLDateTime("20040524100000");	
+	$time_arr = $dto->Time2Array($time);		// Return array("hours"=>1,"minutes"=>0,"second"=>0)
+	$dto->add($time_arr);
+	print $dto->getString("M-d-Y h:i a");			// Output May-24-2004 1:00 pm
+
+Negativ Values are handled accordingly	
+	$time = $row['user_timezone'] ; // assumed value is "-01:00:00"
+	$dto->setMySQLDateTime("20040524100000");	
+	$time_arr = $dto->Time2Array($time);		// Return array("hours"=>1,"minutes"=>0,"second"=>0)
+	$dto->add($time_arr);
+	print $dto->getString("M-d-Y h:i a");			// Output May-24-2004 11:00 am
+
+The sub() Function is similar to add but subtracts the values
+
+_______________________________________________
+4. Calculating Periods or Time Differences
+_______________________________________________
+
+The diff_MySQL function calcutes the difference or period between the basetime of the Object
+and the MySQL DateTime provided as Parameter 
+
+Example 
+		$dto->setMySQLDateTime(20030101010000);
+		$worktime = $dto->diff_MySQL(20030131050000);
+		print " Time to finish : ".$worktime['years']." Years ".
+								   $worktime['weeks']." Weeks ".
+								   $worktime['days']." Days ".
+								   $worktime['hours']." Hours "; // Output : Time to finish 0 Years 4 Weeks 2 Days 4 Hours
+
+
+		$dto->setMySQLDateTime($project['project_start']);
+		$worktime = $dto->diff_MySQL($project['project_deadline']);
+		
+
+		
+
+______________________________________________
+5. Get Formatted Outputs 
+_____________________________________________
+
+There are a couple of functions helping to produce formatted Timestrings
+	
+	day(),month(),year(),hour(),minute(),second()
+	
+	$dto = new SimpleDateTimeObject ();  
+	$dto->setMySQLDateTime("20040524100000");
+	print "It's Day ".$dto->day()." of Month ".$dto->month() ; // Output : It's Day 24 of Month 5
+	
+you may also specify the specific format:
+	
+	print "It's the ".$dto->day("dS")." of ".$dto->month("M") ; // Output : It's the 24th of May
+	
+you may also specify a specific date in UNIX timestamp
+	
+	print "It's the ".$dto->day("dS",mktime())." of the current month ; // Output : It's the 24th current month
+	
+for full Dates use the getString() or getMySQLDateTime() function with the Parameters 
+typical for PHP's own date function:
+
+	$dto = new SimpleDateTimeObject ();  
+	$dto->setMySQLDateTime("20040524140000");
+	print $dto->getString();					// output :	May, 24th 2004 02:00 am
+	print $dto->getString('d.M.Y H:i');			// output :	24.05.2004 14:00
+	
+I guess there's no need to further with this. Just a hint:
+
+Using the format parameter is especially helpful in a multilanguage environment 
+by using a localizing function (but only if you have coded one) :
+
+	$dto = new SimpleDateTimeObject ();  
+	$_SESSION['language'] = "de";
+
+	$dto->setMySQLDateTime("20040524140000");
+	print $dto->getString(lcl('d.M.Y H:i'));					// output :	24.05.2004 14:00
+	
+	$_SESSION['language'] = "en";
+
+	print $dto->getString(lcl('d.M.Y H:i'));					// output :	May, 24th 2004 02:00 am
+
+__________________________________________________________________________________
+6. Get preconfigured SELECT Dropdown lists based on the current object's basetime	
+__________________________________________________________________________________
+
+The SDTO Class has two ways to produce preconfigured Dropdown lists for HTML:
+	the datelist(), dropdown() function
+The datelist function produces a fulldate formatted dropdown list, while the dropdown fuunction
+can produce a dropdown list for either days, months,years, hours, minutes or seconds
+
+Example datelist():
+
+	$dto = new SimpleDateTimeObject ();  
+	$dto->setMySQLDateTime("20040524140000");
+	
+	$selecteddate = $dto->setMySQLDateTime($_POST["deadline"]);
+	
+	print $dto->datelist( "deadline", array("style"=>"std_input",			// the CSS Class
+													 "running"=>"hours", 	// iterate hours
+													 "run" => 168, 			// last entry 168 hours after the first
+													 "steps"=>6, 			// each entry is 6 hours after the previous
+													 "start"=>-6,			// start from DTO's Basetime (here 24th May 2004 14:00) - 6 hours (so start at 24th May 2004 08:00)										 
+													 "format"=>lcl("M_d_Y")." H:00 ", // show a localized Format
+													 "keyformat"=>"YmdH0000",		  // values formatted like 20040524140000	
+													 "selecteddate"=>$selecteddate)); // pre selected Value if POSTed before
+
+
+// this	produces a Select Dropdown Field named "deadline" ready to be used in HTML
+
+Example dropdown();
+
+	$dto = new SimpleDateTimeObject ();  
+	$dto->setMySQLDateTime("20040524140000");
+	
+	if (isset($_POST['deadline'])) {
+		$pd = $_POST['deadline'];
+		$selecteddate = $dto->setMySQLDateTime($pd['year'].$pd['month'].$pd['day'].$pd['hour'].$pd['minute']."00");
+		
+	} 
+
+
+	print $dto->dropdown( "deadline[day]", array("style"=>"std_input","run" => 30, "start"=>0, "format"=>"day","selecteddate"=>$selecteddate)) . "&nbsp;" .
+		  $dto->dropdown( "deadline[month]", array("style"=>"std_input","run" => 12, "start"=>0, "format"=>"month","formatshow"=>"M","selecteddate"=>$selecteddate)) . "&nbsp;" .	
+		  $dto->dropdown( "deadline[year]", array("style"=>"std_input","run" => 2, "start"=>0, "format"=>"year","selecteddate"=>$selecteddate)) . "&nbsp; at &nbsp;" .
+		  $dto->dropdown( "deadline[hour]", array("style"=>"std_input","run" => 23, "start"=>0, "format"=>"hour","selecteddate"=>$selecteddate)) . " : " .											  		
+		  $dto->dropdown( "deadline[minute]", array("style"=>"std_input","run" => 59, "start"=>0, "format"=>"minute","selecteddate"=>$selecteddate)) . "&nbsp; o'clock";
+	
+
+Try this code to see the difference
+	
+____________________________________________________________________
+7. Remarks & Copyright notice
+____________________________________________________________________	
+
+  
+  Please support our development by sending remarks or comments or suggestions
+  
+  Please rate it at PHPClasses.org or wherever you got it from
+
+  (C) 2001-2004 Christian Hansel, CVH, chris@cpi-service.com
+
+  Distributed under GPL, may be distributed, modified and utilized if Copyright 
+  notice is maintained and manual is provided and author is notified of modifications
+

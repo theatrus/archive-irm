@@ -1,0 +1,200 @@
+Class Name: Tracking
+
+Description:
+This class should handle any and all db calls to the tracking table.
+
+Variables:
+
+	$ID - Stores the Tracking ID (ID in the tracking table);
+	$DateEntered - Stores the date that the Tracking was entered (date in the tracking table)
+	$CloseDate - Stores the date that the tracking is marked "old" or "complete" (closedate in the tracking table)
+	$Status - Stores the status of the current request. (status in the tracking table)
+	$Assign - Stores the username of the tech assigned to handle this request (assign in the tracking table)
+	$ComputerID - Stores the ID of the computer that this work request was entered against (computer in the tracking table)
+	$WorkRequest - Stores the actual request (problem description) that a user entered. (contents in the tracking table)
+	$Priority - Stores the priority of the request. (priority in the tracking table)
+	$IsGroup - Stores whether the request was entered against a computer group or not. (is_group in the tracking table)
+	$Author - Stores the "Name" entered by the person making request. (author in the tracking table)
+	$AuthorEmail - Stores the "Email" entered by the person making the request. (uemail in the tracking table)
+	$EmailUpdatesToAuthor - Stores whether updates should be sent to the person who made the request via email. (emailupdates in the tracking table)
+	$Followups - Stores an array of objects of type "Followup".  See the Followup API for more details.
+	$newFollowups - A temporary variable used to determine if a new Followup needs to be committed.
+
+
+Constructor:
+
+	function Tracking(var=0)
+	
+	Description: Accepts one value, which is a tracking ID.  If a tracking ID is supplied, the constructor sets the ID variable, and then calls the "retrieve()" function to populate the rest of the variables with data from the database.  If a tracking ID is not supplied, then one is created automatically when the tracking is added to the database.
+	
+Member Functions:
+
+	function retrieve()
+
+	Description: Uses the current "ID" to populate the rest of the variables with the proper values from the database.
+
+	function setFollowups()
+
+	Description: Gets all followups that are associated with this tracking and stores all of the Followup Object in an array named "Followups".
+
+	function setDateEntered(var)
+
+	Description: Sets the variable "DateEntered" in the current object to the value passed to this function.
+
+	function setCloseDate(var)
+
+	Description: Sets the variable "CloseDate" in the current object to the value passed to this function.
+
+	function setStatus(var)
+
+	Description: Sets the variable "Status" in the current object to the value passed to this function.
+
+	function setAssign(var)
+
+	Description: Sets the variable "Assign" in the current object to the value passed to this function.
+
+	function setComputerID(var)
+
+	Description: Sets the variable "ComputerID" in the current object to the value passed to this function.
+
+	function setWorkRequest(var)
+
+	Description: Sets the variable "WorkRequest" in the current object to the value passed to this function.
+
+	function setPriority(var)
+
+	Description: Sets the variable "Priority" in the current object to the value passed to this function.
+
+	function setIsGroup(var)
+
+	Description: Sets the variable "IsGroup" in the current object to the value passed to this function.
+
+	function setAuthor(var)
+
+	Description: Sets the variable "Author" in the current object to the value passed to this function.
+
+	function setAuthorEmail(var)
+
+	Description: Sets the variable "AuthorEmail" in the current object to the value passed to this function.
+
+	function setEmailUpdatesToAuthor(var)
+
+	Description: Sets the variable "EmailUpdatesToAuthor" in the current object to the value passed to this function.
+
+	function setID($Ident)
+
+	Description: Sets the variable "ID" in the current object to the value passed to this function.
+
+	function getID()
+
+	Description: Returns the value of the variable "ID" in the current object.
+
+	function getDateEntered()
+
+	Description: Returns the value of the variable "DateEntered" in the current object.
+
+	function getCloseDate()
+
+	Description: Returns the value of the variable "CloseDate" in the current object.
+
+	function getStatus()
+
+	Description: Returns the value of the variable "Status" in the current object.
+
+	function getAssign()
+
+	Description: Returns the value of the variable "Assign" in the current object.
+
+	function getComputerID()
+
+	Description: Returns the value of the variable "ComputerID" in the current object.
+
+	function getWorkRequest()
+
+	Description: Returns the value of the variable "WorkRequest" in the current object.
+
+	function getPriority()
+
+	Description: Returns the value of the variable "Priority" in the current object.
+
+	function getIsGroup()
+
+	Description: Returns the value of the variable "IsGroup" in the current object.
+
+	function getAuthor()
+
+	Description: Returns the value of the variable "Author" in the current object.
+
+	function getAuthorEmail()
+
+	Description: Returns the value of the variable "AuthorEmail" in the current object.
+
+	function getEmailUpdatesToAuthor()
+
+	Description: Returns the value of the variable "EmailUpdatesToAuthor" in the current object.
+
+	function getNotClosed($Advanced, $Show, $Order)
+
+	Description: Accepts three variables: $Advanced, $Show, and $Order. $Advanced determines whether tracking is done in an "advanced mode".  Advanced mode allows the user to select whether they want to see all tracking, only tracking assigned to the logged in user, or all tracking that isn't assigned to any user.  $Show contains the variable that determines which "advanced mode" is selected.  $Order specifies the order (oldest first or newest first) in which the tracking is displayed.
+
+	function display($withFollowups = 0)
+
+	Description: Displays a single work request in table format.  Used in a for loop for example in tracking-index.php to display each of the current work requests.  When used alone, displayHeader() must be called before this function, and displayFooter() must be called after this function.  If display() is called multiple times, displayHeader() must be called before the first call to this function, and displayFooter() must be called after the last call to this function.  If the $withFollowups variable is set to "1", a table listing all of the followups associated with the current tracking will be inserted in the same column as the "Description" field.
+	
+
+	function displayDetail()
+
+	Description: Displays all of the information contained in a tracking in a large view.  Designed to be used inside "<FORM" tags that allow people to modify the status and assign variables, and add followups.
+	
+	function displayHeader()
+	
+	Description: Sets up the start of the table for the "display()" function.  If php supported "static" functions in a class, this would be a static function.
+
+	function displayFooter()
+	
+	Description: Sets up the end of the table for the "display()" function.  If php supported "static" functions in a class, this would be a static function.
+
+	function search($field, $information)
+
+	Description: Allows user to search all tracking for a string of text.  The variable $field determines which field in the tracking table is searched, and $information is the text string that is searched for.  If php supported "static" functions in a class, this would be a static function.
+
+	function commit()
+
+	Description: Commits all of the current objects variables to the database.  Not to be used to add new Tracking, only to commit changes to tracking that already exists in the database.
+
+	function sendEmail($mod="no")
+
+	Description: Prepare and sends email out in the event that a tracking object is modified or added.  If the tracking is being modified, $mod must be set to yes so the subject line of the email prints out properly.
+
+	function add()
+
+	Description: Adds all of the current object's variables to the database.  Not to be used to update Tracking that is already in the database, only to add new tracking.
+
+	function addFollowup()
+
+	Description: Adds a new Followup object to the class.
+
+	function getFollowupsInfo()
+
+	Description: Returns a text string that contains all of the "Info" in the followups associated with this tracking.
+
+	function delete()
+
+	Description: Deletes the current Tracking and all related followups from the database.
+
+	function getByComputerID(var)
+
+	Description: The value passed should be a computer ID.  The function then queries the tracking database for all tracking against the computer and returns an array of tracking IDs that are associated with the computer.
+
+	function getByGroupID(var)
+
+	Description: The value passed should be a group ID.  The function then queries the tracking database for all tracking against the group and returns an array of tracking IDs that are associated with the group.
+
+	function isStatus($status)
+
+	Description: Checks to see if the current value of the member variable "Status" is equal to the value contained in the variable "$status", returns TRUE if the values are the same, false if they are not.
+
+	function isAssign($assign)
+
+	Description: Checks to see if the current value of the member variable "Assign" is equal to the value contained in the variable "$assign", returns TRUE if the values are the same, false if they are not.
+

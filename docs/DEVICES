@@ -1,0 +1,40 @@
+Ok so here is the plan for getting devices developed into the system.
+
+* Allow creation of device types (Done)
+* Allow creation of device fields (Done)
+* Create device entry form (Done)
+* Field matching to allow existing dropdowns to be used. i.e. ram, location etc. (Done)
+* Submission of device entry form (Done)
+* Editing of device entries (Done)
+* Deleting of device fields (Done)
+* Deleting of device types (Done)
+* Deleting of device entries (Done)
+* Searching of devices from devices-index. (Done)
+* Allow tracking to be linked to device (Done)
+* Snmp to work if device has ipaddress field (Done)
+
+The follow are nice to have but not nessecary
+
+* Allow software to be linked to device
+* Allow connections to be made between matching fields on different devices.
+* Migrate computer type to device.
+* Migrate network items to devices
+
+-------------------------------------------------------------
+
+Bloody annoyance whilst developing anything in IRM.
+
+'computer' and 'computers' is seemingly used interchangable
+'location' and 'locations' is seemingly used interchangable
+
+This is a lie, 
+
+the table for locations is called
+
+dropdown_locations and is stored in the computer table as location.
+
+In the tracking table the computer id is stored as computer whereas the table for computers
+is called computers.
+
+What this means is that it is difficult to call use sql calls based on names as you have to switch the plurality.
+

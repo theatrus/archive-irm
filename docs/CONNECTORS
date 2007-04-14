@@ -1,0 +1,22 @@
+Connector Fields for connecting computers and networking via ports.
+
+networking_ports
+
+This table holds all the port information for a device.
+
+The device_type field will need to be changed from a tinyint(4) to a 
+varchar(200) to allow device_type names to be used. The reason for this
+is currently device type in the device table does not have an ID field, and if it 
+did it would have to auto_increment from 3 onwards.
+
+
+Currently device types are as follows
+1 - Computer
+2 - Networking
+
+networking wire
+ID is the id of the connection
+end1 
+end2
+
+The two end fields hold the ID of networking ports that are being connected

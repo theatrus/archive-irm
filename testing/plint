@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for file in $( find . -name \*.php ); do
+	php4 -l $file
+done | grep -v '^No syntax errors' || true

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+HERE="$(dirname $( readlink -f $0 ))"
+
+CFG="$HERE/data/slapd.conf"
+
+rm -rf /tmp/slapd_db
+mkdir /tmp/slapd_db
+slapadd -f $CFG -l $HERE/data/basic_data.ldif
+
+slapd -f $HERE/data/slapd.conf -h ldap://localhost:38389/

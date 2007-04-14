@@ -1,0 +1,18 @@
+Making a New translation
+--------------------------
+
+Copy locale/po/irm.pot to locale/po/<lang_code>.po, and then edit that new
+file appropriately.  Add a relevant entry to the array $supported_languages
+at the top of include/i18n.php, providing an appropriate country code and
+the correct encoding from the po file.
+
+If you're getting the irm.pot from a released version of IRM, it won't be
+the latest.  Contact irm-devel@lists.sf.net for info on where the most
+up-to-date irm.pot can be obtained from.  Also, please subscribe to
+irm-devel (http://lists.sf.net/mailman/listinfo/irm-devel) so you get
+announcements of updated translations.
+
+Tools for assisting translations include poedit, kbabel, and gtranslator. 
+There is also a gettext mode in EMACS.
+
+(Suggestions for good translator's howtos appreciated)

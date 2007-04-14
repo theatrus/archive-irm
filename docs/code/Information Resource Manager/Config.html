@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Config</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Config</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+		<p class="notes">
+			Located in <a class="field" href="_lib_Config_php.html">/lib/Config.php</a> (line <span class="field">30</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#AbsLoc" title="details" class="method-name">AbsLoc</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$file</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$args</span> = <span class="var-default">NULL</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#All" title="details" class="method-name">All</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#CurrentSection" title="details" class="method-name">CurrentSection</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$type</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$current</span> = <span class="var-default">NULL</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#Database" title="details" class="method-name">&amp;Database</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#FileAvailable" title="details" class="method-name">FileAvailable</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$file</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#Get" title="details" class="method-name">Get</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$var</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#GetIncludePath" title="details" class="method-name">GetIncludePath</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#LDAP" title="details" class="method-name">LDAP</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#onWindows" title="details" class="method-name">onWindows</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#PathSeparator" title="details" class="method-name">PathSeparator</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ReadConfig" title="details" class="method-name">ReadConfig</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$type</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#Set" title="details" class="method-name">Set</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$variable</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#UseLDAP" title="details" class="method-name">UseLDAP</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#Version" title="details" class="method-name">Version</a>
+										()
+									</div>
+							</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodAbsLoc" id="AbsLoc"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">AbsLoc</span> (line <span class="line-number">56</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return an &quot;absolute&quot; web location for $file (given relative to  the root of the IRM installation.</p>
+<p class="description"><p>Assumes: <ul><li>That the PHP script file is located within the IRM</li></ul>	installation tree; and <ul><li>That the file that this method exists in is one level</li></ul>	down from the root of the IRM installation.</p><p>I swear this code made sense to me when I wrote it.</p><p>You can also give AbsLoc a set of arguments to be passed to the  file specified, and they'll be appended in the usual URL manner.  Make $args an associative array of name =&gt; value pairs.</p><p>Warning: Do *not* pass any arguments as part of the filename if  you want to give an array of arguments -- Bad Things will happen.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			AbsLoc
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$file</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$args</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+		
+		
+	</div>
+<a name="methodAll" id="All"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">All</span> (line <span class="line-number">275</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the complete set of config values.</p>
+<p class="description"><p>Get all of the current config values from the database and  return them to the calling function as an associative array.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			All
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodCurrentSection" id="CurrentSection"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">CurrentSection</span> (line <span class="line-number">204</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the &quot;current&quot; section from the specified config file.</p>
+<p class="description"><p>Where current section is defined either by what is passed in via  $current, or (if $current is NULL) from the $_SESSION['_sess_database']  variable.  If neither of these is available, then we fall back to  the section called '_default'.</p><p>\returns An associative array of config variables, or an empty 	array if no section with the given name is available.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			CurrentSection
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$type</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$current</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+		
+		
+	</div>
+<a name="methodDatabase" id="Database"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Database</span> (line <span class="line-number">101</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			&amp;Database
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodFileAvailable" id="FileAvailable"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">FileAvailable</span> (line <span class="line-number">144</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			FileAvailable
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$file</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodGet" id="Get"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Get</span> (line <span class="line-number">222</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the current value of the specified system config variable.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			Get
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$var</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodGetIncludePath" id="GetIncludePath"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">GetIncludePath</span> (line <span class="line-number">139</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			GetIncludePath
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodLDAP" id="LDAP"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">LDAP</span> (line <span class="line-number">325</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return the LDAP config for the current database, if it exists  Returns an associative array containing all of the LDAP config  parameters for the database that the currently logged-in user  is is using, or false if the database does not do LDAP.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			LDAP
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodonWindows" id="onWindows"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">onWindows</span> (line <span class="line-number">129</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			onWindows
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodPathSeparator" id="PathSeparator"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">PathSeparator</span> (line <span class="line-number">134</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			PathSeparator
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodReadConfig" id="ReadConfig"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ReadConfig</span> (line <span class="line-number">157</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ReadConfig
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$type</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodSet" id="Set"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Set</span> (line <span class="line-number">247</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Set the value of the specified system config variable.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			Set
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$variable</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodUseLDAP" id="UseLDAP"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">UseLDAP</span> (line <span class="line-number">315</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return whether LDAP is in use or not for the currently selected database.</p>
+<p class="description"><p>Returns true if there is an LDAP configuration section defined for the  database in use by the current user, or false otherwise.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			UseLDAP
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodVersion" id="Version"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Version</span> (line <span class="line-number">33</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			Version
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Sun, 23 Oct 2005 23:34:03 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC3</a>
+	</p>
+	</div></body>
+</html>

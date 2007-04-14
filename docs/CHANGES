@@ -1,0 +1,255 @@
+(As of 1.5.1, this file has been discontinued.  Please see
+docs/RELEASE_NOTES for information on what is new in the current release)
+
+IRM 1.5.0 CHANGES
+
+- Introduction of a unit and acceptance testing suite.
+- MD5 password support across the board.
+- Removed all traces of DBI, replaced with MDB.
+- Fixed several annoying bugs reported by users.
+
+
+IRM 1.4.2 CHANGES
+
+A note: all patches that were destined for 1.4 are now postponed until 1.6.
+
+- Bugfixes for differing PHP versions and installation bugs
+- A new test feature in setup.php to check that PHP works
+- Minor bugfixes for slashes and other oddities throughout.
+
+
+IRM 1.4.0 CHANGES
+
+- PHP 4.1 is required
+- Made sure all of the newly implemented classes worked correctly.
+- Scrapped some unfeasible or too-long-to-implement features
+- Fixed as many bugs as possible.
+
+IRM 1.3.4 CHANGES
+- Added "Full Name" to the user information.
+- Added FastTrack tracking -- allows all tracking information to be entered
+	in one page.  In addition, it allows templates to be set up to automatically
+	fill in some of the FastTrack fields.
+- Modified the way Followups are displayed when "Show Followups" is selected in
+	the computer-info screen.
+- Redesigned the Tracking and Followup systems (no noticable difference should
+	be visible to the end user).
+- Changed the "tracking-followups" page (The page you see when you click "More
+	Info" on the right side of a work request) so that it is more clear, and
+	only requires a single "Update" button be pushed for multiple changes.
+- Changed the way that priorities are displayed, it now displays priorities by
+	name
+- Changed the tracking display so that the Full Name is displayed in the
+	"Assigned" and "Author" fields if possible.  Also set it up so that the 
+	Full Names are hypertext links to the user-info.php script.
+- Modified the user-info.php script to display all work requests currently 
+	assigned to the specified user.
+- Changed the tracking display so that the date is displayed in a new,
+	more user friendly format.
+- Changed the user add script such that the new user's Type is a dropdown
+	box instead of a textbox.
+- Modified the way email is sent when tracking is updated.
+- Modified the way tracking is displayed so that groups are not set up as
+	hypertext links, only computers.
+- Still no update for the 1.3.1 users who have software information -- my 
+	apologies.  We will try and get it in for 1.3.5.
+	
+
+IRM 1.3.3 CHANGES
+- Added Knowledgebase and FAQ sections to IRM (the FAQ is a subset of the
+	Knowledgebase).
+- Fixed a bug in the computers-info display that caused a "No tracking Found"
+	message to display whenever a computer was not part of a group, even
+	if the computer had large amounts of tracking against it.
+- Started to move all HTML code to capital letters.  Makes the HTML source
+	much easier to read.
+- NOTE: Please do not upgrade from 1.3.1 if the if the information you have 
+	stored in your software setup is important to you.
+	
+
+IRM 1.3.2 CHANGES
+- Many more typo/bug fixes.  
+- Added a "Technician" user type.  The technician can do everything
+	that an admin could do in the past with the exception of user 
+	management.  Admins can do everything that a tech can do, but they
+	can also do user management.
+- Modified the "Setup Users" stuff.  The page was entirely to painful to
+	use with a large number of users.
+- Most of config.inc.php has been moved into the database, and can be 
+	modified from the "System Configuration" selection on the "setup" web 
+	page.  Note: The system configuration can not be modified by the 
+	new "Technician" user type, only by an admin.
+- Started the process of modifying the mailing system.  All user updates
+	(new followups, etc.) should come from the tech making the update,
+	not some randome "irm" or "anonymous" user.  Also worked to clean
+	up the text in the email sent out so that it is more clear to
+	customers what the email is about.
+- Modified the "header" function so that only areas that a user is allowed
+	to view are displayed.
+- Removed all "short" php tags. This causes no noticable difference to 
+	the user.
+- Major changes to software management/licensing set up.  IF YOU DEPEND ON
+	THE INFORMATION CONTAINED IN YOUR SOFTWARE SETUP, DO NO UPGRADE TO 1.3.2.
+
+IRM 1.3.1 CHANGES
+- Lots of bug fixes.  All known typos/bugs should be fixed with the 
+	exception of the db abstraction stuff.  The db abstraction class used
+	in 1.3.0 and 1.3.1 won't exist in 1.3.2 because it doesn't work well
+	on install.
+- Modified the status options, options are now as follows:
+	* Active - Status that should be assigned by a tech when he/she is working
+		on the specified tracking.
+	* Assigned - Status that is automatically set when a tracking item is 
+		assigned to a technician.
+	* Complete - Status that should be selected when a tracking item has
+		been completed successfully.
+	* New - Default status when new tracking is added.
+	* Old - Status that should be selected when a tracking item has not
+		been completed successfully, but no further action will be taken to
+		complete the tracking successfully.
+	* Wait - This status should be set when a tech is waiting on something
+		outside of his/her own control to complete the tracking.
+
+
+IRM 1.3.0 CHANGES
+- Moved all .php3 files to .php extensions
+- Moved the include files into a subdirectory named "include"
+- Created a $USERPREFIX variable -- fixes problems that we have seen
+	on login failures where people were seeing "page not found" errors.
+- Set up a new abstracted database using class.DBI from
+	http://evil.inetarena.com/php
+- Rewrote the setup/install procedure due to changes forced by the db 
+	abstraction.
+
+IRM 1.0.2 CHANGES
+- Software sorting now makes sense
+- Port sorting now makes sense
+- Deleteing templates deletes associated software
+- Adding port now no longer gives error
+
+IRM 1.0.1 CHANGES
+- Fixed connectdb() error in tracking-assign.
+- Fixed group memebership table in computers-info
+
+IRM 1.0 CHANGES
+- New DB Abstraction class which makes everything sort of compatible
+	Currently MySQL is supported, but you only need to change
+	a few function calls to get it working with PostgreSQL, etc.
+- New networking port system.  Allows you to interconnect computers and
+	network devices.
+- New IRM command center which includes the auditing feature of IRM
+	and serves as a quick-look at what has been happening when you
+	login.
+- Cleaned up the look and feel of IRM in a few places.
+- Fixed a bug which prevented tracking from appearing in some cases.
+- Other misc. bug fixes
+- New simple group editor, allows you to view members of a group.  Also
+	shows group membership in computers-info.php3
+- Software adding now is done by a dropdown box with version number displayed.
+
+
+IRM 0.9c.4 1.0 PRE CHANGES
+- Fixed the database update stuff.  0.9c.3 didn't update the databse schema 
+	completely if the user was upgrading from an old install.
+
+IRM 0.9c.3 1.0 PRE CHANGES
+- Added email to the person entering tracking (if they request it).
+- Added the ability to view tracking in ascending or descending order by date.
+
+IRM 0.9c.1 1.0 PRE CHANGES
+
+- Added Reports feature.
+- Fixed a display bug in computer list view.
+- Made an AUTHORS file and changed the copyright information.
+- Added code to check that people are filling out all of the forms
+        in the Request Help section.    
+- Added new groups capability.  I didn't do it cleanly, alot of cleanup needs
+	to happen before I'm proud of the code, but it appears to be functional.
+- Added (then found out it was already there but not documented) and therefore 
+	only modified the ability to configure whether the name search was 
+	available from the helper.php3 screen.
+
+IRM 0.9c 1.0 PRE CHANGES
+
+- Added new helpful 'Request Help' section which lets posters preview what
+	they are posting, as well as requesting a name and contact info.
+- Moved config.inc to config.inc.php3
+- Fixed bug which was not adding software from templates.
+
+
+IRM 0.9b.3 1.0 PRE CHANGES
+
+- FIxed database.txt bug.  A missing field was causing probelms with imports.  
+
+IRM 0.9b.2 1.0 PRE CHANGES
+
+- Added an advanced tracking view allowing users to select 1 of 3 ways to view 
+		tracking slips.
+- Modified database schema in order to store new preference, this creating 
+		a new database update file.
+
+IRM 0.9b.1 1.0 PRE CHANGES
+
+- Added email to cfg_newtrackingemail when the cfg_notifynewtrackingbyemail=1.
+- Added Brandon Neill (bneill@learn2.com) to Copyright list.
+- Added software license tracking features.
+
+IRM 0.9a.3 1.0 PRE CHANGES
+
+- Re-added View by Location form, for ease of use.
+- Re-added IE bug fixes with cookies
+- Changed crypt() which used DES to md5() (which uses MD5) for
+		 password encryption.
+- Correctly blanked cookies.
+
+IRM 0.9a.2 1.0 PRE CHANGES
+
+- More code clean up.
+- Added the ability to select either exact phrase/contains matches in
+		computers-index.php3.  As a result, the seperate location
+		dropdown and selection was unnecessary and therefore was
+		removed.
+
+IRM 0.9a.1 1.0 PRE CHANGES
+
+- Code clean up, more consistent, easier to read, and more manageable.
+- NO FEATURE CHANGES
+
+
+IRM 0.9a 1.0 PRE CHANGES
+
+- Better Login security
+- Made all incude statements point to ../irm.inc instead of just irm.inc
+- Sort feature
+
+
+IRM 0.29 CHANGES
+
+- Added multi-list view in computers.  Enjoy :)
+- Added Preferences section, replacing 'Change Password'
+
+
+IRM 0.281 CHANGES
+
+- Everyone, destroy IE.  Some stupid IE bug fixes
+
+
+IRM 0.28 CHANGES
+
+- Added Template system for adding computers
+- A new clock in case you forgot what time it was
+- I tried abusing the appostrophe (') bug, fixed as many as I could find.
+
+BUG FIX 1:
+
+- Fixed a tracking bug when adding.  If you had an appostrophe(') in your 
+		description, it would not add your job. 
+
+IRM 0.275 CHANGES
+
+
+- Added CSS, so it looks a little better :)
+- Added cache-control so nothing should cache the pages anymore 
+	- Added Pragma: no-cache and Expires: <past> headers
+	- Added <META> Expires, Pragma, and Cache-Control tags
+- Fixed a few typos

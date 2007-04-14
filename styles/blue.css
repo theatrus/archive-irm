@@ -1,0 +1,443 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	background-color: #ffffff;
+	margin:10px 10px 0px 10px;
+	padding:0px;
+}
+	
+#leftcontent {
+	position: absolute;
+	left:10px;
+	top:60px;
+	width:200px;
+	background:#fff;
+}
+
+#centercontent {
+	background:#fff;
+	margin-left: 199px;
+	/*
+	IE5x PC mis-implements the box model. Because of that we sometimes have
+	to perform a little CSS trickery to get pixel-perfect display across browsers.
+	The following bit of code was proposed by Tantek Celik, and it preys upon a CSS
+	parsing bug in IE5x PC that will prematurly close a style rule when it runs
+	into the string "\"}\"". After that string appears in a rule, then, we can override
+	previously set attribute values and only browsers without the parse bug will
+	recognize the new values. So any of the name-value pairs above this comment
+	that we need to override for browsers with correct box-model implementations
+	will be listed below.
+		
+	We use the voice-family property because it is likely to be used very infrequently,
+	and where it is used it will be set on the body tag. So the second voice-family value 
+	of "inherit" will override our bogus "\"}\"" value and allow the proper value to
+	cascade down from the body tag.
+
+	The style rule immediately following this rule offers another chance for CSS2
+	aware browsers to pick up the values meant for correct box-model implementations.
+	It uses a CSS2 selector that will be ignored by IE5x PC.
+		
+	Read more at http://www.glish.com/css/hacks.asp
+	*/
+		
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	margin-left: 201px;
+}
+
+html>body #centercontent {
+	margin-left: 201px;
+}
+
+#banner {
+	background:#ffffff;
+	height:60px;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	height:59px;
+}
+
+th   
+{  
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt; 
+	font-weight: bold;
+	background-color: #66ccff;
+}
+
+table
+{
+	width: 100%;
+}
+	
+td
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+}
+	 
+form
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+}
+	
+h1
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16pt;
+	font-weight: bold;
+}
+	
+a:link
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	font-weight: bold;
+	text-decoration: none;
+	color: #000099;
+}
+a:visited
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	text-decoration: none;
+	color: #0000bb;
+}
+a:hover
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	text-decoration: underline;
+	color: #ff0000;
+}
+	
+.nav
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #0099ff;
+	color: #000000;
+	border-bottom: 1px solid;
+	border-top: 1px solid;
+	padding-top: 0.5ex;
+	padding-bottom: 0.5ex;
+	padding-left: 1ex;
+	padding-right: 1ex;
+	margin-right: 0px;
+}
+
+.nav a
+{
+	color: #000000;
+	text-decoration: none;
+}
+
+.nav a:visited
+{
+	color: #000000;
+	text-decoration: none;
+}
+
+.nav a:hover
+{
+	text-decoration: none;
+	color: #000000;
+}
+
+
+.graphic
+{
+	border: 0px;
+	margin-top: 1ex;
+	float: right;
+}	
+
+/* SNMP */
+.snmpup
+{
+	color:blue;
+	font-weight:bold;
+}
+/* Tracking Display */
+.tracking
+{
+	width: 100%;
+}
+.trackingheader
+{
+	background-color: #6699ff;
+}
+/* Report Display */
+.report
+{
+	width: 100%;
+	border: 1px;
+}
+.reportheader
+{
+	background-color: #6699ff;
+}
+
+.reportdetail
+{
+	background-color: #99ccff;
+}
+
+.reportupdate
+{
+	background-color: #99ccff;
+}
+
+/* Networking Display */
+.networking
+{
+	width: 100%;
+}
+.networkingheader
+{
+	background-color: #6699ff;
+}
+
+.networkingdetail
+{
+	background-color: #99ccff;
+}
+
+.networkingupdate
+{
+	background-color: #99ccff;
+}
+
+/* Followup Display */
+.followup
+{
+	border: 1px solid;
+	width: 100%;
+}
+
+.followupdetail
+{
+	background-color: #99ccff;
+}
+
+.followupheader
+{
+}
+
+.followupsubheader
+{
+	background-color:#6699ff;
+}
+.snmpdown
+{
+	color:red;
+	font-weight:bold;
+}
+
+/* License Display */
+.license
+{
+	width:100%;
+}
+
+.licenseheader
+{
+	font-weight:bold;
+	background-color:#6699ff;
+}
+
+.licensedetail
+{
+	background-color:#99ccff;
+}
+
+.licenseupdate
+{
+	background-color:#99ccff;
+}
+/* Setup Display */
+.setup
+{
+	width:100%;
+}
+.setupheader
+{
+	background-color:#6699ff;
+}
+
+.setupdetail
+{
+	background-color:#99ccff;
+}
+
+.setupupdate
+{
+	background-color:#99ccff;
+}
+
+.
+/* Computer Display */
+.computer
+{
+	width:100%;
+}
+.computerheader
+{
+	background-color:#6699ff;
+}
+
+.computerdetail
+{
+	background-color:#99ccff;
+}
+
+.computerupdate
+{
+	background-color:#99ccff;
+}
+
+.footer
+{
+	font-style: italic;
+}
+
+/* Software Display */
+.software
+{
+    width:100%;
+}
+.softwareheader
+{
+    background-color:#6699ff;
+}
+
+.softwaredetail
+{
+    background-color:#99ccff;
+}
+
+.softwareupdate
+{
+    background-color:#99ccff;
+}
+
+.licenses
+{
+    font-weight:bold;
+    color:#FF0000;
+}
+/* Tracking Display */
+.tracking
+{
+	width:100%;
+}
+
+.trackingheader
+{
+	font-weight:bold;
+	background-color:#6699ff;
+}
+
+.trackingdetail
+{
+	background-color:#99ccff;
+}
+
+.trackingupdate
+{
+	background-color:#99ccff;
+}
+
+/
+/* Tracking status colours */
+.TrackingStatuswait
+{
+	font-weight:bold;
+	color:#FF0000;
+}
+
+.TrackingStatusassigned
+{
+	font-weight:bold;
+	color:#800080;
+}
+
+.TrackingStatusold, .TrackingStatuscomplete
+{
+	font-weight:bold;
+	color:#000000;
+}
+
+.TrackingStatusactive
+{
+	font-weight:bold;
+	color:#008000;
+}
+
+.TrackingStatusnew
+{
+	font-weight:bold;
+	color:#0000FF;
+}
+
+.TrackingStatusunknown
+{
+	font-weight: bold;
+	color: #FFC0CB;
+}
+
+
+/* Tracking priority colours */
+.TrackingPriority5
+{
+	font-weight:bold;
+	color:#FF0000;
+}
+
+.TrackingPriority4
+{
+	font-weight:bold;
+	color:#800080;
+}
+
+.TrackingPriority3
+{
+	font-weight:bold;
+	color:#000000;
+}
+
+.TrackingPriority1
+{
+	font-weight:bold;
+	color:#008000;
+}
+
+.TrackingPriority2
+{
+	font-weight:bold;
+	color:#0000FF;
+}
+
+.TrackingPriorityunknown
+{
+	font-weight: bold;
+	color: #FFC0CB;
+}
+
+/* Sortable tables */
+table.sortable a.sortheader
+{
+    	width:100%;
+	background-color:#eee;
+	color:#444444;
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+}
+
+table.sortable span.sortarrow
+{
+	color: black;
+	text-decoration: none;
+}

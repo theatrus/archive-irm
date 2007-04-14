@@ -1,0 +1,4 @@
+<FilesMatch "(\.htaccess|\.ini|\.dist)$">
+	order deny,allow
+	deny from all
+</FilesMatch>

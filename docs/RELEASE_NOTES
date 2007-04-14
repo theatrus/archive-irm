@@ -1,0 +1,107 @@
+                         RELEASE NOTES FOR IRM 1.5.5
+                        -----------------------------
+
+What's new?
+-------------
+
+New Features:
+
+* An enhanced and more user-friendly admin.php page;
+
+* SNMP improvements (for those of you who use such things);
+
+* Computer, network, and software lists are now all JavaScript-sorted (so
+	they can be resorted on different fields on-the-fly);
+
+* LDAP lookups can now be customised further using the usernamefield
+	parameter;
+
+* admin.php health check now includes a check to see if gettext() is
+	available on your system;
+
+* Database permission denied errors are now displayed on the screen
+	immediately, so they can be noticed and fixed;
+
+* Enhanced IP List report;
+
+* You can now display a single users' tracking items via the tracking list;
+
+* There is now an optional DHTML sidebar menu.  To use it, you must have the
+	HTML_TreeMenu package installed from PEAR.
+
+
+Bugs fixed:
+
+* Several translation-related problems (buttons not working if using
+	non-English languages, some strings not printing in the local
+	language, etc);
+
+* Fix User::FindUserDN so that it will hopefully work even on Really Crap
+	LDAP implementations (Exchange 5.5, I'm looking at you!);
+
+* Add a > to a search submit button so it actually works and exists;
+
+* Port displays should now work better;
+
+* Tracking item closed dates should now be as they should be, rather than
+	the current date/time;
+
+* Licence counts in cases where multiple licences were assigned to the one
+	machine now display the correct available total;
+
+* The user prefs page no longer prints "checked" all over the place;
+
+* The system setup page remembers configuration items now;
+
+* Fix "constraint violation" errors when adding computers and network
+	devices.
+
+
+Behind the scenes (primarily of interest to developers):
+
+* An improved admin.php page, with bits split out into separate files and
+	greatly cleaned up;
+
+* Databases::Uninitialised() now uses IRMDB too;
+
+* New Config::GetIncludePath() and Config::FileAvailable() methods to get
+	the include_path as an array and to see if a given file exists in
+	the include_path, respectively;
+
+* Test runs now kinda work through a web browser (although there are lots of
+	things that still need to be worked on to make it Really Right);
+
+* Several files are now XHTML clean;
+
+* CSS is being used heavily in several subsystems to make it easier to skin
+	things.
+
+
+Contributors
+--------------
+
+IRM is a community-developed system; the following people contributed to the
+1.5.4 release.  Many thanks to them for their contributions!
+
+
+Mike Fuller
+Eran Gilon
+Christoph Maser
+Matthew Palmer
+Franck Rakotonindrainy
+Martin Stevens
+
+
+Downloading and Installing
+----------------------------
+
+1) Retrieve the irm-==VER==.tar.gz file from
+	http://sourceforge.net/project/showfiles.php?group_id=14522.
+
+2) Expand the downloaded file to a temporary location.
+
+3) For new installations, read docs/INSTALL.  For upgrades, read
+	docs/UPGRADE.
+
+4) Operate as required, and enjoy the best that Open Source can offer!
+

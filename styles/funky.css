@@ -1,0 +1,558 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	color: #000000;
+	background-color: #99b0dd;
+	margin:10px 10px 0px 10px;
+	padding:0px;
+}
+
+#main {
+	-moz-border-radius: 8px;
+	border: 2px;
+	border-color: black;
+	background-color: #99b0dd;
+}
+
+#leftcontent {
+	-moz-border-radius: 8px;
+	border: 2px;
+	border-color: black;
+	position: absolute;
+	left:10px;
+	top:75px;
+	width:200px;
+	background:#99b0dd;
+}
+
+#login{
+	-moz-border-radius: 8px;
+	position: absolute;
+	left:10px;
+	height:400px;
+	width:200px;
+	background:#99b0dd;
+}
+
+
+#centercontent {
+	-moz-border-radius: 8px;
+	border: 1px;
+	background:#99b0dd;
+	margin-left: 199px;
+	/*
+	IE5x PC mis-implements the box model. Because of that we sometimes have
+	to perform a little CSS trickery to get pixel-perfect display across browsers.
+	The following bit of code was proposed by Tantek Celik, and it preys upon a CSS
+	parsing bug in IE5x PC that will prematurly close a style rule when it runs
+	into the string "\"}\"". After that string appears in a rule, then, we can override
+	previously set attribute values and only browsers without the parse bug will
+	recognize the new values. So any of the name-value pairs above this comment
+	that we need to override for browsers with correct box-model implementations
+	will be listed below.
+		
+	We use the voice-family property because it is likely to be used very infrequently,
+	and where it is used it will be set on the body tag. So the second voice-family value 
+	of "inherit" will override our bogus "\"}\"" value and allow the proper value to
+	cascade down from the body tag.
+
+	The style rule immediately following this rule offers another chance for CSS2
+	aware browsers to pick up the values meant for correct box-model implementations.
+	It uses a CSS2 selector that will be ignored by IE5x PC.
+		
+	Read more at http://www.glish.com/css/hacks.asp
+	*/
+		
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	margin-left: 201px;
+}
+
+html>body #centercontent {
+	margin-left: 201px;
+}
+
+#banner {
+	background:#99b0dd;
+	height:60px;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	height:59px;
+}
+
+#warning {
+	background:#FF0000;
+	}
+
+#notice {
+	background:#FF9933;
+	}
+
+#healthy{
+	background:#00FF00;
+	}
+
+#info{
+	background:#00CCCC;
+	}
+.admin
+{
+	width:50%;
+}
+
+table.sample {
+	-moz-border-radius: 8px;
+	border: 2px;
+}
+table.sample th {
+	-moz-border-radius: 8px;
+	border: 2px;
+	background-color: #fad716;
+}
+table.sample td {
+	-moz-border-radius: 8px;
+	border: 2px;
+	background-color: #c3d1eb;
+}
+
+table
+{
+	-moz-border-radius: 8px;
+	border: 2px;
+	border-color: black;
+	width: 100%;
+	border-style: none;
+}
+
+th   
+{  
+	-moz-border-radius: 8px;
+	border: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt; 
+	font-weight: bold;
+	background-color: #D3DCE3;
+}
+
+
+td
+{
+	-moz-border-radius: 8px;
+	border: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+}
+	 
+form
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+}
+	
+h1
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16pt;
+	font-weight: bold;
+}
+	
+a:link
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	text-decoration: none;
+	color: #054BBB;
+}
+a:visited
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	text-decoration: none;
+	color: #0000bb;
+}
+a:hover
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	text-decoration: underline;
+	color: #ff0000;
+}
+	
+.nav
+{
+	-moz-border-radius: 8px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #fad716;
+	color: #000000;
+	border: 2px solid;
+	padding-top: 0.5ex;
+	padding-bottom: 0.5ex;
+	padding-left: 1ex;
+	padding-right: 1ex;
+	margin-right: 0px;
+}
+
+.nav a
+{
+	color: #000000;
+	text-decoration: none;
+}
+
+.nav a:visited
+{
+	color: #000000;
+	text-decoration: none;
+}
+
+.nav a:hover
+{
+	text-decoration: none;
+	color: #000000;
+}
+
+
+.graphic
+{
+	border: 0px;
+	margin-top: 1ex;
+	float: right;
+}	
+
+/* SNMP */
+.snmpup
+{
+	color:green;
+	font-weight:bold;
+}
+/* Tracking Display */
+.tracking
+{
+	border: 1px solid;
+	width: 100%;
+}
+.trackingheader
+{
+	background-color: #BBBBBB;
+}
+/* Report Display */
+.report
+{
+	width: 100%;
+	border: 1px;
+}
+.reportheader
+{
+	background-color: #BBBBBB;
+}
+
+.reportdetail
+{
+	background-color: #FFFFFF;
+}
+
+.reportupdate
+{
+	background-color: #BBBBB0;
+}
+
+/* Device Display */
+.device
+{
+	width: 100%;
+	border: 1px;
+}
+.deviceheader
+{
+	background-color: #BBBBBB;
+}
+
+.devicedetail
+{
+	background-color: #DDDDDD;
+}
+
+.deviceupdate
+{
+	background-color: #BBBBB0;
+}
+
+/* Knowledgebase Display */
+.kb
+{
+	border: 1px solid;
+	width: 100%;
+}
+.kbheader
+{
+	background-color: #BBBBBB;
+}
+
+.kbdetail
+{
+	background-color: #DDDDDD;
+}
+
+.kbupdate
+{
+	background-color: #BBBBB0;
+}
+
+
+/* Networking Display */
+.networking
+{
+	border: 1px solid;
+	width: 100%;
+}
+.networkingheader
+{
+	background-color: #BBBBBB;
+}
+
+.networkingdetail
+{
+	background-color: #DDDDDD;
+}
+
+.networkingupdate
+{
+	background-color: #BBBBB0;
+}
+
+/* Followup Display */
+.followup
+{
+	border: 1px solid;
+	width: 100%;
+}
+
+.followupdetail
+{
+	background-color: #BBBBB0;
+}
+
+.followupheader
+{
+}
+
+.followupsubheader
+{
+	background-color:#DDCCBB;
+}
+.snmpdown
+{
+	color:red;
+	font-weight:bold;
+}
+
+/* License Display */
+.license
+{
+	width:100%;
+}
+
+.licenseheader
+{
+	font-weight:bold;
+	background-color:#BBBBBB;
+}
+
+.licensedetail
+{
+	background-color:#DDDDDD;
+}
+
+.licenseupdate
+{
+	background-color:#BBBBB0;
+}
+/* Setup Display */
+.setup
+{
+	width:100%;
+}
+.setupheader
+{
+	background-color:#cbd7ed;
+}
+
+.setupdetail
+{
+	background-color:#DDDDDD;
+}
+
+.setupupdate
+{
+	background-color:#BBBBB0;
+}
+
+.
+/* Computer Display */
+.computer
+{
+	width:100%;
+}
+.computerheader
+{
+	background-color:#cbd7ed;
+}
+
+.computerdetail
+{
+	background-color:#DDDDDD;
+}
+
+.computerupdate
+{
+	background-color:#BBBBB0;
+}
+
+.footer
+{
+	font-style: italic;
+}
+
+/* Software Display */
+.software
+{
+    width:100%;
+}
+.softwareheader
+{
+    background-color:#cbd7ed;
+}
+
+.softwaredetail
+{
+    background-color:#DDDDDD;
+}
+
+.softwareupdate
+{
+    background-color:#BBBBB0;
+}
+
+.licenses
+{
+    font-weight:bold;
+    color:#FF0000;
+}
+/* Tracking Display */
+.tracking
+{
+	width:100%;
+}
+
+.trackingheader
+{
+	font-weight:bold;
+	background-color:#cbd7ed;
+}
+
+.trackingdetail
+{
+	background-color:#DDDDDD;
+}
+
+.trackingupdate
+{
+	background-color:#BBBBB0;
+}
+
+/
+/* Tracking status colours */
+.TrackingStatuswait
+{
+	font-weight:bold;
+	color:#FF0000;
+}
+
+.TrackingStatusassigned
+{
+	font-weight:bold;
+	color:#800080;
+}
+
+.TrackingStatusold, .TrackingStatuscomplete
+{
+	font-weight:bold;
+	color:#000000;
+}
+
+.TrackingStatusactive
+{
+	font-weight:bold;
+	color:#008000;
+}
+
+.TrackingStatusnew
+{
+	font-weight:bold;
+	color:#0000FF;
+}
+
+.TrackingStatusunknown
+{
+	font-weight: bold;
+	color: #FFC0CB;
+}
+
+
+/* Tracking priority colours */
+.TrackingPriority5
+{
+	font-weight:bold;
+	color:#FF0000;
+}
+
+.TrackingPriority4
+{
+	font-weight:bold;
+	color:#800080;
+}
+
+.TrackingPriority3
+{
+	font-weight:bold;
+	color:#000000;
+}
+
+.TrackingPriority1
+{
+	font-weight:bold;
+	color:#008000;
+}
+
+.TrackingPriority2
+{
+	font-weight:bold;
+	color:#0000FF;
+}
+
+.TrackingPriorityunknown
+{
+	font-weight: bold;
+	color: #FFC0CB;
+}
+
+/* Sortable tables */
+table.sortable a.sortheader
+{
+	-moz-border-radius: 8px;
+	border: 2px;
+    	width:100%;
+	background-color:#eee;
+	color:#666666;
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+}
+
+table.sortable span.sortarrow
+{
+	-moz-border-radius: 8px;
+	border: 2px;
+	color: black;
+	text-decoration: none;
+}
+

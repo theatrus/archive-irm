@@ -1,0 +1,80 @@
+IRM FAQ
+-------
+
+When things just don't go as they should.
+
+Q: I get a blank screen at some stage in the installation process (usually
+either admin.php or login.php).
+
+A: That's PHP dying and giving up trying to run IRM, typically due to some
+bug or misconfiguration.  Edit include/irm.inc and change the line
+
+//$DEV = true;
+
+to
+
+$DEV = true;
+
+(somewhere around line 36)
+
+And then retry.  An error message should be printed on-screen, which will
+tell you what's wrong.  If you can't understand the error, mail
+irm-discuss@lists.sf.net giving the exact error message and details about
+your system (OS, version, PHP version, Webserver details etc) and we'll try
+and help you out.
+
+
+Q: I get an error like this when trying to do pretty much anything:
+Fatal error: Database Error: MDB Error: unknown error (BLAH BLAH BLAH)
+[nativecode=1044]) in /var/www/html/irm/lib/IRMDB.php on line 242
+
+The important thing here is the "nativecode=1044".  That's MySQL-speak for
+"Access Denied".  Basically, your MySQL server isn't letting IRM into the
+database.
+
+This is not an IRM problem, it is a MySQL one.  Please check
+http://dev.mysql.com/doc/mysql/en/access-denied.html for debugging info.
+
+
+Q: When I log in, IRM gives me 'Undefined function mysql_connect in...'
+
+Simple problem, simple solution.  When you compiled PHP (you did compile
+it from sources, right?), you omitted the --with-mysql flag.  Simply run
+./configure again, and make sure you use --with-mysql and
+--enable-track-vars.
+
+
+Q: Whenever I access IRM, I get the error "Call to undefined function:
+loadextension()"
+
+A: Your version of the core PEAR library is too old to provide the
+loadExtension method.  We don't know which version first introduced
+loadExtension, but you should probably upgrade to the latest version anyway. 
+Run 'pear upgrade -o pear' to do this.  If you don't have the pear command on
+your system, or do not have the necessary privileges to run this command,
+please contact irm-devel@lists.sf.net and we'll try and help you with an
+alternate means of upgrading.
+
+
+Q: When upgrading my IRM installation from a version prior to 1.5.1, I get
+the error "MDB Error: syntax error (SELECT ID+1 FROM computers ORDER BY ID
+DESC LIMIT 1"
+
+A: There is a bug in MDB version 1.2 which causes queries with LIMITs to be
+rewritten improperly.  Please upgrade to MDB 1.3.0 or later by running the
+command 'pear upgrade -o mdb'.  If you don't have the pear command on
+your system, or do not have the necessary privileges to run this command,
+please contact irm-devel@lists.sf.net and we'll try and help you with an
+alternate means of upgrading.
+
+Q: I get errors about sessions.
+
+A: The chances are that you have a version of php installed without session
+support, please try recompiling php with session support.
+
+Q: Feature X doesn't seem to work
+
+A: We break stuff sometimes.  Sorry about that.  Please send an e-mail to 
+irm-discuss@lists.sf.net for help.  If you're pretty sure it's a bug, then
+feel free to report the problem in our Bug tracker, available from
+http://www.sf.net/projects/irm (click the 'Bugs' link in the top menu).

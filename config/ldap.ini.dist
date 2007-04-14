@@ -1,0 +1,53 @@
+; LDAP authentication configuration.
+;
+; IRM is able to authenticate users by attempting a bind to an LDAP
+; database, and to retrieve various pieces of information about the user
+; from LDAP instead of from the IRM database.
+;
+; Note that any database for which a section is defined in this file will
+; automatically use LDAP, and will not look for users in the IRM database.
+;
+; For each database for which you wish to allow this method of
+; authenticating users, specify the database's 'id' (whatever's in the
+; square brackets in database.ini) then give the necessary parameters as
+; config items below that.
+;
+; Available config options are:
+;   server: the hostname or IP address of the LDAP server to connect to.
+;	(default: localhost)
+;   protocol: the version of the LDAP protocol to use to communicate with
+;	the server.  Available values: '2' and '3'.  (default: 3)
+;   rootdn: The DN (distinguished name) which is the root of your LDAP
+;	directory.  (no useful default)
+;   usernamefield: Where the user's login name is stored.  (default: uid)
+;   fullnamefield: The field in the retrieved entry which contains the
+;	real name (such as "Joe Bloggs").  (default: cn)
+;   emailfield: The field in the retrieved entry which contains the user's
+;	e-mail address.  (default: mail)
+;   locationfield: The field in the retrieved entry which contains the
+;	user's location.  (default: roomNumber)
+;   phonefield: The field in the retrieved entry which contains the user's
+;	contact phone number.  (default: telephoneNumber)
+;   binddn: A distinguished name (DN) to use to bind to the LDAP directory
+;	for doing data searches.  If none is given, the system will default
+;	to doing an anonymous bind.  (default: none)
+;   bindpw: The password associated with the DN given in binddn.  Like
+;	binddn, if no password is given, an anonymous bind will be
+;	performed.  (default: none)
+;
+; Although many LDAP attribute names are mixed-case in the schema
+; specifications, you should specify all field names in this config file as
+; all-lowercase.
+;
+; For example, to define an LDAP authentication method for the testing
+; database, you could write something like the following:
+;
+; [testing]
+; server = "ldap.host.com"
+; protocol = 3
+; rootdn = "o=host.com"
+; fullnamefield = "gecos"
+; emailfield = "mail"
+; locationfield = "officelocation"
+; phonefield = "officephonenumber"
+

@@ -1,0 +1,6 @@
+TODO
+
+Remove all references to computers-info.php
+Allow ports to connect to devices
+Searching for a computer when doing connecting, currently calls the port class
+which is not implemented yet.

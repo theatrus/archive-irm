@@ -1,0 +1,9 @@
+SNMP in IRM
+-----------
+
+You will need the SNMP either loaded as a php module or compiled into php.
+
+SNMP is used to look up networking ports, and you can add all the ports directly
+onto a computer/network/device.
+
+You can browse all relevant MIBS of an SNMP enabled device

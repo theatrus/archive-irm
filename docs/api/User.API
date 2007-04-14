@@ -1,0 +1,133 @@
+Class Name: User
+
+Description:
+This class handles all interaction with the users table.  It will handle all authentication, privelage checking etc.
+
+
+Variables:
+	
+	$Name - The username of the user. (name in the users table)
+	$Password - The password of the user. (password in the users table)
+	$Fullname - The full name (firstname lastname) of the user. (fullname in the users table)
+	$Email - The email address of the user. (email in the users table)
+	$Location - The location of the user's office. (location in the users table)
+	$Phone - The phone number of the user. (phone in the users table)
+	$Type - The type of user, i.e. priveleges that the user has. (type in the users table)
+	$Comments - Additional comments for this user. (comments in the users table)
+
+Constructor:
+
+	function User($name = "")
+
+	Description: Accepts one value, the user's username.  If the username is supplied, the constructor sets the member variable "Name" and then calls the member function "retrieve()" to populate the data stored in the rest of the member variables.  If the username is not supplied, a blank user object is created.
+	
+	function retrieve()
+
+	Description: Uses the current value of the member variable "Name" to populate the rest of the variables in the object with the proper values from the database.
+
+	function add()
+
+	Description: Adds the object information to the database.
+
+	function delete()
+
+	Description: Deletes the user specified by the member variable "Name" from the database.
+
+	function commit()
+
+	Description: Commits any changes made to the current user object to the database.
+
+	function getName()
+
+	Description: Returns the value of the member variable "Name"
+
+	function getPassword()
+
+	Description: Returns the value of the member variable "Name"
+	{
+		return($this->Password);
+	}
+
+	function getFullname()
+
+	Description: Returns the value of the member variable "Fullname"
+
+	function getEmail()
+
+	Description: Returns the value of the member variable "Email"
+
+	function getLocation()
+
+	Description: Returns the value of the member variable "Location"
+
+	function getPhone()
+
+	Description: Returns the value of the member variable "Phone"
+
+	function getType()
+
+	Description: Returns the value of the member variable "Type"
+
+	function getComments()
+
+	Description: Returns the value of the member variable "Comments"
+
+	function setName($name)
+
+	Description: Sets the value of the member variable "Name" to the value of "$name".
+
+	function setPassword($pass)
+
+	Description: Sets the value of the member variable "Password" to the value of "$pass".
+
+	function setFullname($fname)
+
+	Description: Sets the value of the member variable "Fullname" to the value of "$fname".
+
+	function setEmail($email)
+
+	Description: Sets the value of the member variable "Email" to the value of "$email".
+
+	function setLocation($loc)
+
+	Description: Sets the value of the member variable "Location" to the value of "$loc".
+
+	function setPhone($phone)
+
+	Description: Sets the value of the member variable "Phone" to the value of "$phone".
+
+	function setType($type)
+
+	Description: Sets the value of the member variable "Type" to the value of "$type".
+
+	function setComments($comment)
+
+	Description: Sets the value of the member variable "Comments" to the value of "$comment".
+
+	function displayHeader()
+
+	Description: Prints out the table start HTML tag and a single header row.  Required before the first use of member function "display()".
+
+	function displayFooter()
+
+	Description: Prints out the table stop HTML tag.  Required after the last use of member function "display()".
+
+	function display()
+
+	Description: Prints out this user's information in an easy to read format.  Must preceed first use with a call to the member function "displayHeader()", and must call member function "displayFooter()" after last use to properly open and close the table.
+
+	function displayLong()
+
+	Description: Prints out this user's information in an more detailed and larger format that the member function "display()".
+
+	function displayAllUsers()
+
+	Description: Retrieves all users in the system using a database query, then runs the member function "display()" for each of them.
+
+	function exists($name)
+
+	Description: Checks to see if a user with the username "$name" exists.  Returns TRUE if the user exists, and FALSE if the user does not exist.
+
+	function permissionCheck($priv)
+
+	Description: Checks permissions level to make sure that no one is doing anything that he/she shouldn't be able to do.  If the current user has priveleges greater than those specified in the "$priv" variable, the function returns TRUE, otherwise the function returns FALSE.

@@ -1,0 +1,52 @@
+IRM Modular Reports System
+
+As of 0.9c.1 IRM featured a modular reports system.  This allows third-parties
+to develop report modules that work regardless of the version of IRM (almost).
+Reports are scripts which probe the database and generate interesting
+statistics, outputting in HTML and graphics (GIF,PNG).  A small demo
+report was included with IRM, default.php3.  It contains some useful
+starting code for making your own reports. 
+This document mainly talks about how to create and install your report. 
+
+1. Creating the Report Module
+-----------------------------
+
+This is mainly up to you.  You can build it however you please, but
+using some IRM functions may make your life easier.  First off, include
+irm.inc and reports.inc.php3.  Second, use 'connectDB();' to establish
+a connection to the database.  There is no need to use commonHeader("diz");
+and commonFooter(); in your report, make your own (printer friendly :)) 
+layout.  Those functions would just produce a screwy menubar which doesn't 
+work.
+
+Also, don't be fooled by default.php3, you can make your report modules
+spread over several scripts.  This is needed for making graphs on the
+fly.
+
+2. Installing Your Report Module
+--------------------------------
+
+This is incredibly simple.  Open up the file reports.inc.php3 in your 
+favorite text editor, and add a simple two lines (or just make a script
+so end users can run that).  You have to add two lines to correctly
+install the module, these are the 'file' line and the 'name' line.  
+
+First, add a 'name' line.
+
+$report_list["<name of your report>"]["name"] = "<name of your report>";
+
+Replacing the stuff in the <> markers. Note the ; mark, and avoid quotes
+in your name.
+
+Next, add a 'file' line.
+
+$report_list["<name of your report>"]["file"] = "reports/<filename>.php";
+
+Replacing filename with the appropiate filename.  Keep the module name to 
+.php3, keeping uniformity in extensions.  Also note that the file is in 'reports'
+(in /users).  Please try keeping your modules here, so it keeps the directory
+layout cleaner and allows for easier upgrades.
+
+That should be it!
+
+Yann
