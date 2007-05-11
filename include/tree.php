@@ -98,6 +98,19 @@ function buildTree(){
 	//Computer Section
 	$query="SELECT * from groups order by name";
 	$data = $DB->getAll($query);
+
+	$menu_computers->addItem(new HTML_TreeNode(array(
+        	  'text'=>_('Add computer') . '...',
+	          'linkTarget'=>'_self',
+        	  'link'=> $userbase . 'computers-index.php?action=add'
+	)));
+
+	$menu_computers->addItem(new HTML_TreeNode(array(
+        	  'text'=>_('Manage groups') . '...',
+	          'linkTarget'=>'_self',
+        	  'link'=> $userbase . 'setup-groups-index.php'
+	)));
+
 	foreach ($data as $result)
 	{		
 	      $ID = $result["ID"];
@@ -162,22 +175,18 @@ function buildTree(){
         	);
 	}
 
-	$menu_computers->addItem(new HTML_TreeNode(array(
-        	  'text'=>_('Add computer') . '...',
-	          'linkTarget'=>'_self',
-        	  'link'=> $userbase . 'computers-index.php?action=add'
-	)));
-
-	$menu_computers->addItem(new HTML_TreeNode(array(
-        	  'text'=>_('Manage groups') . '...',
-	          'linkTarget'=>'_self',
-        	  'link'=> $userbase . 'setup-groups.php'
-	)));
 
 
 	// Networking section
 	$query="SELECT * from networking order by name";
 	$data = $DB->getAll($query);
+
+    $menu_network->addItem(new HTML_TreeNode(array(
+        	  'text'=>_('Add Network Device') . '...',
+	          'linkTarget'=>'_self',
+        	  'link'=> $userbase . 'networking-index.php?action=select-add'
+	)));
+
 	foreach ($data as $result)
 	  {		
 	      $ID = $result["ID"];
@@ -185,10 +194,10 @@ function buildTree(){
 				$menu_network->addItem(new HTML_TreeNode(array(
 				'text'=>$name,
 				'linkTarget'=>'_self',
-				'link'=> $userbase . 'networking-info.php?ID='.$ID,)
+				'link'=> $userbase . 'networking-index.php?devicetype=networking&action=info&ID='.$ID,)
 			));
 	  }
-
+	  
 	// Device section
 	$query="SELECT * from devices order by name";
 	$data = $DB->getAll($query);
@@ -231,6 +240,11 @@ function buildTree(){
 	// Software section
 	$query="SELECT * from software";
 	$data = $DB->getAll($query);
+    $menu_software->addItem(new HTML_TreeNode(array(
+        	  'text'=>_('Add Software') . '...',
+	          'linkTarget'=>'_self',
+        	  'link'=> $userbase . 'software-index.php?action=select-add'
+	)));
 	foreach ($data as $result)
 	  {		
 	      $ID = $result["ID"];
@@ -238,9 +252,10 @@ function buildTree(){
 				$menu_software->addItem(new HTML_TreeNode(array(
 				'text'=>$name,
 				'linkTarget'=>'_self',
-				'link'=> $userbase . 'software-info.php?ID='.$ID,)
+				'link'=> $userbase . 'software-index.php?devicetype=software&action=info&ID='.$ID,)
 				));
 	  }
+
 
 	$image_path = Config::Absloc('images');
 	// Chose a generator. You can generate DHTML or a Listbox
