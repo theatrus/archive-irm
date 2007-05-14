@@ -3,8 +3,8 @@
 <title><? echo $this->title ?></title>
 </head>
 
+<link href="<? print $this->stylesheet ?>" rel="stylesheet" type="text/css" />
 <body id="main" onload="document.login.name.focus()">
-<link href="<? print $this->stylesheet ?>" rel="stylesheet" type="text/css">
 <div class="nav"><? print $this->content_nav ?></div>
 <div id="login"><? print $this->content_menu ?></div>
 <div id="centercontent"><? print $this->content_main ?></div>

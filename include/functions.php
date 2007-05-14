@@ -46,24 +46,24 @@ require_once dirname(__FILE__) . '/ocs.class.php';
 
 function formSubmit ($extraFields, $submit){
 	if(!$submit == ""){
-		return $extraFields . '<br /><input type="submit" value="' . $submit . '"></form>';
+		return $extraFields . '<br /><input type="submit" value="' . $submit . '" /></form>';
 	}
 }
 
 function redirectCheck(){
 	if (@$_REQUEST['redirect'])
 	{
-		return '<input type="hidden" name="redirect" value="'.$_REQUEST['redirect'].'">';
+		return '<input type="hidden" name="redirect" value="'.$_REQUEST['redirect'].'" />';
 	}
 }
 
 function irmConnect(){
-	$irmConnect = '<input type="hidden" name="name" value="IRMConnect">';
+	$irmConnect = '<input type="hidden" name="name" value="IRMConnect" />' . "\n";
 	return $irmConnect;
 }
 
 function formAction (){
-	$formAction = '<form method="post" action="login.php" name="login">';
+	$formAction = '<form method="post" action="login.php" name="login">' . "\n";
 	$formAction .= make_dblist(); 
 	return $formAction;
 }
@@ -72,11 +72,11 @@ function loginCheck(){
 	switch ($_REQUEST['auth'])
 	{
 		case 'fail':
-			return "<b>"._('Incorrect username or password')."</b>";
+			return "<b>"._('Incorrect username or password')."</b>\n";
 			break;
 		
 		case 'sess':
-			return "<b>"._('Session expired')."</b>";
+			return "<b>"._('Session expired')."</b>\n";
 			break;
 	}
 }
@@ -91,16 +91,16 @@ function make_dblist()
 
 	if (count($dblist) > 1)
 	{
-		$dblistOutput .= '<select name="dbuse" size="1">';  
+		$dblistOutput .= '<select name="dbuse" size="1">' . "\n";  
 		foreach ($dblist as $k => $d) {    
-			$dblistOutput .= '<option value="'.$k.'">'.$d.'</option>';
+			$dblistOutput .= '<option value="'.$k.'">'.$d.'</option>' . "\n";
 		}
-		$dblistOutput .= "</select>"; 
+		$dblistOutput .= "</select>" . "\n"; 
 	}
 	else if (count($dblist) == 1)
 	{
 		$f = array_keys($dblist);
-		$dblistOutput .= '<input type="hidden" name="dbuse" value="'.$f[0].'">';
+		$dblistOutput .= '<input type="hidden" name="dbuse" value="'.$f[0].'" />' . "\n";
 	}
 	else
 	{

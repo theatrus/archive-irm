@@ -34,8 +34,8 @@ $viewRequest = array (	'Section' => 'menu',
 			'Submit' => _('View Request'),
 			'Fields' => formAction()
 				. irmConnect()
-				. '<input type="hidden" name="redirect" value="users/tracking-index.php?action=detail&ID=">'
-				. '<input type="text" name="ID" value="">'
+				. '<input type="hidden" name="redirect" value="users/tracking-index.php?action=detail&amp;ID=" />' . "\n"
+				. '<input type="text" name="ID" value="" />' . "\n"
 			);
 
 $introduction = array (	'Section' => 'main',
@@ -58,7 +58,7 @@ post a request for help.'),
 			'Submit' =>_('Read FAQ') ,
 			'Fields' => formAction() 
 				. irmConnect()
-				. '<input type="hidden" name="redirect" value="users/faq-index.php">'
+				. '<input type="hidden" name="redirect" value="users/faq-index.php" />' . "\n"
 			);
 
 $request = array (	'Section' => 'main' ,
@@ -80,8 +80,8 @@ $login = array (	'Section' => 'menu',
 			'Fields' => loginCheck()
 				. formAction()
 				. "<br />"
-				. _('Username') . '<br /><input type="text" name="name" value=""><br />'
-				. _('Password') . '<br /><input type="password" name="password" value=""><br>'
+				. _('Username') . '<br /><input type="text" name="name" value="" /><br />' . "\n"
+				. _('Password') . '<br /><input type="password" name="password" value="" /><br />' . "\n"
 				. redirectCheck()
 			);
 
