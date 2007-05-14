@@ -162,23 +162,21 @@ class Tracking Extends IRMMain
 		}
 		PRINT '<tr class="trackingheader">';
 		PRINT '<td colspan="3">';
+		
+		PRINT '<form method=get action="' . Config::AbsLoc('users/tracking-index.php') . '">';
+		PRINT _("Search");
+		PRINT '<input type="hidden" name="action" value="search" />';
+		PRINT '<select name="searchtype">';
+		PRINT '<option value="tracking">' . _("Ticket only") . "</option>";
+		PRINT '<option value="followups">' . _("Followups only") . "</option>";
+		PRINT '<option value="">' . _("Ticket and Followups") . "</option>";
+		PRINT "</select>\n";
 
-		?>
-		<form method=get action="<?php echo Config::AbsLoc('users/tracking-index.php'); ?>">
-		<?php __("Search") ?>
-		<input type="hidden" name="action" value="search"> 
-		<select name="searchtype">
-		<option value=""><?php __("Ticket and Followups") ?></option>
-		<option value="tracking"><?php __("Ticket only") ?></option>
-		<option value="followups"><?php __("Followups only") ?></option>
-		</select>
+		PRINT _("for the following term: ");
+		PRINT '<input type=text name=contains size=20 />';
+		PRINT '<input type=submit value="' . _("Search")  . '"/>';
+		PRINT "</form>";
 
-		<?php __("for the following term: ") ?>
-		<input type=text name=contains size=20>
-		<input type=submit value="<?php __("Search") ?>">
-		</form>
-
-		<?php
 		PRINT "</td>";
 		PRINT "</tr>";
 		PRINT "</table>";
@@ -202,27 +200,27 @@ class Tracking Extends IRMMain
 		PRINT "<td>";
 		PRINT '<form method="get" action="'.Config::AbsLoc('users/tracking-index.php').'">';
 		$me = "u:$IRMName";
-		PRINT '<input type="hidden" name="show" value="' . $me . '">';
-		PRINT "<input type=submit value=\""._("My Requests")."\">";
-		PRINT '<input type="hidden" name="action" value="display">';
+		PRINT '<input type="hidden" name="show" value="' . $me . '"/>';
+		PRINT '<input type=submit value="' . _("My Requests"). '"/>';
+		PRINT '<input type="hidden" name="action" value="display"/>';
 		PRINT "</form>";
 		PRINT "</td>";
 		
 		PRINT "<td>";
 		PRINT '<form method="get" action="'.Config::AbsLoc('users/tracking-index.php').'">';
-		PRINT '<input type="hidden" name="show" value="unassigned">';
-		PRINT '<input type="hidden" name="action" value="display">';
-		PRINT "<input type=submit value=\""._("Unassigned")."\">";
+		PRINT '<input type="hidden" name="show" value="unassigned"/>';
+		PRINT '<input type="hidden" name="action" value="display"/>';
+		PRINT '<input type=submit value="' . _("Unassigned") . '"/>';
 		PRINT "</form>";
 		PRINT "</td>";
 		
 		PRINT "<td>";
 		PRINT '<form method="get" action="'.Config::AbsLoc('users/tracking-index.php').'">';
-		PRINT '<input type="hidden" name="action" value="display">';
+		PRINT '<input type="hidden" name="action" value="display"/>';
 		PRINT '<select name="show" size=1>';
 		PRINT select_options($opts, $show);
 		PRINT "</select>";
-		PRINT "<input type=submit value=\""._("Show")."\">";
+		PRINT '<input type=submit value="' . _("Show") . '"/>';
 		PRINT "</form>";
 		PRINT "</td>";
 		PRINT "</tr>";
@@ -813,14 +811,14 @@ class Tracking Extends IRMMain
 		PRINT "</tr>";
 	}
 	
-	function computerSelectionQuery()
+	function legacySelectionQuery($type = "computers")
 	{
 		// Hack because because the locations dropdown does not map to location in the computers table
 		if (!$this->DeviceID == "")
 		{
-			$this->query = "SELECT name,location FROM computers WHERE (ID = $this->DeviceID)";
+			$this->query = "SELECT name,location FROM $type WHERE (ID = $this->DeviceID)";
 		} else {
-			$this->query = "SELECT name,location FROM computers";
+			$this->query = "SELECT name,location FROM $type";
 		}
 
 	}
@@ -839,17 +837,21 @@ class Tracking Extends IRMMain
 			switch($this->DeviceType)
 			{
 				case "":
-					$this->computerSelectionQuery();
+					$this->legacySelectionQuery();
 					break;
 				case "computers":
-					$this->computerSelectionQuery();	
+					$this->legacySelectionQuery();
 					break;
 				case "Computers":
-					$this->computerSelectionQuery();	
+					$this->legacySelectionQuery();
 					break;
 				case "software":
-					$this->computerSelectionQuery();
+					$this->legacySelectionQuery();
 					break;
+				case "networking":
+					$this->legacySelectionQuery("networking");
+					break;
+
 				default:
 					//Check that the device type exists, but of a hack.
 					$this->query = 'SHOW TABLES LIKE "' . $this->DeviceType . '%"';
