@@ -49,7 +49,7 @@ if($type == "admin"){
 	$DB = Config::Database();
 	$users = $DB->getAll("SELECT * from users");
 
-	PRINT "<table class=tracking>";
+	PRINT "<table class=tracking-count>";
 	PRINT "<tr>";
 	PRINT "<th>" . _("Technician") . "</th>";
 	PRINT "<th>" . _("Work requests open") . "</th>";
@@ -62,7 +62,7 @@ if($type == "admin"){
 	PRINT "<th>" . _("Normal") . "</th>";
 	PRINT "<th>" . _("Low") . "</th>";
 	PRINT "<th>" . _("Very Low") . "</th>";
-	PRINT "</tr>";
+	PRINT "</tr>\n";
 	
 	$totalCount = 0;
 	
@@ -110,22 +110,22 @@ if($type == "admin"){
 			PRINT "<td>" . $priority3. "</td>";
 			PRINT "<td>" . $priority2. "</td>";
 			PRINT "<td>" . $priority1. "</td>";
-			PRINT "</tr>";
+			PRINT "</tr>\n";
 		$totalCount = $totalCount + $notClosedSize;
 		}
 	}	
 	PRINT "<tr class=trackingdetail>";
 	PRINT "<td>Total Open Work Requests</td>";
 	PRINT "<td>" . $totalCount . "</td>";
-	PRINT "</tr>";
+	PRINT "</tr>\n";
 
-	PRINT "</table>";
+	PRINT "</table>\n";
 }
 
 if($type == "admin" || $type == "tech")
 {
-        echo "<p>\n";
-        
+	print "<br />";
+
 	$DB = Config::Database();
 	
 	$uname = $DB->getTextValue($IRMName);
@@ -137,42 +137,34 @@ if($type == "admin" || $type == "tech")
 	if($tracking_order == "yes")
 	{
 		$tracking_order = "date ASC";
-	}
-	else
-	{
+	} else {
 		$tracking_order = "date DESC";
 	}
 
-	#
 	# Show last 5 events
-	#
-
 	$query = "SELECT * FROM event_log ORDER BY date DESC LIMIT 0,5";
 	show_events($DB->getAll($query));
 
-	
-	#
-	# Show Tracking
-	#
+	print "<br />";
 
-	echo '<table class="tracking">';
+	# Show how many jobs you have assigned to you currently :)
+	$notClosed = Tracking::getNotClosed("yes", "u:$IRMName", $tracking_order);
+	$notClosedSize = sizeof($notClosed);
+
+	# Show Tracking
+	echo '<table class="tracking-assigned">';
 	PRINT "<tr><th>";
 	__("Tracking");
 	PRINT "</th></tr>\n";
 	PRINT "<tr><td>\n";
-	#
-	# Show how many jobs you have assigned to you currently :)
-	#
-	$notClosed = Tracking::getNotClosed("yes", "u:$IRMName", $tracking_order);
-	$notClosedSize = sizeof($notClosed);
 	
 	printf('<a href="%s">%s</a>',
-				Config::AbsLoc("users/tracking-index.php?action=display&show=u:$IRMName"),
+				Config::AbsLoc("users/tracking-index.php?action=display&amp;show=u:$IRMName"),
 				sprintf(_("You have %s job(s) assigned to you."), $notClosedSize)
 				);
 	if (Config::Get('showjobsonlogin'))
 	{
-		Tracking::displayHeader(false);
+		Tracking::displayHeader("open");
 		for($i=0;$i<$notClosedSize;$i++)
 		{
 			$track = new Tracking($notClosed[$i]);
@@ -186,21 +178,23 @@ if($type == "admin" || $type == "tech")
 
 if ($type == "normal" || $type == "tech" || $type == "admin")
 {
-	PRINT '<table class="tracking">';
+	# Show how many jobs you have entered that have not been closed
+	$notClosed = Tracking::getNotClosedBy("ASC");
+	$notClosedSize = sizeof($notClosed);
+
+	PRINT '<table class="tracking-open">';
 	PRINT "<tr>";
 	PRINT "<th>";
 	__("Open Work Requests");
 	PRINT "</th></tr>\n";
 	PRINT "<tr><td>\n";
-	$notClosed = Tracking::getNotClosedBy("ASC");
-	$notClosedSize = sizeof($notClosed);
 		
 	printf(_("You have entered %s request(s) that have not yet been completed."),
 			$notClosedSize);
 
 	if (Config::Get('showjobsonlogin'))
 	{
-		Tracking::displayHeader(false);
+		Tracking::displayHeader("notcomplete");
 		for($i=0;$i<$notClosedSize;$i++)
 		{
 			$track = new Tracking($notClosed[$i]);
@@ -208,7 +202,6 @@ if ($type == "normal" || $type == "tech" || $type == "admin")
 		}
 		Tracking::displayFooter();
 	}
-	
 	PRINT "</td></tr></table>\n";
 }
 commonFooter();

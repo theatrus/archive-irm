@@ -152,7 +152,7 @@ function SetupStyle($stylesheet)
 	{
 		$stylesheet = "default.css";
 	}
-  	print '<link href="'.Config::AbsLoc('styles/' . $stylesheet).'" rel="stylesheet" type="text/css">';
+  	print '<link href="'.Config::AbsLoc('styles/' . $stylesheet).'" rel="stylesheet" type="text/css" />' . "\n";
 }
 
 function TreeMenuRights($usertype)
@@ -189,18 +189,18 @@ function appendURLArguments($baseURL, $newargs)
 
 function SetupSortableTables()
 {
-	PRINT '<script src="'.Config::AbsLoc('javascript/sorttable.js').'"></script>';
+	PRINT '<script src="'.Config::AbsLoc('javascript/sorttable.js').'" language="JavaScript" type="text/javascript"></script>' . "\n";
 }
 
 function SetupDHTMLTree()
 {
 
-	PRINT '<script src="'.Config::AbsLoc('javascript/TreeMenu.js').'" language="JavaScript" type="text/javascript"></script>';
+	PRINT '<script src="'.Config::AbsLoc('javascript/TreeMenu.js').'" language="JavaScript" type="text/javascript"></script>' . "\n";
 }
 
 function PrintIcon($icon)
 {	
-	return '<img src="'.Config::AbsLoc('images/icons/' . $icon).'" border="0">';
+	return '<img src="'.Config::AbsLoc('images/icons/' . $icon).'" border="0" alt="' . $icon . '" />' . "\n";
 }
 
 function MenuItem($userbase, $link, $icon, $text)
@@ -237,6 +237,7 @@ function commonHeader($title)
 	PRINT "<!-- Keith Schoenefeld keith-p@schoenefeld.org -->\n";
 	PRINT "<!-- Some code is (c) 1999 Brandon Neill bneill@learn2.com	-->\n";
 	PRINT "<!-- http://www.stackworks.net/irm/ -->\n";
+	PRINT '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . "\n";
 	PRINT "<html>\n";
 	PRINT "<head>\n";
 	PRINT "<title>IRM: $title</title>\n";
@@ -277,7 +278,7 @@ function commonHeader($title)
 
 	PRINT MenuItem($userbase, "index.php", $homeImage, _("Home"));
 	PRINT MenuItem($userbase, "helper-index.php", $requestImage, _("Request Help"));
-	PRINT MenuItem($userbase, "tracking-index.php?action=display&show=u:$uname", $trackingImage, _("Tracking"));
+	PRINT MenuItem($userbase, "tracking-index.php?action=display&amp;show=u:$uname", $trackingImage, _("Tracking"));
 
 	if($usertype == "tech" || $usertype == "admin")
 	{
@@ -343,7 +344,7 @@ function logo()
 
 function displayConnectedDatabase()
 {	
-	$connectedDatabase =  _("You are logged into database : ") . @$_SESSION['_sess_database'] . "<br />";
+	$connectedDatabase =  _("You are logged into database : ") . @$_SESSION['_sess_database'] . "<br />\n";
 	return $connectedDatabase;
 }
 
@@ -355,40 +356,33 @@ function irmVersion()
 
 function copyright()
 {
-	$copyright = "";
-	$copyright .= _("Distribution of IRM is permitted under the terms of the GNU GPL Version 2");
-	$copyright .= "<br />";
+	$copyright = _("Distribution of IRM is permitted under the terms of the GNU GPL Version 2");
+	$copyright .= "<br />\n";
 	$copyright .= _("Copyright &copy; 1999-2005 Yann Ramin, Keith Schoenefeld, and others");
-	$copyright .= "<br />";
+	$copyright .= "<br />\n";
 	return $copyright;
 }
 
 function website()
 {
-	$website = '<a href="http://www.stackworks.net/irm/">' .  _("Website") . "</a><br />";
+	$website = '<a href="http://www.stackworks.net/irm/">' .  _("Website") . "</a><br />\n";
 	return $website;
 }
 
 function commonFooter() 
 {
-?>
 
-	<hr />
-	<br />
-	<div class="footer">
-	<?php
-	
+	PRINT "<hr />";
+	PRINT "<br />\n";
+	PRINT '<div class="footer">';
 	PRINT displayConnectedDatabase();
 	PRINT irmVersion();
 	PRINT website();
 	PRINT copyright();
-	?>
-	</div>
+	PRINT "</div>";
 
-	</div>
-	</body>
-	</html>
-<?php
+	PRINT "</body>";
+	PRINT "</html>";
 }
 
 function AuthCheck($authtype) 
@@ -399,7 +393,7 @@ function AuthCheck($authtype)
 	{
 		$webroot = Config::AbsLoc('');
 		$relpath = urlencode(ereg_replace("^$webroot", '', $_SERVER['REQUEST_URI']));
-		$dest = Config::AbsLoc('index.php?auth=sess&redirect='.$relpath);
+		$dest = Config::AbsLoc('index.php?auth=sess&amp;redirect='.$relpath);
 		header("Location: $dest");
 		__("Session expired.  Returning you to the login page.");
 		PRINT "(<a href=\"$dest\">$dest</a>)";
@@ -913,7 +907,7 @@ function SnmpStatus($ip,$ID,$devicetype)
 	if (Config::Get('snmp'))
 	{
 		$hstatus = SnmpPing($ip);	
-		$snmp_link = " | <a href=\"$userbase/snmp-stat.php?ID=$ID&device=$devicetype\">"._("Runtime Information (SNMP)")."</a> $hstatus";
+		$snmp_link = " | <a href=\"$userbase/snmp-stat.php?ID=$ID&amp;evice=$devicetype\">"._("Runtime Information (SNMP)")."</a> $hstatus";
 	}
 	else
 	{
@@ -1092,7 +1086,7 @@ function ShowInstalled($ID){
 		$computerDetails = $DB->getAll($query);
 		foreach($computerDetails as $computer){
 			PRINT '<tr class="licensedetail">
-				<td><a href='.Config::AbsLoc("users/computers-index.php?action=info&ID=" . $computer['ID']) .'>' . $computer['name'].'</a></td>
+				<td><a href='.Config::AbsLoc("users/computers-index.php?action=info&amp;ID=" . $computer['ID']) .'>' . $computer['name'].'</a></td>
 			</tr>';
 		}
 	}
@@ -1205,7 +1199,7 @@ function templcompsoftShow($showID)
 		$name = $result2["name"];
 
 		PRINT '<tr class="computerdetail">';
-		PRINT '<td><i><A HREF="'.Config::AbsLoc("users/software-index.php?ID=$sID&action=info").'">';
+		PRINT '<td><i><A HREF="'.Config::AbsLoc("users/software-index.php?ID=$sID&amp;ction=info").'">';
 		PRINT "$name</A></i></TD>";
 		PRINT "<td WIDTH=10%>";
 		PRINT '<A HREF="'.Config::AbsLoc("users/setup-templates-software-del.php?ID=$ID").'">['._("Delete").']</A></TD></TR>';
@@ -1343,14 +1337,14 @@ function show_events($events)
 	if (Config::Get('show_events') == true){
 		if (!count($events))
 		{
-			PRINT "<p>"._("No events")."</p><br>";
+			PRINT "<p>"._("No events")."</p><br />";
 			return;
 		}
-		PRINT '<table id="tracking">';
+		PRINT '<table id="tracking-overview">';
 		PRINT '<tr class="trackingheader"><th colspan="5">' . _("Last ") . count($events). (" Events") . "</th></tr>\n";
 		PRINT "</table>";
 
-		PRINT '<table class="sortable" id="tracking">';
+		PRINT '<table class="sortable" id="event-tracking">';
 		PRINT "<tr>";
 		PRINT "<th>"._("Item")."</th>";
 		PRINT "<th>"._("Date")."</th>";

@@ -731,7 +731,7 @@ class Tracking Extends IRMMain
 		}
 		
 		PRINT '<tr class="trackingdetail">';
-		PRINT '<td align="center">'."<a href=\"$userbase/tracking-index.php?action=detail&ID=$this->ID\">$this->ID</a></td>";
+		PRINT '<td align="center">'."<a href=\"$userbase/tracking-index.php?action=detail&amp;ID=$this->ID\">$this->ID</a></td>";
 		PRINT namestatus($this->Status);
 
 		$this->requestAge();
@@ -741,12 +741,9 @@ class Tracking Extends IRMMain
 		PRINT "\n<td>";
 		if($authExists)
 		{
-			PRINT "<a href=\"$userbase/users-info.php?ID=$this->Author\">\n";
-		}
-		PRINT "$authorfullname";
-		if($authExists)
-		{
-			PRINT "</a>";
+			PRINT "<a href=\"$userbase/users-info.php?ID=$this->Author\">" . $authorfullname . "</a>";
+		} else {
+			PRINT $authorfullname;
 		}
 
 		if((Config::Get('userupdates')) && ($this->EmailUpdatesToAuthor == "yes"))
@@ -765,13 +762,11 @@ class Tracking Extends IRMMain
 			PRINT "<td>\n";
 			if($assignExists)
 			{
-				PRINT "<a href=\"$userbase/users-info.php?ID=$this->Assign\">\n";
+				PRINT "<a href=\"$userbase/users-info.php?ID=$this->Assign\">" . $assignfullname . "</a>\n";
+			} else {
+				PRINT $assignfullname;
 			}
-			PRINT "$assignfullname";
-			if($assignExists)
-			{
-				PRINT "</td>";
-			}
+			PRINT "</td>";
 		}
 
 		PRINT "<td>";
@@ -780,13 +775,13 @@ class Tracking Extends IRMMain
 			switch ($this->DeviceType)
 			{
 			case 'computers':
-				PRINT "<a href=\"$userbase/computers-index.php?action=info&ID=$this->ComputerID\">";
+				PRINT "<a href=\"$userbase/computers-index.php?action=info&amp;ID=$this->ComputerID\">";
 				break;
 			case null;
-				PRINT "<a href=\"$userbase/computers-index.php?action=info&ID=$this->ComputerID\">";
+				PRINT "<a href=\"$userbase/computers-index.php?action=info&amp;ID=$this->ComputerID\">";
 				break;
 			default:	
-				PRINT "<a href=\"$userbase/device-info.php?ID=$this->ComputerID&devicetype=$this->DeviceType\">";
+				PRINT "<a href=\"$userbase/device-info.php?ID=$this->ComputerID&amp;evicetype=$this->DeviceType\">";
 			}
 		}
 		PRINT $this->DeviceType . " : ";
@@ -953,9 +948,9 @@ class Tracking Extends IRMMain
 		PRINT "<br>";
 		if($this->IsGroup != "yes") {
 			if ($this->DeviceType == "computers") {
-				PRINT "<a href=\"$userbase/computers-index.php?action=info&ID=$this->ComputerID\">";
+				PRINT "<a href=\"$userbase/computers-index.php?action=info&amp;ID=$this->ComputerID\">";
 			} else {
-				PRINT "<a href=\"$userbase/device-info.php?ID=" . $this->ComputerID . "&devicetype=$this->DeviceType\">";
+				PRINT "<a href=\"$userbase/device-info.php?ID=" . $this->ComputerID . "&amp;devicetype=$this->DeviceType\">";
 			}
 		}
 
@@ -1041,9 +1036,9 @@ class Tracking Extends IRMMain
 		commonFooter();
 	}
 	
-	function displayHeader()
+	function displayHeader($styleid = "default")
 	{
-		PRINT '<table class="sortable" id="tracking">';
+		PRINT '<table class="sortable" id="tracking-'. $styleid .'">';
 		PRINT '<tr class="trackingheader">';
 		PRINT '<th>'._("ID").'</th>';
 		PRINT '<th>'._("Status").'</th>';
@@ -1054,7 +1049,7 @@ class Tracking Extends IRMMain
 		PRINT '<th>'._("Device").'</th>';
 		PRINT '<th>'._("Location").'</th>';
 		PRINT '<th>'._("Description").'</th>';
-		PRINT '</tr>';
+		PRINT "</tr>\n";
 	}
 
 	function displayFooter()
@@ -1191,7 +1186,7 @@ class Tracking Extends IRMMain
 		$body .= _("Modify this tracking item:")."\n";
 		$body .= "  http://"
 				.$_SERVER['SERVER_NAME']
-				.Config::AbsLoc("users/tracking-index.php?action=detail&ID=$this->ID")
+				.Config::AbsLoc("users/tracking-index.php?action=detail&amp;ID=$this->ID")
 				."\n";
 		$body .= "================================================================\n\n";
 		

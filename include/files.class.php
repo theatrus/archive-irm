@@ -147,7 +147,7 @@ class Files
 		$DB = Config::Database();
 		$dbfiles = $DB->getall($sql);
 
-		$string = '<table class="sortable" id="tracking">';
+		$string = '<table class="sortable" id="tracking-files">';
 
 		$string.='<tr>';
 		$string.="<th>" . _("ID") . "</th>";
