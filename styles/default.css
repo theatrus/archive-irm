@@ -224,16 +224,7 @@ a:hover
 	color:green;
 	font-weight:bold;
 }
-/* Tracking Display */
-.tracking
-{
-	border: 1px solid;
-	width: 100%;
-}
-.trackingheader
-{
-	background-color: #BBBBBB;
-}
+
 /* Report Display */
 .report
 {
@@ -441,12 +432,13 @@ a:hover
 .tracking
 {
 	width:100%;
+	border: 1px solid;
 }
 
 .trackingheader
 {
 	font-weight:bold;
-	background-color:#BBBBBB;
+	background-color:white;
 }
 
 .trackingdetail
