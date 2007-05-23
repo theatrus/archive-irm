@@ -881,9 +881,8 @@ class Tracking Extends IRMMain
 		}
 		
 		commonHeader(_("Tracking") ." - " . _("More Information"));
-		PRINT "<a href=\"".$_SESSION['_sess_pagehistory']->Previous()."\">" . _("Go Back") . "</a>";
-		PRINT "<hr noshade>";
-		PRINT "<br>";
+		PRINT "<hr noshade />";
+		PRINT "<br />";
 
 		PRINT '<form method="post" action="tracking-update.php">';
 		if (!$this->ComputerID)	{
@@ -894,11 +893,11 @@ class Tracking Extends IRMMain
 		PRINT "<table>";
 		PRINT "<tr>";
 		PRINT "<th colspan=2>"._("Job Number "). $this->ID . "</th>";
-		print "</tr>";
+		print "</tr>\n";
 
 		PRINT '<tr class="trackingdetail">';
 
-		PRINT "<td width=50%>"._("Status:")."<br>";
+		PRINT "<td width=50%>"._("Status:")."<br />";
 		if ($readonly) {
 			PRINT $this->status_list[$this->Status];
 		} else {
@@ -908,18 +907,18 @@ class Tracking Extends IRMMain
 		}
 		PRINT "</td>";
 
-		PRINT "<td>"._("Date Opened:")."<br>" . $this->dateopened . "<BR>";
+		PRINT "<td>"._("Date Opened:")."<br />" . $this->dateopened . "<br />";
 		if(($this->CloseDate != "0000-00-00 00:00:00") && ($this->CloseDate != "")) {
-			PRINT "<BR>" . _("Date Closed:") . "<br>$this->CloseDate";
+			PRINT "<BR>" . _("Date Closed:") . "<br />$this->CloseDate";
 			$query = "SELECT SEC_TO_TIME(UNIX_TIMESTAMP('$this->CloseDate') - UNIX_TIMESTAMP('$this->DateEntered'))";
 			$opentime = $DB->getOne($query);
-			PRINT "<br>"._("This job was open for:")." $opentime";
+			PRINT "<br />"._("This job was open for:")." $opentime";
 		}
 		PRINT "</td>";
 		PRINT "</tr>";
 
 		PRINT '<tr class="trackingdetail">';
-		PRINT "<td>"._("Priority:")."<br>\n";
+		PRINT "<td>"._("Priority:")."<br />\n";
 		if ($readonly) {
 			echo $options[$this->Priority]."\n";
 		} else {
@@ -931,7 +930,7 @@ class Tracking Extends IRMMain
 		PRINT "</td>";
 		PRINT "<td>";
 		PRINT _("Author:") . "<a href=\"$userbase/users-info.php?ID=$this->Author\">$fullname</a>";
-		PRINT "<br>";
+		PRINT "<br />";
 		PRINT _("Other Emails:") . $this->getOtherEmails();
 		PRINT "</td>";
 		PRINT "</tr>";
@@ -947,7 +946,7 @@ class Tracking Extends IRMMain
 			PRINT _("Group") . ":";
 		}
 
-		PRINT "<br>";
+		PRINT "<br />";
 		if($this->IsGroup != "yes") {
 			if ($this->DeviceType == "computers") {
 				PRINT "<a href=\"$userbase/computers-index.php?action=info&amp;ID=$this->ComputerID\">";
@@ -963,13 +962,13 @@ class Tracking Extends IRMMain
 		}
 
 		if (!$readonly)	{
-			print "&nbsp; <input type=\"text\" name=\"ComputerID\" value=\"$this->ComputerID\" size=\"3\">";
+			print "&nbsp; <input type=\"text\" name=\"ComputerID\" value=\"$this->ComputerID\" size=\"3\" />";
 		}
 		PRINT "</td>";
 		// End of Name and type cell
 
 
-		PRINT "<td>"._("Assigned to:")."<br>";
+		PRINT "<td>"._("Assigned to:")."<br />";
 
 		Tech_list($this->Assign, "user", $readonly);
 
@@ -977,13 +976,13 @@ class Tracking Extends IRMMain
 		PRINT "</tr>";
 		
 		PRINT '<tr class="trackingdetail">';
-		PRINT "<td colspan=2>"._("Problem Description:")."<br>";
+		PRINT "<td colspan=2>"._("Problem Description:")."<br />";
 		if ($readonly) {
 			echo nl2br(htmlspecialchars($this->WorkRequest));
 		} else {
 			$text = htmlspecialchars($this->WorkRequest);
 			PRINT '<TEXTAREA NAME="workrequest" ROWS="10" COLS="60">' . $text . '</TEXTAREA>';
-			PRINT '<input type="hidden" name="original" value="' . $text . '">';
+			PRINT '<input type="hidden" name="original" value="' . $text . '"/>';
 		}
 		PRINT "</td>";
 		PRINT "</tr>";
@@ -1017,16 +1016,16 @@ class Tracking Extends IRMMain
 			PRINT "</tr>";
 
 			PRINT '<tr class="trackingdetail">';
-			PRINT "<td><input type=checkbox name=addtoknowledgebase value=yes>";
+			PRINT "<td><input type=checkbox name=addtoknowledgebase value=yes />";
 			__("If tracking is marked as complete, should it be used to add something to the knowledgebase?");
 			PRINT "</td>";
 			PRINT "</tr>\n";
 
 			PRINT "</table>";
-			PRINT "<input type=hidden name=tID value=$this->ID>";
-			PRINT '<input type=submit VALUE="' . _("Update Tracking"). '">';
+			PRINT "<input type=hidden name=tID value=$this->ID />";
+			PRINT '<input type=submit VALUE="' . _("Update Tracking"). '" />';
 			PRINT "</form>";
-			PRINT "<br>\n";
+			PRINT "<br />\n";
 		}
 
 		$files = new Files();	
@@ -1533,7 +1532,7 @@ function displayDeviceGroups($ID)
 {
 	if (Config::Get('groups'))
 	{
-		PRINT "<br><b>";
+		PRINT "<br /><b>";
 		__("Group Memberships");
 		PRINT "</b><p>	";
 
@@ -1548,7 +1547,7 @@ function displayDeviceGroups($ID)
 			$qgID = $DB->getTextValue($gID);
 			$q2 = "SELECT name FROM groups WHERE id = $qgID";
 			$gname = $DB->getOne($q2);
-			PRINT '<a href="'.Config::AbsLoc("users/setup-groups-members.php?id=$gID")."\">$gname</a><br>";
+			PRINT '<a href="'.Config::AbsLoc("users/setup-groups-members.php?id=$gID")."\">$gname</a><br />";
 		}
 	}
 }
@@ -1658,10 +1657,10 @@ function displayDeviceTracking($ID, $devicetype)
 		} else {
 			PRINT '<form method=get action="'.Config::AbsLoc('users/device-info.php'). '#tracking">';
 		}
-		PRINT "<input type=hidden name=devicetype value=$devicetype>";
-		PRINT "<input type=hidden name=action value=info>";
-		PRINT "<input type=hidden name=ID value=$ID>";
-		echo '<select name="showtracking" size="1">';
+		PRINT "<input type=hidden name=devicetype value=$devicetype />";
+		PRINT "<input type=hidden name=action value=info />";
+		PRINT "<input type=hidden name=ID value=$ID />";
+		echo '<select name="showtracking" size="1" />';
 		$options = array(
 				'allandclosed' => _("Show All Tracking inc Closed"),
 				'all' => _("Show All Tracking"),
@@ -1670,11 +1669,11 @@ function displayDeviceTracking($ID, $devicetype)
 				);
 		echo select_options($options, $_REQUEST['showtracking']);
 		PRINT "</select>";
-		PRINT '<input type="checkbox" name="showfollowups"' . Checked(@$_REQUEST['showfollowups']) .'>';
+		PRINT '<input type="checkbox" name="showfollowups"' . Checked(@$_REQUEST['showfollowups']) .'/>';
 		__("Show Followups");
-		PRINT '<input type="submit" value="' . _("Show Tracking") . '"></form>';
+		PRINT '<input type="submit" value="' . _("Show Tracking") . '" /></form>';
 		PRINT "</td>";
-		PRINT "</tr>";
+		PRINT "</tr>\n";
 		PRINT "</table>";
 		PRINT "<h3>Device Tracking</h3>";
 		deviceTracking($ID, $devicetype);

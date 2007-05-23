@@ -105,11 +105,13 @@ class Files
 		<?
 		__("Select a file on your computer");
 		?>
-		<input type=file name="up_file">
-		<input type=submit value="Upload"><br>
-		<input type="hidden" name="mode" value="0">		
-		<input type="hidden" name="deviceType" value="<? echo $this->deviceType ?>">		
-		<input type="hidden" name="deviceID" value="<? echo $this->deviceID ?>">		
+		<input type=file name="up_file" />
+		<input type=submit value="Upload"/><br />
+		<input type="hidden" name="mode" value="0" />		
+		<input type="hidden" name="deviceType" value="<? echo $this->deviceType ?>" />		
+		<input type="hidden" name="deviceID" value="<? echo $this->deviceID ?>" />		
+
+		<? /* Is all this javascript poo being used ? */ ?>
 	<!--	
 		<script language=javascript>
 		old_id = 0;

@@ -94,9 +94,9 @@ class Followup Extends IRMMain
 		PRINT '<tr class="followupdetail">';
 		PRINT "<td><font COLOR=\"yellow\">"._("Add Followup")."</font></td>";
 		PRINT "<td>$IRMName</td>";
-		PRINT "<td><textarea cols=60 rows=5 name=newfollowup wrap=soft></textarea><br />
-			<input type=checkbox name=public value=1 checked>" . _("Public followup") . "</td>";
-		PRINT "<td><input type=text size=3 value=0 name=newminspent></td>";
+		PRINT "<td><textarea cols=60 rows=5 name=newfollowup></textarea><br />
+			<input type=checkbox name=public value=1 checked />" . _("Public followup") . "</td>";
+		PRINT "<td><input type=text size=3 value=0 name=newminspent /></td>";
 		PRINT "</tr>";
 	}
 	
