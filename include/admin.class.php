@@ -99,7 +99,7 @@ class admin
 		{
 			die(_("Sorry, your IRM database is pre-1.3.0.
 				 Upgrades from versions of IRM prior to 1.3.0 are not supported,
-				 due to massive and catastrophic changes to the database format.")."<br>\n");
+				 due to massive and catastrophic changes to the database format.")."<br />\n");
 		}
 
 		$upgrading = false;
@@ -112,7 +112,7 @@ class admin
 			
 			if ($upgrading)
 			{
-				$this->RUNMSG .= sprintf(_("Running upgrade for %s"), $ver)."<br>\n";
+				$this->RUNMSG .= sprintf(_("Running upgrade for %s"), $ver)."<br />\n";
 				if (is_array($queries))
 				{
 					$this->RUNMSG .=($queries);
@@ -152,8 +152,8 @@ class admin
 
 	function sectionHeader($section)
 	{
-		PRINT "<hr>";
-		PRINT "<h2>" . $section . "</h2>";
+		PRINT "<hr />\n";
+		PRINT "<h2>" . $section . "</h2>\n";
 	}
 
 	function healthCheck()
@@ -162,11 +162,11 @@ class admin
 		PRINT "<p>";
 		__("We provide a free \"health check\" for your web server to see if some common
 		problems exist.  If there are errors, you may have problems running IRM."); 
-		PRINT '<form method="POST" action="admin.php">';
-		PRINT '<input type="submit" name="submit" value="' . _("Health Check") . '">';
-		PRINT '<input type="hidden" name="tricksy_hiddens" value="Precioussss">';
+		PRINT '<form method="post" action="admin.php">';
+		PRINT '<input type="submit" name="submit" value="' . _("Health Check") . '"/>' . "\n";
+		PRINT '<input type="hidden" name="tricksy_hiddens" value="Precioussss"/>' . "\n";
 		PRINT '</form>';
-		PRINT "</p>";
+		PRINT "<br />\n";
 
 	}
 
@@ -195,7 +195,7 @@ class admin
 		} else {
 			__("I have detected that you are running on a Unix-like system (Linux, Mac OS X, etc).");
 		}
-		PRINT "</p><p>";
+		PRINT "</p>\n<p>";
 		__("If this autodetection is not correct, we have a serious problem.  Please report a bug.");
 		PRINT "</p>";
 	}
@@ -222,7 +222,7 @@ class admin
 
 			PRINT "<tr class=setupdetail>";
 			PRINT "<td>" . _("Insert Sample Data?") .  "</td>";
-			PRINT '<td><input type="checkbox" name="sample_data" value="1"><br /></td>';
+			PRINT '<td><input type="checkbox" name="sample_data" value="1">\n<br /></td>';
 			PRINT "</tr>";
 
 			PRINT "<tr class=setupdetail>";
@@ -265,15 +265,22 @@ class admin
 
 	function displayPage()
 	{
+		PRINT "<!-- IRM is (c) 1999-2004 Yann Ramin, Keith Schoenefeld, and others -->\n";
+		PRINT "<!-- Yann Ramin atrus@atrustrivalie.org -->\n";
+		PRINT "<!-- Keith Schoenefeld keith-p@schoenefeld.org -->\n";
+		PRINT "<!-- Some code is (c) 1999 Brandon Neill bneill@learn2.com	-->\n";
+		PRINT "<!-- http://www.stackworks.net/irm/ -->\n";
+		PRINT '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . "\n";
+		PRINT "<html>\n";
+		PRINT "<head>\n";
+
 		?>
-		<html>
-		<head>
 		<title> <?php printf(_("Setup IRM version %s"), Config::Version()) ?></title>
 		<? SetupStyle('default.css'); ?>
 		</head>
 		<body>
 		<center>
-		<img src="images/irm-jr1.jpg" alt="IRM Logo">
+		<img src="images/irm-jr1.jpg" alt="IRM Logo" />
 		<br />
 		<?
 		PRINT "<a href=" . Config::Absloc("index.php") . ">" . _("Go to login page") . "</a>";
