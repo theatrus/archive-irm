@@ -50,5 +50,6 @@ $device->getDevices();
 $device->printDeviceList();
 PRINT "</table>";
 
-PRINT "<a href=ocs-index.php>OCS Inventory Information</a>";
+// TODO
+//PRINT "<a href=ocs-index.php>OCS Inventory Information</a>";
 commonFooter();
