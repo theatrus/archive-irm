@@ -310,7 +310,7 @@ function kbisfaq($ID)
 		PRINT _("This Knowledge Base entry is part of the FAQ.");
 		$url = '<A HREF="'.Config::AbsLoc("users/knowledgebase-index.php?ID=$ID&removefromfaq=yes").'">'._("Remove Article from the FAQ").'</A>';
 		$action = 'removefromfaq';
-		$actionstring = _("Remove Article to the FAQ");
+		$actionstring = _("Remove Article from the FAQ");
 	}
 	else
 	{
