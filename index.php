@@ -78,7 +78,7 @@ $login = array (	'Section' => 'menu',
 			'Header' => _('IRM Login'),
 			'Submit' => _('Login'),
 			'Fields' => loginCheck()
-				. formAction()
+				. formAction('name="login"')
 				. "<br />"
 				. _('Username') . '<br /><input type="text" name="name" value="" /><br />' . "\n"
 				. _('Password') . '<br /><input type="password" name="password" value="" /><br />' . "\n"

@@ -62,8 +62,8 @@ function irmConnect(){
 	return $irmConnect;
 }
 
-function formAction (){
-	$formAction = '<form method="post" action="login.php">' . "\n";
+function formAction ($extra = ""){
+	$formAction = '<form method="post" '.$extra.' action="login.php">' . "\n";
 	$formAction .= make_dblist(); 
 	return $formAction;
 }
