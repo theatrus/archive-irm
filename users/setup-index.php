@@ -35,6 +35,7 @@ commonHeader(_("Setup"));
 __("Welcome to IRM Setup.  Here we will administer new users, setup various computer types and operating systems, network card brands, and (almost) everything else relating to IRM.") 
 ?>
 
+<hr />
 <table class="setup">
 <tr class="setupheader">
 	<th colspan="2"><?php __("IRM Configuration") ?></th>
@@ -60,15 +61,13 @@ __("Welcome to IRM Setup.  Here we will administer new users, setup various comp
 	<td align=center><a href="<?php echo Config::AbsLoc('users/setup-lookup.php') ?>"><?php __("Setup dropdowns") ?></a></td>
 </tr>
 
-</table>
-
-<table>
 <tr class="setupheader">
 	<th colspan="2"><?php __("Individual Preferences") ?></th>
 </tr>
 
 <tr class="setupdetail">
-	<td align=center colspan=2><a href="<?php echo Config::AbsLoc('users/prefs-index.php') ?>"><?php __("Preferences") ?></a></td>
+	<td align=center><a href="<?php echo Config::AbsLoc('users/prefs-index.php') ?>"><?php __("Preferences") ?></a></td>
+	<td align=center><a href="<?php echo Config::AbsLoc('users/passwd.php') ?>"><?php __("Change Your Password") ?></a></td>
 </tr>
 </table>
 

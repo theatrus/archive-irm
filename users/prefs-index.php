@@ -41,10 +41,8 @@ commonHeader(_("Setup - Your Preferences"));
 
 __("This is the place to make IRM what you, and only you, want it to be.  Here you can change what you see in the computers list view, as well as change your password.");
 
-PRINT "<hr noshade>";
+PRINT "<hr />";
 PRINT "<p align=center>";
-printf('<a href="%s">%s</a>', Config::AbsLoc('users/passwd.php'), _("Change Your Password"));
-PRINT "<hr noshade>";
 PRINT '<form method="post" action="'.  $_SERVER['PHP_SELF'] .'">';
 PRINT "<input type=hidden name=user value=\"$IRMName\">";
 
