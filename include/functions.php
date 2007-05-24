@@ -271,7 +271,6 @@ function commonHeader($title)
 	$trackingImage = "battery.png";
 	$reportImage = "printer.png";
 	$setupImage = "preferences-desktop.png";
-	$preferencesImage = "preferences-system.png";
 	$knowledgeBaseImage = "applications-internet.png";
 	$logoutImage = "system-log-out.png";
 	$faqImage = "system-search.png";
@@ -286,7 +285,6 @@ function commonHeader($title)
 		PRINT MenuItem($userbase, "inventory-index.php", $inventoryImage, _("Inventory"));
 		PRINT MenuItem($userbase, "reports-index.php", $reportImage, _("Reports"));
 		PRINT MenuItem($userbase, "setup-index.php", $setupImage, _("Setup"));
-		PRINT MenuItem($userbase, "prefs-index.php", $preferencesImage, _("Preferences"));
 		
 		if(Config::Get('knowledgebase'))
 		{

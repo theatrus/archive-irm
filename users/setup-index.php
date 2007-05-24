@@ -61,6 +61,17 @@ __("Welcome to IRM Setup.  Here we will administer new users, setup various comp
 </tr>
 
 </table>
+
+<table>
+<tr class="setupheader">
+	<th colspan="2"><?php __("Individual Preferences") ?></th>
+</tr>
+
+<tr class="setupdetail">
+	<td align=center colspan=2><a href="<?php echo Config::AbsLoc('users/prefs-index.php') ?>"><?php __("Preferences") ?></a></td>
+</tr>
+</table>
+
 <?php
 commonFooter();
 ?>
