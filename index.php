@@ -38,15 +38,6 @@ $viewRequest = array (	'Section' => 'menu',
 				. '<input type="text" name="ID" value="" />' . "\n"
 			);
 
-$introduction = array (	'Section' => 'main',
-			'Header' =>  _('Introduction to IRM'),
-			'Info' =>_('IRM is a multi-user computer, software, peripheral and problem tracking system.
-You can use IRM, depending on your user-level, to view, edit, and add
-computer systems to a database with an extensive list of fields.  You can
-also view and post jobs if you have a problem with a computing resource.') ,
-			'Submit' => '',
-			'Fields' => ''
-			);
 
 $faq = array (	'Section' => 'main',
 			'Header' => _('Frequently Asked Questions'),
@@ -85,10 +76,20 @@ $login = array (	'Section' => 'menu',
 				. redirectCheck()
 			);
 
-$status = array (	'Section' => 'menu',
+$status = array (	'Section' => 'main',
 			'Header' => _('Current Status'),
 			'Info' => currentStatus(),
 			'Submit' => '',
+			);
+
+$introduction = array (	'Section' => 'nav',
+			'Header' =>  _('IRM - The Information Resource Manager'),
+			'Info' =>_('IRM is a multi-user computer, software, peripheral and problem tracking system.
+You can use IRM, depending on your user-level, to view, edit, and add
+computer systems to a database with an extensive list of fields.  You can
+also view and post jobs if you have a problem with a computing resource.') ,
+			'Submit' => '',
+			'Fields' => ''
 			);
 
 $Content = array (	$login,
@@ -101,6 +102,7 @@ $Content = array (	$login,
 
 $allMenuContent = "";
 $allMainContent = "";
+$allNavContent = "";
 
 $Page = new IrmFactory();
 
@@ -112,12 +114,14 @@ foreach($Content as $content){
 		$allMenuContent .= $Page->fetch('section.html.php');
 	} elseif($content['Section'] == "main"){
 		$allMainContent .= $Page->fetch('section.html.php');
+	} elseif($content['Section'] == "nav"){
+		$allNavContent .= $Page->fetch('section.html.php');
 	}
 }
 
 $Page->assign('title', _('IRM - The Information Resource Manager'));
 $Page->assign('stylesheet', 'styles/default.css');
-$Page->assign('content_nav', '<h1>' . _('IRM - The Information Resource Manager') . '</h1>');
+$Page->assign('content_nav', $allNavContent);
 $Page->assign('content_menu', $allMenuContent);
 $Page->assign('content_main', $allMainContent);
 
