@@ -42,6 +42,7 @@ require_once dirname(__FILE__) . '/connections.class.php';
 require_once dirname(__FILE__) . '/setup-fasttrack.class.php';
 require_once dirname(__FILE__) . '/setup-templates.class.php';
 require_once dirname(__FILE__) . '/setup-groups.class.php';
+require_once dirname(__FILE__) . '/setup-groups-members.class.php';
 require_once dirname(__FILE__) . '/ocs.class.php';
 require_once dirname(__FILE__) . '/../FCKeditor/fckeditor.php';
 

@@ -20,7 +20,8 @@
 require_once '../include/irm.inc';
 require_once 'lib/Config.php';
 require_once 'include/i18n.php';
-
+$setupGroupMembers = new setupGroupMembers();
+/*
 AuthCheck("tech");
 
 commonHeader(_("Computers") . " - " . _("Group Members"));
@@ -103,3 +104,4 @@ PRINT "<input type=\"submit\" name=\"btn\" value=\""._("Add")."\"></FORM>\n";
 PRINT $switchlink;
 
 commonFooter();
+*/
