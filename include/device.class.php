@@ -393,7 +393,7 @@ class Device
 	{
 		//Print "HTML Text Area";
 		PRINT $this->fieldname . ':<br />';
-		PRINT '<textarea name="' . $this->fieldname . '" value="'. $this->fieldData . '"></textarea>';
+		fckeditor($this->fieldname,$this->fieldData);
 	}
 
 	function dateTimeField()

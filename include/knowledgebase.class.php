@@ -149,41 +149,35 @@ function searchKB()
 	$this->searchDetails = "<h1>" . _("Search Results") . "</h1>";
 	
 	foreach($data as $item){
-		$this->searchDetails .= "<a href=knowledgebase-index.php?action=detail&ID=" . $item[ID] . ">" . $item[question] . "</a><br />";
+		$this->searchDetails .= "<a href=knowledgebase-index.php?action=detail&amp;ID=" . $item[ID] . ">" . $item[question] . "</a><br />";
 	}
-	$this->searchDetails .= "<hr>";
+	$this->searchDetails .= "<hr />";
 } 
 
 function indexKB()
 {
 	AuthCheck("tech");
 	commonHeader(_("Knowledge Base") . $actionDescription);
-	__("This is the IRM Knowledge Base system. It allows you to view all of the knowledge base articles that have been entered."); ?>
-	<hr>
-	<?
+	__("This is the IRM Knowledge Base system. It allows you to view all of the knowledge base articles that have been entered.");
+	PRINT "<hr />";
 	PRINT $this->searchDetails;
-	?>
-	<table>
-	<tr>	
-	<td align=center>
-	<?
+	PRINT "<table>";
+	PRINT "<tr>";
+	PRINT "<td align=center>";
 	PRINT '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
-	?>
-	<input type="hidden" name="action"  value="search">
-	<input type="input" name="search"  value="">
-	<input type="submit" value="<?php echo _("Search") ?>">
-	</form>
+	PRINT '<input type="hidden" name="action"  value="search" />';
+	PRINT '<input type="input" name="search"  value="" />';
+	PRINT '<input type="submit" value="' . _("Search") . '" />';
+	PRINT "</form>\n";
 
-	<?
 	PRINT '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
-	?>
-	<input type="hidden" name="action"  value="add">
-	<input type="submit" value="<?php echo _("Add an Article") ?>">
-	</form>
-	</td>
-	</tr>
-	</table>
-	<?php
+	PRINT '<input type="hidden" name="action"  value="add" />';
+	PRINT '<input type="submit" value="' . _("Add an Article") . '" />';
+	PRINT "</form>\n";
+
+	PRINT "</td>";
+	PRINT "</tr>";
+	PRINT "</table>";
 	$this->kbdisplaycategories();
 	commonFooter();
 }
@@ -199,14 +193,15 @@ function kbdisplaycategories($parentID=0)
 	$data = $DB->getAll($query);
 	if(count($data) > 0)
 	{	
-		PRINT "<ul>\n";
+		PRINT "<ol>\n";
 		foreach ($data as $result)
 		{
 			PRINT "<li>";
-			PRINT "<b>" . $result["name"] . "</b>\n";
+			PRINT "<b>" . $result["name"] . "</b>";
 			$this->kbdisplaycategories($result['ID']);
+			PRINT "</li>\n";
 		}
-		PRINT "</ul>\n";
+		PRINT "</ol>\n";
 	} 
 }
 
@@ -216,12 +211,12 @@ function kbdisplayarticles($parentID)
 
 	$DB = Config::Database();
 	$data = $DB->getAll($query);
-	PRINT "<ul>\n";
+	PRINT "<ol>";
 	foreach ($data as $result)
 	{
 		$this->kbdisplayarticle($result["ID"]);
 	}
-	PRINT "</ul>\n";
+	PRINT "</ol>\n";
 }
 
 function kbdisplayarticle($ID)
@@ -230,9 +225,9 @@ function kbdisplayarticle($ID)
 
 	$DB = Config::Database();
 	$result = $DB->getRow($query);
-	$question = $result["question"];
-	PRINT '<li><A HREF="'.Config::AbsLoc("users/knowledgebase-index.php?action=detail&ID=$ID").'">';
-	PRINT htmlspecialchars($question) . "</A>\n";
+	PRINT '<li><A HREF="'.Config::AbsLoc("users/knowledgebase-index.php?action=detail&amp;ID=$ID").'">';
+	PRINT $result["question"];
+	print "</a></li>\n";
 }
 
 function faqdisplayfullarticle($ID)
@@ -243,7 +238,6 @@ function faqdisplayfullarticle($ID)
 	$files->setDeviceType("knowledgebase");
 	$files->setDeviceID($ID);
 	$files->displayAttachedFiles();
-
 	commonFooter();
 }
 
@@ -251,29 +245,16 @@ function faqdisplayfullarticle($ID)
 function kbdisplayfullarticle($ID)
 {
 	$query = "SELECT * FROM kbarticles WHERE (ID=$ID)";
-
 	$DB = Config::Database();
 	$result = $DB->getRow($query);
-	
 	$categoryID = $result["categoryID"];
-	$question = $result["question"];
-	$answer = $result["answer"];
 	
-	$fullcategoryname = $this->kbcategoryname($categoryID);
-	
-	PRINT "<H2>".sprintf(_("Question (%s):"), $fullcategoryname)."</H2>";
-
-	$question = nl2br(htmlspecialchars($question)); 
-	PRINT $question;
-	
-	PRINT "<HR>\n";
-	
-	PRINT "<H2>"._("Answer:")."</H2>\n";
-
-	$answer = nl2br(htmlspecialchars($answer));
-	PRINT $answer;
+	PRINT "<h2>".sprintf(_("Question (%s):"), $this->kbcategoryname($categoryID))."</h2>";
+	PRINT $result['question'];
+	PRINT "<hr />\n";
+	PRINT "<h2>"._("Answer:")."</h2>\n";
+	PRINT $result['answer'];
 }
-
 
 function kbaddtofaq()
 {
@@ -296,12 +277,10 @@ function kbremovefromfaq()
 function kbisfaq($ID)
 {
 	$query = "SELECT * FROM kbarticles WHERE (ID=$ID)";
-	
 	$DB = Config::Database();
 	$result = $DB->getRow($query);
 
 	$isFAQ = $result["faq"];
-
 	PRINT "<br />";
 	PRINT "<hr />";
 
@@ -327,25 +306,25 @@ function kbisfaq($ID)
 
 	PRINT "<td align=left width=\"33%\">";
 	PRINT '<form method="post" action="' . Config::Absloc("users/knowledgebase-index.php") .'">';
-	PRINT '<input type="hidden" name="action" value="' . $action . '">';
-	PRINT '<input type="hidden" name="ID" value="' . $ID . '">';
-	PRINT '<input type=submit value="' . $actionstring . '">';
+	PRINT '<input type="hidden" name="action" value="' . $action . '" />';
+	PRINT '<input type="hidden" name="ID" value="' . $ID . '" />';
+	PRINT '<input type=submit value="' . $actionstring . '" />';
 	PRINT '</form>';
 	PRINT '</td>';
 
 	PRINT '<td align="left" width="34%">';
 	PRINT '<form method="post" action="' . Config::Absloc("users/knowledgebase-index.php") .'">';
-	PRINT '<input type="hidden" name="action" value="modify">';
-	PRINT '<input type="hidden" name="ID" value="' . $ID . '">';
-	PRINT '<input type=submit value="' . _("Modify Article") . '">';
+	PRINT '<input type="hidden" name="action" value="modify" />';
+	PRINT '<input type="hidden" name="ID" value="' . $ID . '" />';
+	PRINT '<input type=submit value="' . _("Modify Article") . '" />';
 	PRINT '</form>';
 	PRINT '</td>';
 	
 	PRINT '<td align="left" width="33%">';
 	PRINT '<form method="post" action="' . Config::Absloc("users/knowledgebase-index.php") .'">';
-	PRINT '<input type="hidden" name="action" value="delete">';
-	PRINT '<input type="hidden" name="ID" value="' . $ID . '">';
-	PRINT '<input type=submit value="' . _("Delete Article") . '">';
+	PRINT '<input type="hidden" name="action" value="delete" />';
+	PRINT '<input type="hidden" name="ID" value="' . $ID . '" />';
+	PRINT '<input type=submit value="' . _("Delete Article") . '" />';
 	PRINT "</form>";
 	PRINT "</td>";
 
@@ -448,29 +427,27 @@ function formKBArticle()
 	}
 
 	__("Here is where you can add an article to the knowledge base.");
-	?>
-	<hr noshade>
-	<BR>
-	<form method=post action="<?php $_SERVER['PHP_SELF'] ?>">
-	<?php __("Select the category in which this article should be placed:");?>
-	<?php
+	PRINT "<hr />";
+	PRINT "<BR>";
+	PRINT '<form method="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	__("Select the category in which this article should be placed:");
 	PRINT $this->kbcategoryList(@$this->categorylist); 
 	PRINT "<br>";
 	PRINT "<br>";
 	__("Enter the question here.  Please be as detailed as possible with the 
 		question, but don't repeat information that can be inferred by the category.");
 	PRINT "<br>";
-	PRINT "<textarea cols=50 rows=14 wrap=soft name=question>" . $this->question . "</textarea>"; 
+	fckeditor("question",$this->question);
 	PRINT "<br>";
 	__("Enter the answer here.  Please be as detailed as possible with the answer, including a step by step process.");
 	PRINT "<br>";
-	PRINT "<textarea cols=50 rows=14 wrap=soft name=answer>" . $this->answer . "</textarea>"; 
+	fckeditor("answer",$this->answer);
 	PRINT "<br>\n";
-	PRINT "<input type=checkbox name=faq value=\"yes\"$faqchecked> "._("Place this Knowledge Base Article into the publicly viewable FAQ as well.")."<BR>\n";
-	PRINT "<input type=hidden name=action value=preview>";
-	PRINT "<input type=submit value=\""._("Add Article")."\">";
-	PRINT " <input type=reset value=\""._("Reset")."\">";
-	PRINT "</form>";
+	PRINT "<input type=checkbox name=faq value=\"yes\" $faqchecked /> "._("Place this Knowledge Base Article into the publicly viewable FAQ as well.")."<br />\n";
+	PRINT '<input type="hidden" name="action" value="preview" />' . "\n";
+	PRINT '<input type="submit" value="' . _("Add Article") . '" />' . "\n";
+	PRINT '<input type="reset" value="' . _("Reset") . '" />' . "\n";
+	PRINT "</form>" . "\n";
 	commonFooter();
 }
 
@@ -488,10 +465,7 @@ function kbErrors()
 		PRINT "<br>";
 	}
 
-	//$categoryname = $this->kbcategoryname($this->categorylist);
-	$categoryname = $this->kbcategoryname($this->categoryID);
-
-	if ($categoryname == ""){
+	if ($this->kbcategoryname($this->categoryID) == ""){
 		$this->error = 1;
 		__("The following error occured with your Knowledge Base article:  You did not enter any category (You may not post Knowledge Base Articles in Main).");
 		PRINT "<br>";
@@ -500,36 +474,32 @@ function kbErrors()
 	if ($this->error != 1){
 		__("Please check that the article you are about to submit is correct.  If it is not, use the provided links to re-edit it.");
 	} else {
-		PRINT "<br><b>";
+		PRINT "<br /><b>";
 		__("Errors occured with your Knowledge Base article.  Your only option is to re-edit the article.");
-		PRINT "</b><br>";
+		PRINT "</b><br />";
 	}
 
 }
 
 function previewKBArticleDetails()
 {
-	$htmlquestion = nl2br(htmlspecialchars($this->question));
-	$htmlanswer = nl2br(htmlspecialchars($this->answer));
-	$categoryname = $this->kbcategoryname($this->categoryID);
-
 	//Main Display
-	printf(_("Category Selected was: %s"), $categoryname);
+	printf(_("Category Selected was: %s"), $this->kbcategoryname($this->categoryID));
 	PRINT "<br />";
 	PRINT "<hr />";
 	PRINT "<strong>" . _("Question:") . "</strong><br />";
-	PRINT $htmlquestion;
+	PRINT $this->question;
 	PRINT "<hr />";
 	PRINT "<strong>" . _("Answer:") . "</strong><br />";
-	PRINT $htmlanswer;
+	PRINT $this->answer;
 }
 
 function previewHiddenFields()
 {
-	PRINT '<input type=hidden name=categorylist value="' . $this->categoryID .'">';
-	PRINT '<input type=hidden name=question value="' . $this->question . '">';
-	PRINT '<input type=hidden name=answer value="' . $this->answer . '">';
-	PRINT '<input type=hidden name=faq value=' . $this->faq . '>';
+	PRINT '<input type="hidden" name="categorylist" value="' . $this->categoryID .'"/>' ."\n";
+	PRINT '<input type="hidden" name="question" value="' . $this->question . '"/>' ."\n"; 
+	PRINT '<input type="hidden" name="answer" value="' . $this->answer . '"/>' ."\n";
+	PRINT '<input type="hidden" name="faq" value="' . $this->faq . '"/>' ."\n";
 }
 
 function previewKBArticle()
@@ -538,7 +508,6 @@ function previewKBArticle()
 	commonHeader(_("Knowledge Base") . " - " . _("Article Preview"));
 
 	$error = 0;	
-
 	$modify = $this->modify;
 
 	/* Start error checking */
@@ -551,13 +520,13 @@ function previewKBArticle()
 	$this->previewKBArticleDetails();
 
 	// Re-edit Article
-	PRINT "<hr noshade>\n";
+	PRINT "<hr />\n";
 	PRINT '<form method=post action="'.Config::AbsLoc('users/knowledgebase-index.php').'">'. "\n";
 
 	$this->previewHiddenFields();
 
-	PRINT "<input type=hidden name=action value=add>\n";
-	PRINT '<input type=submit value="' . _("Re-edit Article") . '">'. "\n";
+	PRINT "<input type=hidden name=action value=add/>\n";
+	PRINT '<input type=submit value="' . _("Re-edit Article") . '" />'. "\n";
 	PRINT "</form>\n";
 	
 	if ($this->error != 1) 
@@ -573,15 +542,15 @@ function previewKBArticle()
 			$submitValue = _("Save Article");
 		}
 		//Main form
-		PRINT '<form method=post action="'. $_SERVER['PHP_SELF'].'">';
-		PRINT '<input type=hidden name=ID value="' . $this->ID . '">';
-		PRINT '<input type=hidden name=modify value="' . $modify . '">';
-		PRINT '<input type=hidden name=commit value=1>';
-		PRINT '<input type=hidden name=action value=add>';
+		PRINT '<form method=post action="'. $_SERVER['PHP_SELF'].'">' . "\n";
+		PRINT '<input type="hidden" name="ID" value="' . $this->ID . '"/>' . "\n";
+		PRINT '<input type=hidden name=modify value="' . $modify . '"/>' . "\n";
+		PRINT '<input type=hidden name=commit value=1 />' . "\n";
+		PRINT '<input type=hidden name=action value=add />' . "\n";
 
 		$this->previewHiddenFields();
 
-		PRINT '<input type=submit value=' . $submitValue . '>';
+		PRINT '<input type=submit value="' . $submitValue . '" />';
 		PRINT '</form>';
 	}
 }
@@ -604,8 +573,6 @@ function detailKBArticle($ID)
 	$files->setDeviceID($ID);
 	$files->displayAttachedFiles();
 	$files->displayFileUpload();
-
-
 	commonFooter();
 }
 
@@ -623,37 +590,32 @@ function formModifyKBArticle()
 	$faq = $result["faq"];
 	$categorylist = $result["categoryID"];
 
-
-	__("Here is where you can modify an article that is in the knowledge base.") ?>
-	<hr noshade>
-	<br />
-	<form method=post action="<?php echo Config::AbsLoc('users/knowledgebase-index.php') ?>">
-	<?php 
+	__("Here is where you can modify an article that is in the knowledge base.");
+	PRINT "<hr />";
+	PRINT "<br />";
+	PRINT '<form method=post action="' . Config::AbsLoc('users/knowledgebase-index.php') . '">';
 	__("Select the category in which this article should be placed:");
 	PRINT $this->kbcategoryList($categorylist);
-	 ?>
-	<br>
-	<br>
+	PRINT "<br />";
+	PRINT "<br />";
 
-	<?php __("Modify the question here.  Please be as detailed as possible with the question, but don't repeat information that can be inferred by the category.") ?>
-	<br>
-	<textarea cols=50 rows=14 wrap=soft name=question><?php echo $question ?></textarea>
-	<br>
-	<?php __("Modify the answer here.  Please be as detailed as possible with the answer, including a step by step process."); ?>
-	<br>
-	<textarea cols=50 rows=14 wrap=soft name=answer><?php echo $answer ?></textarea>
-	<br>
-	<input type=checkbox name=faq value="yes" <?php echo ($faq == 'yes' ? 'checked' : '') ?>>
-	<?php __("Place this Knowledge Base Article into the publicly viewable FAQ as well.") ?>
-	<BR>
-	<input type=hidden name=modify value=1>
-	<input type=hidden name=action value=preview>
-	<input type=hidden name=ID value=<?php echo $ID ?>>
-	<input type=submit value=" <? PRINT _("Preview Article") ?> ">
-	<input type=reset value=" <? PRINT _("Reset") ?> ">
-	</form>
-
-	<?php
+	__("Modify the question here.  Please be as detailed as possible with the question, but don't repeat information that can be inferred by the category."); 
+	PRINT "<br />";
+	fckeditor("question",$question);
+	PRINT "<br/ >";
+	__("Modify the answer here.  Please be as detailed as possible with the answer, including a step by step process."); 
+	PRINT "<br>";
+	fckeditor("answer",$answer);
+	PRINT "<br />";
+	PRINT '<input type="checkbox" name="faq" value="yes"' . ($faq == 'yes' ? 'checked' : '') . '"/>';
+	__("Place this Knowledge Base Article into the publicly viewable FAQ as well."); 
+	PRINT "<br />";
+	PRINT '<input type="hidden" name="modify" value="1" />';
+	PRINT '<input type="hidden" name="action" value="preview" />';
+	PRINT '<input type="hidden" name="ID" value="' . $ID . '" />';
+	PRINT '<input type="submit" value="' . _("Preview Article") . '" />';
+	PRINT '<input type="reset" value="' . _("Reset") . '" />';
+	PRINT '</form>';
 	commonFooter();
 }
 
@@ -680,30 +642,30 @@ function setupKB()
 		PRINT "</tr>";
 	
 	  	PRINT '<tr class="kbdetail">';
-  		PRINT "<td>" . _("Category Name:") . "<br><input type=text size=\"65%\"	name=categoryname value=\"$categoryname\"></td>";
+  		PRINT "<td>" . _("Category Name:") . "<br><input type=text size=\"65%\"	name=categoryname value=\"$categoryname\" /></td>";
 		PRINT "<td>" . _("As a subcategory of: ");
 		PRINT $this->kbcategoryList($parentID);
 		PRINT "</td>\n";
 			
 		PRINT "<td>";
-		PRINT "<input type=hidden name=action value=updatecategory>";
-		PRINT "<input type=hidden name=id value=\"$id\">";
-		PRINT "<input type=submit value=\"". _("Update") ."\">";
+		PRINT "<input type=hidden name=action value=updatecategory />";
+		PRINT "<input type=hidden name=id value=\"$id\" />";
+		PRINT "<input type=submit value=\"". _("Update") ."\" />";
 		PRINT "</form>";
 		PRINT "</td>";
 	
 		PRINT "<td valign=center>";
 		PRINT '<form method=post action="'.Config::AbsLoc('users/knowledgebase-index.php').'">';
-		PRINT "<input type=hidden name=action value=deletecategory>";
-		PRINT "<input type=hidden name=id value=\"$id\">";
-		PRINT "<input type=submit value=\"". _("Delete") ."\">";
+		PRINT "<input type=hidden name=action value=deletecategory />";
+		PRINT "<input type=hidden name=id value=\"$id\" />";
+		PRINT "<input type=submit value=\"". _("Delete") ."\" />";
 		PRINT "</form>";
 		PRINT "</td>";
 		
 		PRINT "</tr>";
 		PRINT "</table>";
 	}
-	PRINT "<a name=\"add\"></a><hr noshade><h4>";
+	PRINT "<a name=\"add\"></a><hr /><h4>";
 	__("Add a Category");
 	PRINT '</h4><form method=post action="'.Config::AbsLoc('users/knowledgebase-index.php').'">';
 	PRINT "<table>";
@@ -712,7 +674,7 @@ function setupKB()
 	PRINT "</tr>";
 	
 	PRINT '<tr class="kbdetail">';
-	PRINT "<td>" . _("Name:") . "<br> <input type=text size=\"65%\" name=categoryname></td>";
+	PRINT "<td>" . _("Name:") . "<br> <input type=text size=\"65%\" name=categoryname /></td>";
 	PRINT "<td>" . _("As a subcategory of: ");
 	PRINT $this->kbcategoryList(0);
 	PRINT "</td>";
@@ -720,8 +682,8 @@ function setupKB()
 	
 	PRINT '<tr class="kbupdate">';
 	PRINT "<td colspan=2>";
-	PRINT "<input type=hidden name=action value=addcategory>";
-	PRINT "<input type=submit value=" . _("Add") . ">";
+	PRINT "<input type=hidden name=action value=addcategory />";
+	PRINT "<input type=submit value=" . _("Add") . " />";
 	PRINT "</td>";
 	PRINT "</tr>";
 	PRINT "</table>";

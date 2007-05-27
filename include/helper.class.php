@@ -548,7 +548,7 @@ function helpForm()
 	PRINT "</td>";
 	PRINT "<td>";
 	$contents = stripslashes(@$contents);
-	PRINT "<textarea cols=50 rows=14 wrap=soft name=contents>$contents</textarea>"; 
+	fckeditor("contents",$contents);
 	PRINT "</td>";
 	PRINT "<td>";
 	__("Please explain the problem, be as clear as possible, but also keep it short.");

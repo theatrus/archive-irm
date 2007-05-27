@@ -83,7 +83,7 @@ class Software
 
 		PRINT '<tr class="softwaredetail">';
 		PRINT "<td colspan=3>" . _("Comments").":<br>";
-		PRINT "<textarea cols=80 rows=5 name=comments wrap=soft>$comments</textarea>";
+		fckeditor("comments",$comments);
 		PRINT "</td>";
 		PRINT "</tr>";
 

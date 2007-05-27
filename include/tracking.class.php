@@ -981,7 +981,7 @@ class Tracking Extends IRMMain
 			echo nl2br(htmlspecialchars($this->WorkRequest));
 		} else {
 			$text = htmlspecialchars($this->WorkRequest);
-			PRINT '<TEXTAREA NAME="workrequest" ROWS="10" COLS="60">' . $text . '</TEXTAREA>';
+			fckeditor("workrequest",$text);
 			PRINT '<input type="hidden" name="original" value="' . $text . '"/>';
 		}
 		PRINT "</td>";

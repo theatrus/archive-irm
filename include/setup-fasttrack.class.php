@@ -132,7 +132,7 @@ class setupFastTrack{
 		PRINT "<INPUT TYPE=\"RADIO\" NAME=\"IDTYPE\" VALUE=\"IRMID\">" . _("IRM ID: ");
 		PRINT "<INPUT TYPE=text NAME=ID SIZE=10>&nbsp;&nbsp;\n";
 		PRINT "<INPUT TYPE=hidden NAME=is_group VALUE=\"no\">\n";
-		PRINT "<BR>\n";
+		PRINT "<br>\n";
 		if(Config::Get('groups'))
 		{
 			PRINT "<INPUT TYPE=\"RADIO\" NAME=\"IDTYPE\" VALUE=\"GROUP\"> ";
@@ -160,11 +160,11 @@ class setupFastTrack{
 				);
 		echo select_options($opts, $priority);
 		PRINT "</SELECT>\n";
-		PRINT "<BR>\n";
-		PRINT _("Describe the problem:") . "<BR>\n";
-		PRINT "<textarea cols=50 rows=4 wrap=soft name=contents>$request</textarea><BR>\n";
-		PRINT _("Describe the solution (will be added as a followup):") . "<BR>\n";
-		PRINT "<textarea cols=50 rows=4 wrap=soft name=solution>$response</textarea>\n"; 
+		PRINT "<br>\n";
+		PRINT _("Describe the problem:") . "<br>\n";
+		fckeditor("contents",$request);
+		PRINT _("Describe the solution (will be added as a followup):") . "<br>\n";
+		fckeditor("solution",$response);
 		PRINT "</td>\n";
 		PRINT "</tr>\n";
 /*
@@ -311,7 +311,9 @@ class setupFastTrack{
 		PRINT "</tr>\n";
 
 		PRINT '<tr class="setupdetail">';
-		PRINT "<td><textarea cols=50 rows=4 wrap=soft name=contents>$request</textarea></td>\n";
+		PRINT "<td>";
+		fckeditor("contents",$request);
+		PRINT "</td>\n";
 		PRINT "</tr>\n";
 
 		PRINT '<tr class="setupheader">';
@@ -319,7 +321,9 @@ class setupFastTrack{
 		PRINT "</tr>\n";
 
 		PRINT '<tr class="setupdetail">';
-		PRINT "<td><textarea cols=50 rows=4 wrap=soft name=solution>$response</textarea></td>\n";
+		PRINT "<td>";
+		fckeditor("solutions",$response);
+		PRINT "</td>\n";
 		PRINT "</tr>\n";
 
 

@@ -43,6 +43,15 @@ require_once dirname(__FILE__) . '/setup-fasttrack.class.php';
 require_once dirname(__FILE__) . '/setup-templates.class.php';
 require_once dirname(__FILE__) . '/setup-groups.class.php';
 require_once dirname(__FILE__) . '/ocs.class.php';
+require_once dirname(__FILE__) . '/../FCKeditor/fckeditor.php';
+
+function fckeditor($editorname, $defaultText){
+	$oFCKeditor = new FCKeditor($editorname) ;
+	$oFCKeditor->BasePath = '../FCKeditor/';
+	$oFCKeditor->Value = $defaultText;
+	$oFCKeditor->ToolbarSet = 'Basic';
+	$oFCKeditor->Create() ;
+}
 
 function formSubmit ($extraFields, $submit){
 	if(!$submit == ""){
@@ -336,7 +345,7 @@ function logo()
 	$LOGO = Config::Get('logo');
 	if ($LOGO != ""){
 		PRINT '<a href="' .Config::Absloc('users/') . 'index.php">';
-		PRINT '<img src="'.Config::AbsLoc('images/' . $LOGO) .'" class="graphic"></a><br />';
+		PRINT '<img src="'.Config::AbsLoc('images/' . $LOGO) .'" class="graphic"  alt="logo"/></a><br />';
 	}
 }
 
@@ -470,7 +479,7 @@ function irmSetup()
 
 	PRINT '<tr class="setupdetail">';
 	PRINT "<td>";
-	PRINT "<textarea name=status>$status</textarea>";
+	fckeditor("status",$status);
 	PRINT "</td>\n";
 	PRINT "</tr>\n";
 	
@@ -1008,7 +1017,9 @@ function showSoftware($ID)
 
 	<td>'._("Comments").':
 		<br />
-		<textarea cols=80 rows=5 name=comments wrap=soft>' . $comments .'</textarea>
+	';
+	fckeditor("comments",$comments);
+	PRINT '
 	</td>
 	</tr>
 		
