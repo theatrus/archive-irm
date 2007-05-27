@@ -154,7 +154,7 @@ PRINT "<td>";
 
 PRINT "<strong>" . _("Describe the problem:") . "</strong>\n";
 PRINT "<br />\n";
-PRINT "<textarea cols=50 rows=4 wrap=soft name=\"contents\">$request</textarea>"; 
+fckeditor("contents",$request);
 PRINT "</td>";
 PRINT "</tr>";
 
@@ -163,7 +163,7 @@ PRINT "<td>";
 
 PRINT "<strong>" . _("Describe the solution (will be added as a followup):") . "</strong>\n";
 PRINT "<br />\n";
-PRINT "<textarea cols=50 rows=4 wrap=soft name=\"solution\">$response</textarea>\n"; 
+fckeditor("solution",$response);
 PRINT "</td>\n";
 PRINT "</tr>\n";
 
