@@ -113,16 +113,23 @@ class Tracking Extends IRMMain
 			$priorityType = "High";
 			$priorityColour = "orange";
 		}
-	
-		print "<html>";
+		PRINT '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . "\n";
+	PRINT "<html>\n";
+
 		print "<head>";
-		print '<meta http-equiv="refresh" content="5;url=' . $_SERVER['PHP_SELF'] . '">';
-		print "</head>";
+		print '<meta http-equiv="refresh" content="5;url=' . $_SERVER['PHP_SELF'] . '" />';
+		print "<title>" . _("Alerts") . "</title>";
+		print "</head>\n";
 
 		print "<body bgcolor=black text=white>";
 		
 		print "<table>";
-		print "<tr><td colspan=2 bgcolor=$priorityColour align=center><h1><font color=black>" . count($this->result) . " " . $priorityType . " Priority Requests Outstanding</font></td></tr>";
+		print "<tr>";
+		print "<td colspan=2 bgcolor=$priorityColour align=center>";
+		print "<h1><font color=black>" . count($this->result) . " " . $priorityType . " Priority Requests Outstanding</font></h1>";
+		print "</td>";
+		print "</tr>";
+
 		foreach($this->result as $item){
 			print "<tr>";
 			print "<td bgcolor=$priorityColour><h1><font color=black>" . $item['ID'] . " - " . $item['assign'] . "</font></h1></td>";
