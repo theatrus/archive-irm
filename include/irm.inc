@@ -81,29 +81,7 @@ require_once 'include/i18n.php';
 require_once 'include/functions.php';
 require_once 'include/User.php';
 
-$networking_fields = array(
-		'name'			 => _("Name"),
-		'ID'			 => _("IRM ID"),
-		'location'		 => _("Location"),
-		'type'			 => _("Type"),
-		'ram'			 => _("RAM Amount (in MB)"),
-		'serial'		 => _("Serial Number"),
-		'otherserial'		 => _("Other Number"),
-		'ip'			 => _("IP Address"),
-		'mac'			 => _("MAC/Network Address"),
-		'comments'		 => _("Comments"),
-		'contact'		 => _("Contact Person"),
-		'contact_num'		 => _("Contact Number"),
-		'date_mod'		 => _("Date Last Modified")
-		);
 
-$software_fields = array(
-		'name'			=> _("Name"),
-		'ID'			=> _("IRM ID"),
-		'platform'		=> _("Platform"),
-		'comments'		=> _("Comments"),
-		'class'			=> _("Class")
-);
 
 $computer_fields = array(
 		'name'			 => _("Name"),

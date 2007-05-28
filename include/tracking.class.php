@@ -1715,7 +1715,7 @@ function displayDeviceTracking($ID, $devicetype)
 		PRINT "<input type=hidden name=devicetype value=$devicetype />";
 		PRINT "<input type=hidden name=action value=info />";
 		PRINT "<input type=hidden name=ID value=$ID />";
-		echo '<select name="showtracking" size="1" />';
+		echo '<select name="showtracking" size="1">';
 		$options = array(
 				'allandclosed' => _("Show All Tracking inc Closed"),
 				'all' => _("Show All Tracking"),
@@ -1734,7 +1734,6 @@ function displayDeviceTracking($ID, $devicetype)
 		deviceTracking($ID, $devicetype);
 		PRINT "<h3>Group Tracking</h3>";
 		groupTracking($ID, $devicetype);
-
 	}
 }
 ?>

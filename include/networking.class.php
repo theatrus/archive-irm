@@ -23,6 +23,23 @@ class networking
 {
 	function networking()
 	{
+		$this->networking_fields = array(
+			'name'			 => _("Name"),
+			'ID'			 => _("IRM ID"),
+			'location'		 => _("Location"),
+			'type'			 => _("Type"),
+			'ram'			 => _("RAM Amount (in MB)"),
+			'serial'		 => _("Serial Number"),
+			'otherserial'		 => _("Other Number"),
+			'ip'			 => _("IP Address"),
+			'mac'			 => _("MAC/Network Address"),
+			'comments'		 => _("Comments"),
+			'contact'		 => _("Contact Person"),
+			'contact_num'		 => _("Contact Number"),
+			'date_mod'		 => _("Date Last Modified")
+			);
+
+
 		$this->ID = $_REQUEST['ID'];
 
 		switch($_REQUEST['action'])
@@ -188,7 +205,7 @@ class networking
 		commonHeader(_("Networking"));
 		__("Welcome to the IRM Networking section.  This where you keep information about all of your networking devices.");
 		$deviceType = "networking";
-		deviceSearch($deviceType,$networking_fields);
+		deviceSearch($deviceType,$this->networking_fields);
 		commonFooter();
 	}
 	function networkingForm($formtype,$result)

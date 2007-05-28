@@ -117,17 +117,20 @@ class Device
 	function deviceListData($result)
 	{
 		$this->deviceList .=  "<tr>";
-		foreach($result as $key=>$value)
-		{
+		foreach($result as $key=>$value){
 			if($key == "ID"){
 				if($this->devicetype == 'software') {
-					$this->deviceList .= "<td><a href=software-info.php?ID=$value >" . $value . "</a></td>";
+					$this->deviceList .= "<td><a href=software-index.php?devicetype=software&amp;action=info&amp;ID=$value >" . $value . "</a></td>";
+				}elseif ($this->devicetype == 'computers'){
+					$this->deviceList .= "<td><a href=computers-index.php?devicetype=computer&amp;action=info&amp;ID=$value >" . $value . "</a></td>";
+				}elseif ($this->devicetype == 'networking'){
+					$this->deviceList .= "<td><a href=networking-index.php?devicetype=networking&amp;action=info&amp;ID=$value >" . $value . "</a></td>";
 				} else {
 					$this->deviceList .= "<td><a href=device-info.php?devicetype=" . $this->devicetype . "&action=info&ID=$value >" . $value . "</a></td>";
 				}
 			} else {
 				$this->deviceList .= "<td>" . $value . "</td>";
-			}
+			}	
 		}
 		$this->deviceList .= "</tr>";
 	}

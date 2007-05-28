@@ -89,7 +89,9 @@ function deviceSearch($deviceType, $deviceFields)
 	PRINTF (_("Add  %s"), $deviceType);
 	PRINT "</a></td>";
 	PRINT "</tr>\n";
+	PRINT "</table>";
 
+	PRINT "<table>";
 	PRINT '<tr class="devicedetail">';
 	PRINT "<th align=center>";
 	PRINTF (_("Select %s"),$deviceType);
@@ -145,6 +147,9 @@ function deviceSearch($deviceType, $deviceFields)
 
 
 	PRINT '<form method="get" action="' .  Config::AbsLoc($pageName) . '">';
+
+#	var_dump($softwareFields);
+#	var_dump($deviceFields);
 	
 	PRINT '<select name="field">';
 	PRINT select_options($deviceFields);

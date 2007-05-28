@@ -57,6 +57,7 @@
 				// Pull in the values for this particular lookup
 				$sql = "SELECT value FROM lookup_data WHERE lookup = '$lookupId' ORDER BY value";
 				$result = $DB->getAll($sql);
+
 				if (!MDB::isError($result))
 				{
 					foreach ($result as $row)
