@@ -546,11 +546,9 @@ function helpForm()
 	PRINT "<td>";
 	__("Describe the problem:"); 
 	PRINT "</td>";
-	PRINT "<td>";
+	PRINT '<td colspan="2">';
 	$contents = stripslashes(@$contents);
-	fckeditor("contents",$contents);
-	PRINT "</td>";
-	PRINT "<td>";
+
 	__("Please explain the problem, be as clear as possible, but also keep it short.");
 	PRINT "<br />";
 	PRINT "<br />";
@@ -558,6 +556,10 @@ function helpForm()
 	PRINT "<br />";
 	PRINT "<br />";
 	__("A bad example : 'It doesn't turn on'.");
+
+
+	fckeditor("contents",$contents);
+
 	PRINT "</td>";
 	PRINT "</tr>";
 
