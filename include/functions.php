@@ -91,8 +91,6 @@ function loginCheck(){
 	}
 }
 
-
-
 function make_dblist()
 {
 	$dblist = Databases::All();
@@ -1078,94 +1076,6 @@ function showBundled($ID) {
 	}
 	print "</table>";
 	PRINT "<br />";
-}
-
-function ShowInstalled($ID){
-	$DB = Config::Database();
-	$qID = $DB->getTextValue($ID);
-	$query = "SELECT * FROM inst_software WHERE (sID = $qID)";
-	$data = $DB->getAll($query);
-	print '<table class="license">
-	<tr class="licenseheader">
-		<th>'._("Computers with this software assigned to them").'</th>
-	</tr>';
-
-	foreach($data as $result){
-		$computerID = $result['cID'];
-		$query = "SELECT * FROM computers WHERE(ID = " . $result['cID'] . ")";
-		$computerDetails = $DB->getAll($query);
-		foreach($computerDetails as $computer){
-			PRINT '<tr class="licensedetail">
-				<td><a href='.Config::AbsLoc("users/computers-index.php?action=info&amp;ID=" . $computer['ID']) .'>' . $computer['name'].'</a></td>
-			</tr>';
-		}
-	}
-	print '<tr class="licenseheader"><th>'._("Add this software to :").'</th></tr>';
-	print '<tr class="licensedetail"><td>';
-
-	PRINT '<form method=post action="'.Config::AbsLoc('users/computers-software-add.php').'">';
-	PRINT "<input type=hidden name=sID value=$ID>";
-	Dropdown_device("computer");
-	PRINT "<input type=hidden name=reqdliccnt value=1>";
-	PRINT "<input type=submit value=" ._("Add"). ">";
-	PRINT "</form>";
-
-
-	PRINT '</td></tr>';
-	PRINT '<table>';
-}
-
-
-function showLicenses($ID) {
-	$DB = Config::Database();
-
-	$qID = $DB->getTextValue($ID);
-	$query = "SELECT * FROM software_licenses WHERE (sID = $qID) ORDER BY licensekey";
-
-	$data = $DB->getAll($query);
-
-	print '<table class="license">
-	<tr class="licenseheader">
-		<td>ID</td>
-		<td>'._("License Key").'</td>
-		<td>'._("Entitlement").'</td>
-		<td>'._("Oem Sticker").'</td>
-	</tr>
-	
-	<tr class="licensedetail">
-		<form method="post" action="license-add.php">
-		<input type="hidden" name="sID" value="'.$ID.'">
-		<td><input type=submit value="'._("Add").'"></td>
-		<td><input type="text" name="licensekey" size="40"></td>
-		<td><input type="text" name="entitlement" size="4"></td>
-		<td><input type="checkbox" name="oem_sticker"></td>
-	</tr>
-	</form>
-	
-	<form method="post" action="license-del.php">
-	';
-
-	foreach ($data as $result)
-	{
-		$sID = $result['sID'];
-		$lID = $result['ID'];
-		$licensekey = $result['licensekey'];
-		$entitlement = $result['entitlement'];
-		$oem_sticker = $result['oem_sticker'];
-
-		PRINT '<tr class="licensedetail">
-			<td><input type=radio name=lID value="'.$lID.'">'.$lID.'</td>
-		<td>'.$licensekey.'</td>
-		<td>'.$entitlement.'</td>
-		<td>'.$oem_sticker.'</td>
-		</tr>
-		';
-	}
-	PRINT '<tr class="licenseupdate">
-		<td colspan="4"><input type="submit" value="'._("Del").'"></td>
-	</form>
-	</table>
-	';
 }
 
 function Count_Installations($sID)
