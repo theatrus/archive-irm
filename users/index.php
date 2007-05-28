@@ -45,7 +45,7 @@ if($type == "admin" || $type == "tech" || $type == "normal") {
  * If the user type is admin show work open work request for each user, that has work assigned to them.
  */
 if($type == "admin"){
-	PRINT "<h3>" . _("Jobs for each Technician") . "</h3>";
+	PRINT "<h3>" . _("Jobs for each Technician") . " - " . "<a href=alert.php>" . _("Display Alerts") . "</a></h3>";
 	$DB = Config::Database();
 	$users = $DB->getAll("SELECT * from users");
 
@@ -120,6 +120,7 @@ if($type == "admin"){
 	PRINT "</tr>\n";
 
 	PRINT "</table>\n";
+
 }
 
 if($type == "admin" || $type == "tech")

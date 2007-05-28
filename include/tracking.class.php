@@ -95,6 +95,48 @@ class Tracking Extends IRMMain
 		$rss->saveFeed("RSS1.0", "../users/files/feed.xml");
 	}
 
+	function getTrackingByPriority(){
+		$DB = Config::Database();
+		$query = "SELECT ID, status, assign, contents, priority FROM tracking WHERE (priority = '" . $this->priority . "') AND (status !='complete') AND (status !='duplicate') AND (status != 'old')";
+		$this->result = $DB->getAll($query);
+	}
+
+	function displayAlert(){
+		$this->priority = 5;
+		$this->getTrackingByPriority();
+		$priorityType = "Very High";
+		$priorityColour = "red";
+		
+		if(count($this->result) == 0){
+			$this->priority = 4;
+			$this->getTrackingByPriority();
+			$priorityType = "High";
+			$priorityColour = "orange";
+		}
+	
+		print "<html>";
+		print "<head>";
+		print '<meta http-equiv="refresh" content="5;url=' . $_SERVER['PHP_SELF'] . '">';
+		print "</head>";
+
+		print "<body bgcolor=black text=white>";
+		
+		print "<table>";
+		print "<tr><td colspan=2 bgcolor=$priorityColour align=center><h1><font color=black>" . count($this->result) . " " . $priorityType . " Priority Requests Outstanding</font></td></tr>";
+		foreach($this->result as $item){
+			print "<tr>";
+			print "<td bgcolor=$priorityColour><h1><font color=black>" . $item['ID'] . " - " . $item['assign'] . "</font></h1></td>";
+			print "<td><h1>" . substr($item['contents'],0,100) . ".....</h1></td>";
+			print "</tr>";
+		}
+		print "</table>";
+
+		
+		print "</body>";
+		print "</html>";
+	}
+
+
 	function searchTracking(){
 		commonHeader(_("Tracking") ." - " . _("Search"));
 		$trackingIDs = $this->search($_REQUEST['searchtype'], $_REQUEST['contains']);
