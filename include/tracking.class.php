@@ -977,11 +977,17 @@ class Tracking Extends IRMMain
 		
 		PRINT '<tr class="trackingdetail">';
 		PRINT "<td colspan=2>"._("Problem Description:")."<br />";
+
+		# We're not going to use htmlspecialchars - this could be
+		# bad though, we need a new HTML filter to remove
+		# harmful stuff, like <script> tags and
+		# other XSS based exploits.
+
 		if ($readonly) {
-			echo nl2br(htmlspecialchars($this->WorkRequest));
+			echo nl2br($this->WorkRequest);
 		} else {
 			$text = htmlspecialchars($this->WorkRequest);
-			fckeditor("workrequest",$text);
+			fckeditor("workrequest",$this->WorkRequest);
 			PRINT '<input type="hidden" name="original" value="' . $text . '"/>';
 		}
 		PRINT "</td>";
