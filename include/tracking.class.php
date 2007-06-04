@@ -1520,7 +1520,7 @@ function deviceTracking($ID,$devicetype)
 			$q = "SELECT DISTINCT(ID) FROM tracking
 				WHERE (tracking.computer = $qID
 				AND tracking.is_group='no'
-				AND tracking.device = '' OR tracking.device = 'computers'
+				AND (tracking.device IS NULL OR tracking.device = '' OR tracking.device = 'computers')
 				)";
 		} else {
 			$q = "SELECT DISTINCT(ID) FROM tracking
