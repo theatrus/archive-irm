@@ -47,7 +47,7 @@ class httpupload {
 			HTTPUPLOAD_ERROR_IMG => "The uploaded file exceeds the max image width or max image height directive that was specified in class setting.",
 			HTTPUPLOAD_ERROR_EXT => "File extension is not allowed.",
 			HTTPUPLOAD_ERROR_MIME => "File mime is not allowed.",
-			HTTPUPLOAD_ERROR_WRITE => "There was an error during writing file . Maybe target file is existed or PHP cannot write the target file.",
+			HTTPUPLOAD_ERROR_WRITE => "There was an error writing the file on this system. Maybe the file name you're trying to upload already exists, or your webserver cannot write to the file or directory. This is likely a permission problem - make sure the webserver can write to the upload directory..",
 			HTTPUPLOAD_ERROR_PARTIAL => "The uploaded file was only partially uploaded.",
 	);
 
