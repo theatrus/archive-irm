@@ -211,7 +211,7 @@ foreach ($netdevslist as $result)
 		if ($table_name == 1)  # it's a computer
 		{
                                 PRINT '<TR BGCOLOR=#DDDDD0><TD>';
-#			PRINT '<A HREF="'.Config::AbsLoc("users/computers-info.php?ID=$ID").'">';  # was 1.5.7 call
+#			PRINT '<A HREF="'.Config::AbsLoc("users/computers-index.php?action=info&ID=$ID").'">';  # was 1.5.7 call
 			PRINT '<A HREF="'.Config::AbsLoc("users/computers-index.php",
 			     array('ID' => $ID, 'devicetype'=>'computer', 'action'=>'info')   ).'">';
 
@@ -241,7 +241,7 @@ foreach ($netdevslist as $result)
 	                if ($device_type == 1)  #it's a port on a computer
         	        {
                                 PRINT '<TR BGCOLOR=#DDDDD0><TD>';
-#	 		        PRINT '<A HREF="'.Config::AbsLoc("users/computers-info.php?ID=$ID").'">';  # was 1.5.7 call
+
 			        PRINT '<A HREF="'.Config::AbsLoc("users/computers-index.php",
 			             array('ID' => $ID, 'devicetype'=>'computer', 'action'=>'info')   ).'">';
 
@@ -265,7 +265,7 @@ foreach ($netdevslist as $result)
 			}
 			else # it's a port on a networking device - we decide not to show
                         {
-#                                PRINT '<A HREF="'.Config::AbsLoc("users/networking-info.php?ID=$ID").'">';
+#                                PRINT '<A HREF="'.Config::AbsLoc("users/networking-index.php?action=info&devicetype=networking&ID=$ID").'">';
 #                                PRINT "NP$ID</A></TD>";
                          $numNP++;
                         }

@@ -68,7 +68,7 @@ PRINT "</TR>\n";
 
 PRINT "<BR>\n";
 PRINT "<TD>$name (ID= ";
-PRINT '<A HREF="'.Config::AbsLoc("users/networking-info.php?ID=$id").'">';
+PRINT '<A HREF="'.Config::AbsLoc("users/networking-index.php?action=info&devicetype=networking&ID=$id").'">';
 PRINT "$id</A>)</TD>\n";
 PRINT "<TD>$type</TD>";
 if ($serial=="") {
@@ -194,11 +194,11 @@ if ($numRows < 1)  {
             PRINT "<TD>$pName</TD>";
             PRINT "<TD><B>$nname</B> (";
             if ($pType==1) {
-#                PRINT '<A HREF="'.Config::AbsLoc("users/computers-info.php?ID=$nID").'">';  # was 1.5.7 call
+#                PRINT '<A HREF="'.Config::AbsLoc("users/computers-index.php?action=info&devicetype=computers&ID=$nID").'">';  # was 1.5.7 call
                 PRINT '<A HREF="'.Config::AbsLoc("computers-index.php",
                        array('ID' => $nID, 'devicetype'=>'computer', 'action'=>'info')   ).'">';
             } else {
-                PRINT '<A HREF="'.Config::AbsLoc("users/networking-info.php?ID=$nID").'">';
+                PRINT '<A HREF="'.Config::AbsLoc("users/networking-index.php?action=info&devicetype=networking&ID=$nID").'">';
             }
             PRINT "$nID</A>)</TD>\n";
 

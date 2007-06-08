@@ -87,14 +87,14 @@ foreach ($netdevslist as $result)
 	
 	if ($table_name == 1)
 	{
-#		PRINT '<td><a href="'.Config::AbsLoc("users/computers-info.php", array('ID' => $ID)).'">'; # was 1.5.7 call
+
                 PRINT '<td><a href="'.Config::AbsLoc("users/computers-index.php",
 				    array('ID' => $ID, 'devicetype'=>'computer', 'action'=>'info')   ).'">';
 		PRINT "C$ID</a></td>\n";
 	}
 	else
 	{
-		PRINT '<td><a href="'.Config::AbsLoc("users/networking-info.php", array('ID' => $ID)).'">';
+		PRINT '<td><a href="'.Config::AbsLoc("users/networking-index.php&action=info&devicetype=networking&ID=$ID").'">';
 		PRINT "N$ID</a></td>\n";
 	}
 

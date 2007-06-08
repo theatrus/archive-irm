@@ -273,13 +273,13 @@ foreach ($ports as $result) {
             PRINT "<TR>\n";
             PRINT "<TD><B>$p2nam</B> (";
             if ($typ2 == "computer") {
-#                PRINT '<A HREF="'.Config::AbsLoc("users/computers-info.php?ID=$p2id").'">'; # 1.5.7 call
+#                PRINT '<A HREF="'.Config::AbsLoc("users/computers-index.php?action=info&ID=$p2id").'">'; # 1.5.7 call
                 PRINT '<A HREF="'.Config::AbsLoc("users/computers-index.php",
 		     array('ID' => $p2id, 'devicetype'=>'computer', 'action'=>'info')   ).'">';
                 PRINT "$p2id</A>)</TD>\n";
             }
             elseif ($typ2 == "netdevice") {
-                PRINT '<A HREF="'.Config::AbsLoc("users/networking-info.php?ID=$p2id").'">';
+                PRINT '<A HREF="'.Config::AbsLoc("users/networking-index.php?devicetype=networking&action=info&ID=$p2id").'">';
                 PRINT "$p2id</A>)</TD>\n";
             } else {
                 PRINT "$pid)</TD>\n";
@@ -307,13 +307,13 @@ foreach ($ports as $result) {
             PRINT "<TR>\n";
             PRINT "<TD><B>$pnam</B> (";
             if ($typ == "computer") {
-#                PRINT '<A HREF="'.Config::AbsLoc("users/computers-info.php?ID=$pid").'">'; # 1.5.7 call
+#                PRINT '<A HREF="'.Config::AbsLoc("users/computers-index.php?action=info&ID=$pid").'">'; # 1.5.7 call
                 PRINT '<A HREF="'.Config::AbsLoc("users/computers-index.php",
 		     array('ID' => $pid, 'devicetype'=>'computer', 'action'=>'info')   ).'">';
                 PRINT "$pid</A>)</TD>\n";
             }
             elseif ($typ == "netdevice") {
-                PRINT '<A HREF="'.Config::AbsLoc("users/networking-info.php?ID=$pid").'">';
+                PRINT '<A HREF="'.Config::AbsLoc("users/networking-index.php?action=info&devicetype=networking&ID=$pid").'">';
                 PRINT "$pid</A>)</TD>\n";
             } else {
                 PRINT "$pid)</TD>\n";

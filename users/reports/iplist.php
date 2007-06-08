@@ -82,7 +82,7 @@ foreach ($netdevslist as $result)
 	}
 	else
 	{
-		PRINT '<td><a href="'.Config::AbsLoc("users/networking-info.php", array('ID' => $ID)).'">';
+		PRINT '<td><a href="'.Config::AbsLoc("users/networking-index.php?action=info&devicetype=networking&ID=$ID").'">';
 		PRINT "N$ID</a></td>\n";
 	}
 

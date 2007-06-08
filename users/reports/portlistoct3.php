@@ -270,13 +270,13 @@ foreach ($ports as $result) {
 
             PRINT "<TD><B>$pnam</B> (";
             if ($typ == "computer") {
-#                PRINT '<A HREF="'.Config::AbsLoc("users/computers-info.php?ID=$pid").'">'; # was 1.5.7 call
+
                  PRINT '<A HREF="'.Config::AbsLoc("users/computers-index.php",
                       array('ID' => $pid, 'devicetype'=>'computer', 'action'=>'info')   ).'">';
                 PRINT "$pid</A>)</TD>\n";
             }
             elseif ($typ == "netdevice") {
-                PRINT '<A HREF="'.Config::AbsLoc("users/networking-info.php?ID=$pid").'">';
+                PRINT '<A HREF="'.Config::AbsLoc("users/networking-index.php?devicetype=networking&action=info&ID=$pid").'">';
                 PRINT "$pid</A>)</TD>\n";
             } else {
                 PRINT "$pid)</TD>\n";
