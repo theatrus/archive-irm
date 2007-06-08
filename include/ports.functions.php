@@ -234,7 +234,7 @@ function showPortRow($data, $ip)
 			case "2":	
 				PRINTF(_("Connected to port %s on network device %s"),
 					"<a href=\"$userbase/networking-port.php?ID=$pID\">$pNum</a>\n",
-					"<a href=\"$userbase/networking-info.php?ID=$nID\">$nname ($nID)</a>\n"
+					"<a href=\"$userbase/networking-index.php?devicetype=networking&action=info&ID=$nID\">$nname ($nID)</a>\n"
 					);
 				PRINT " | <a href=\"$userbase/networking-port-discon.php?ID=$ID\">"._("Disconnect")."</a>.\n";
 				break;

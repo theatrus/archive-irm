@@ -407,7 +407,7 @@ class DeviceConnection
 				//TODO The following line fails due to file no
 				//longer being used.
 				'<a href="'
-					.Config::AbsLoc("users/computers-info.php", array('ID' => $nID))
+					.Config::AbsLoc("users/networking-index.php?action=info&ID=" .$nID)
 					."\">$nname ($nID)</a>"
 				);
 			PRINT ' | <a href="'.Config::AbsLoc("users/networking-port-discon.php", array('ID' => $ID)).'">'._("Disconnect").'</a>.';
@@ -417,7 +417,8 @@ class DeviceConnection
 			printf(_("Port %s on network device %s"),
 				'<a href="'.Config::AbsLoc("users/networking-port.php", array('ID' => $pID))
 					."\">$pNum</a>",
-				'<a href="'.Config::AbsLoc("users/networking-info.php", array('ID' => $nID))
+
+				'<a href="'.Config::AbsLoc("users/networking-index.php?action=info&ID=". $nID)
 					."\">$nname ($nID)</a>"
 				);
 
