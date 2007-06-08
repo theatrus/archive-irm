@@ -240,7 +240,7 @@ function commonHeader($title)
 	if (Config::Get('sendexpire')) {
 		header("Expires: Fri, Jun 12 1981 08:20:00 GMT Pragma: no-cache\n");
 	}
-	PRINT "<!-- IRM is (c) 1999-2004 Yann Ramin, Keith Schoenefeld, and others -->\n";
+	PRINT "<!-- IRM is (c) 1999-2007 Yann Ramin, Keith Schoenefeld, and others -->\n";
 	PRINT "<!-- Yann Ramin atrus@atrustrivalie.org -->\n";
 	PRINT "<!-- Keith Schoenefeld keith-p@schoenefeld.org -->\n";
 	PRINT "<!-- Some code is (c) 1999 Brandon Neill bneill@learn2.com	-->\n";
@@ -364,7 +364,7 @@ function copyright()
 {
 	$copyright = _("Distribution of IRM is permitted under the terms of the GNU GPL Version 2");
 	$copyright .= "<br />\n";
-	$copyright .= _("Copyright &copy; 1999-2005 Yann Ramin, Keith Schoenefeld, and others");
+	$copyright .= _("Copyright &copy; 1999-2007 Yann Ramin, Keith Schoenefeld, Matthew Palmer, Martin Stevens, and others. See the files AUTHORS and CONTRIBUTORS for more information.");
 	$copyright .= "<br />\n";
 	return $copyright;
 }
