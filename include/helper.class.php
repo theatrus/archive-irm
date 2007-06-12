@@ -262,7 +262,7 @@ function helpAdd(){
 		$groupQuery = "SELECT ID FROM groups WHERE (name='" . $_REQUEST['groupname'] . "')";
 		$groupID = $DB->getOne($groupQuery);
 
-		$query = "SELECT tracking.ID, LEFT(tracking.contents, 120) as contents";
+		$query = "SELECT DISTINCT tracking.ID, LEFT(tracking.contents, 120) as contents";
 		$query .= " FROM tracking, comp_group";
 	//	$query .= " WHERE comp_group.comp_id=tracking.computer";
 //		$query .= " AND comp_group.group_id=$groupID";

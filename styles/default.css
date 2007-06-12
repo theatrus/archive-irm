@@ -23,7 +23,7 @@ body {
 
 	left:10px;
 	top:75px;
-	width:200px;
+	width:180px;
 	background:#ffffff;
 }
 
@@ -44,6 +44,18 @@ body {
 	position: absolute;
 	left: 199px;
 	top: 75px;
+	
+
+}
+
+
+#centerlogincontent {
+	-moz-border-radius: 8px;
+	border: 1px;
+	background:#fff;
+	position: absolute;
+	left: 210px;
+	top: 120px;
 	
 
 }
