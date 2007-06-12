@@ -308,8 +308,12 @@ function commonHeader($title)
 	PRINT '<td class="nav">';
 	PRINT date("M d H:i");
 	PRINT " </td>\n";
+
+
 	PRINT "</tr>\n";
+
 	PRINT "</table>\n";
+
 	PRINT "</div>";
 
 	if (Config::FileAvailable('HTML/TreeMenu.php') && Config::Get('tree_menu'))
@@ -334,7 +338,7 @@ function commonHeader($title)
 	{
 		PRINT '<div id="centercontent">';
 	}
-	logo();
+	logo(); 
 	PRINT "<h3>$title</h3>\n";
 	PRINT "<hr />\n";
 }
@@ -344,7 +348,7 @@ function logo()
 	$LOGO = Config::Get('logo');
 	if ($LOGO != ""){
 		PRINT '<a href="' .Config::Absloc('users/') . 'index.php">';
-		PRINT '<img src="'.Config::AbsLoc('images/' . $LOGO) .'" class="graphic"  alt="logo"/></a><br />';
+		PRINT '<img src="'.Config::AbsLoc('images/' . $LOGO) .'" class="logographic"  alt="logo"/></a><br />';
 	}
 }
 
