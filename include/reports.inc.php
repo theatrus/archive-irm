@@ -31,6 +31,7 @@ require_once 'include/i18n.php';
 
 
 // Display Name
+$report_list['opentracking']['name'] =		_("All Open Tracking - PDF");
 $report_list['device-by-ip']['name'] =		_("All Devices by IP Address");
 $report_list['location']['name'] =		_("All Devices by Location");
 $report_list["default"]["name"] =		_("Default Report");
@@ -56,6 +57,7 @@ $report_list['systems']['name'] =		_("Systems");
 
 
 // Report File
+$report_list['opentracking']['file'] =		'reports/opentracking.php';
 $report_list['device-by-ip']['file'] =		'reports/iplist.php';
 $report_list['location']['file'] =		'reports/locationlist.php';
 $report_list["default"]["file"] =		"reports/default.php";

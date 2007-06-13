@@ -97,18 +97,18 @@ class Tracking Extends IRMMain
 
 	function getTrackingByPriority(){
 		$DB = Config::Database();
-		$query = "SELECT ID, status, assign, contents, priority FROM tracking WHERE (priority = '" . $this->priority . "') AND (status !='complete') AND (status !='duplicate') AND (status != 'old')";
+		$query = "SELECT ID, status, assign, contents, priority FROM tracking WHERE (priority = '" . $this->Priority . "') AND (status !='complete') AND (status !='duplicate') AND (status != 'old')";
 		$this->result = $DB->getAll($query);
 	}
 
 	function displayAlert(){
-		$this->priority = 5;
+		$this->setPriority(5);
 		$this->getTrackingByPriority();
 		$priorityType = "Very High";
 		$priorityColour = "red";
 		
 		if(count($this->result) == 0){
-			$this->priority = 4;
+			$this->setPriority(4);
 			$this->getTrackingByPriority();
 			$priorityType = "High";
 			$priorityColour = "orange";
@@ -1595,7 +1595,7 @@ function displayDeviceGroups($ID)
 		$qID = $DB->getTextValue($ID);
 
 		$query = "SELECT * FROM comp_group where comp_id = $qID";
-		$data = $DB->getAll($query);
+		$data = $DB->opentracking = $tracking->getAll($query);
 		foreach ($data as $result)
 		{
 			$gID = $result["group_id"];
