@@ -935,7 +935,7 @@ class Tracking Extends IRMMain
 
 		PRINT '<form method="post" action="tracking-update.php">';
 		if (!$this->ComputerID)	{
-			PRINT "<B>"._("This Tracking Entry Does Not Exist, or is missing critical details.")."</B><BR />";
+			PRINT "<b>"._("This Tracking Entry Does Not Exist, or is missing critical details.")."</b><br />";
 			$this->ComputerID = "99999";
 		}
 	
@@ -945,38 +945,49 @@ class Tracking Extends IRMMain
 		print "</tr>\n";
 
 		PRINT '<tr class="trackingdetail">';
-
-		PRINT "<td width=50%>"._("Status:")."<br />";
+		# We're not going to use htmlspecialchars - this could be
+		# bad though, we need a new HTML filter to remove
+		# harmful stuff, like <script> tags and
+		# other XSS based exploits.
+		PRINT "<td rowspan=6>"._("Problem Description:")."<br />";
+		if ($readonly) {
+			echo nl2br($this->WorkRequest);
+		} else {
+			$text = htmlspecialchars($this->WorkRequest);
+			fckeditor("workrequest",$this->WorkRequest);
+			PRINT '<input type="hidden" name="original" value="' . $text . '"/>';
+		}
+		PRINT "</td>";
+		PRINT "<td>"._("Status:");
 		if ($readonly) {
 			PRINT $this->status_list[$this->Status];
 		} else {
-			PRINT "<SELECT NAME=status SIZE=1>";
+			PRINT "<select name=status size=1>";
 			PRINT select_options($this->status_list, $this->Status);
-			PRINT "</SELECT>";
-		}
-		PRINT "</td>";
-
-		PRINT "<td>"._("Date Opened:")."<br />" . $this->dateopened . "<br />";
-		if(($this->CloseDate != "0000-00-00 00:00:00") && ($this->CloseDate != "")) {
-			PRINT "<BR>" . _("Date Closed:") . "<br />$this->CloseDate";
-			$query = "SELECT SEC_TO_TIME(UNIX_TIMESTAMP('$this->CloseDate') - UNIX_TIMESTAMP('$this->DateEntered'))";
-			$opentime = $DB->getOne($query);
-			PRINT "<br />"._("This job was open for:")." $opentime";
+			PRINT "</select>";
 		}
 		PRINT "</td>";
 		PRINT "</tr>";
 
 		PRINT '<tr class="trackingdetail">';
-		PRINT "<td>"._("Priority:")."<br />\n";
+		PRINT "<td>"._("Date Opened: "). $this->dateopened . "<br />";
+		PRINT $this->dateClosed();
+		PRINT "</td>";
+		PRINT "</tr>";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>"._("Priority:")." ";
 		if ($readonly) {
 			echo $options[$this->Priority]."\n";
 		} else {
-			PRINT '<SELECT name="priority" size="1">'."\n";
+			PRINT '<select name="priority" size="1">'."\n";
 			PRINT select_options($this->priorities, $this->Priority);
-			PRINT '</SELECT>'."\n";
+			PRINT '</select>'."\n";
 		}
-		
 		PRINT "</td>";
+		PRINT "</tr>";
+
+		PRINT '<tr class="trackingdetail">';
 		PRINT "<td>";
 		PRINT _("Author:") . "<a href=\"$userbase/users-info.php?ID=$this->Author\">$fullname</a>";
 		PRINT "<br />";
@@ -984,9 +995,8 @@ class Tracking Extends IRMMain
 		PRINT "</td>";
 		PRINT "</tr>";
 		
-		PRINT '<tr class="trackingdetail">';
-
 		// Device Name and type cell
+		PRINT '<tr class="trackingdetail">';
 		PRINT "<td>";
 		$this->DeviceType;
 		if($this->IsGroup != "yes") {
@@ -995,7 +1005,6 @@ class Tracking Extends IRMMain
 			PRINT _("Group") . ":";
 		}
 
-		PRINT "<br />";
 		if($this->IsGroup != "yes") {
 			if ($this->DeviceType == "computers") {
 				PRINT "<a href=\"$userbase/computers-index.php?action=info&amp;ID=$this->ComputerID\">";
@@ -1014,54 +1023,17 @@ class Tracking Extends IRMMain
 			print "&nbsp; <input type=\"text\" name=\"ComputerID\" value=\"$this->ComputerID\" size=\"3\" />";
 		}
 		PRINT "</td>";
-		// End of Name and type cell
-
-
-		PRINT "<td>"._("Assigned to:")."<br />";
-
-		Tech_list($this->Assign, "user", $readonly);
-
-		PRINT "</td>";
 		PRINT "</tr>";
-		
+
 		PRINT '<tr class="trackingdetail">';
-		PRINT "<td colspan=2>"._("Problem Description:")."<br />";
-
-		# We're not going to use htmlspecialchars - this could be
-		# bad though, we need a new HTML filter to remove
-		# harmful stuff, like <script> tags and
-		# other XSS based exploits.
-
-		if ($readonly) {
-			echo nl2br($this->WorkRequest);
-		} else {
-			$text = htmlspecialchars($this->WorkRequest);
-			fckeditor("workrequest",$this->WorkRequest);
-			PRINT '<input type="hidden" name="original" value="' . $text . '"/>';
-		}
+		PRINT "<td>"._("Assigned to: ");
+		Tech_list($this->Assign, "user", $readonly);
 		PRINT "</td>";
 		PRINT "</tr>";
+
 		PRINT "</table>";
 
-
-		// Display Followups
-		$numFollowups = sizeof($this->Followups);
-
-		Followup::displayHeader();
-		
-		if($numFollowups > 0) {
-			for($i=0; $i < $numFollowups; $i++) {
-				$this->Followups[$i]->display();
-			}
-		} else {
-			PRINT "<tr><td colspan=3>"._("No Followups on this request")."</td></tr>\n";
-		}
-
-		if (!$readonly) {
-			Followup::displayAddForm();
-		}
-
-		Followup::displayFooter();
+		$this->displayFollowups();
 		
 		//Display Knowledgebase checkbox
 		if (!$readonly)	{
@@ -1090,6 +1062,37 @@ class Tracking Extends IRMMain
 		$files->displayFileUpload();
 
 		commonFooter();
+	}
+
+	function dateClosed(){
+		$text = "";
+		if(($this->CloseDate != "0000-00-00 00:00:00") && ($this->CloseDate != "")) {
+			$query = "SELECT SEC_TO_TIME(UNIX_TIMESTAMP('$this->CloseDate') - UNIX_TIMESTAMP('$this->DateEntered'))";
+			$opentime = $DB->getOne($query);
+			$text .= "<br />" . _("Date Closed:") . "<br />" . $this->CloseDate;
+			$text .= "<br />"._("This job was open for:")." $opentime";
+		}
+		return $text;
+	}	
+
+	function displayFollowups(){
+		// Display Followups
+		$numFollowups = sizeof($this->Followups);
+
+		Followup::displayHeader();
+		
+		if($numFollowups > 0) {
+			for($i=0; $i < $numFollowups; $i++) {
+				$this->Followups[$i]->display();
+			}
+		} else {
+			PRINT "<tr><td colspan=3>"._("No Followups on this request")."</td></tr>\n";
+		}
+
+		if (!$readonly) {
+			Followup::displayAddForm();
+		}
+		Followup::displayFooter();
 	}
 	
 	function displayHeader($styleid = "default")
