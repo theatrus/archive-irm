@@ -1,5 +1,5 @@
 TODO
 
-Allow ports to connect to devices
+Allow ports to connect to devices - Working, however need testing.
 Searching for a computer when doing connecting, currently calls the port class
 which is not implemented yet.
