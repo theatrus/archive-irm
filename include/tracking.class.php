@@ -67,7 +67,7 @@ class Tracking Extends IRMMain
 			case "detail";
 				$this->setID($_REQUEST['ID']);
 				$this->retrieve();
-				$this->displayDetail($readonly);
+				$this->displayDetail($this->readonly);
 				break;
 			default:
 				break;
@@ -913,44 +913,17 @@ class Tracking Extends IRMMain
 		} 
 	}
 
-	function displayDetail($readonly = true)
-	{
-		$this->deviceSelection();
-		$DB = Config::Database();
-		$result = $DB->getRow($this->query);
-		$computername = $result["name"];
-		$userbase = Config::AbsLoc('users');
-		$user = new User();
-		$authExists = $user->exists($this->Author);
-		if($authExists) {
-			$user2 = new User($this->Author);
-			$fullname = $user2->getFullname();
-		} else {
-			$fullname = $this->Author;
-		}
+	function displayRequestDetail(){
+		PRINT '<table class="followup">';
+		PRINT '<tr><th>' . _("Request Details") . '</th></tr>';
 		
-		commonHeader(_("Tracking") ." - " . _("More Information"));
-		PRINT "<hr noshade />";
-		PRINT "<br />";
-
-		PRINT '<form method="post" action="tracking-update.php">';
-		if (!$this->ComputerID)	{
-			PRINT "<b>"._("This Tracking Entry Does Not Exist, or is missing critical details.")."</b><br />";
-			$this->ComputerID = "99999";
-		}
-	
-		PRINT "<table>";
-		PRINT "<tr>";
-		PRINT "<th colspan=2>"._("Job Number "). $this->ID . "</th>";
-		print "</tr>\n";
-
-		PRINT '<tr class="trackingdetail">';
+		PRINT '<tr>';
 		# We're not going to use htmlspecialchars - this could be
 		# bad though, we need a new HTML filter to remove
 		# harmful stuff, like <script> tags and
 		# other XSS based exploits.
-		PRINT "<td rowspan=6>"._("Problem Description:")."<br />";
-		if ($readonly) {
+		PRINT "<td class=followupsubheader>"._("Problem Description:")."<br />";
+		if ($this->readonly) {
 			echo nl2br($this->WorkRequest);
 		} else {
 			$text = htmlspecialchars($this->WorkRequest);
@@ -958,8 +931,17 @@ class Tracking Extends IRMMain
 			PRINT '<input type="hidden" name="original" value="' . $text . '"/>';
 		}
 		PRINT "</td>";
+		print "</tr>\n";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>"._("Date Opened: "). $this->dateopened . "<br />";
+		PRINT $this->dateClosed();
+		PRINT "</td>";
+		PRINT "</tr>";
+
+		PRINT '<tr class="trackingdetail">';
 		PRINT "<td>"._("Status:");
-		if ($readonly) {
+		if ($this->readonly) {
 			PRINT $this->status_list[$this->Status];
 		} else {
 			PRINT "<select name=status size=1>";
@@ -970,14 +952,8 @@ class Tracking Extends IRMMain
 		PRINT "</tr>";
 
 		PRINT '<tr class="trackingdetail">';
-		PRINT "<td>"._("Date Opened: "). $this->dateopened . "<br />";
-		PRINT $this->dateClosed();
-		PRINT "</td>";
-		PRINT "</tr>";
-
-		PRINT '<tr class="trackingdetail">';
 		PRINT "<td>"._("Priority:")." ";
-		if ($readonly) {
+		if ($this->readonly) {
 			echo $options[$this->Priority]."\n";
 		} else {
 			PRINT '<select name="priority" size="1">'."\n";
@@ -988,8 +964,14 @@ class Tracking Extends IRMMain
 		PRINT "</tr>";
 
 		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>"._("Assigned to: ");
+		Tech_list($this->Assign, "user", $this->readonly);
+		PRINT "</td>";
+		PRINT "</tr>";
+
+		PRINT '<tr class="trackingdetail">';
 		PRINT "<td>";
-		PRINT _("Author:") . "<a href=\"$userbase/users-info.php?ID=$this->Author\">$fullname</a>";
+		PRINT _("Author:") . "<a href=\"$userbase/users-info.php?ID=$this->Author\">$this->fullname</a>";
 		PRINT "<br />";
 		PRINT _("Other Emails:") . $this->getOtherEmails();
 		PRINT "</td>";
@@ -1019,42 +1001,95 @@ class Tracking Extends IRMMain
 			PRINT "</a>";
 		}
 
-		if (!$readonly)	{
+		if (!$this->readonly)	{
 			print "&nbsp; <input type=\"text\" name=\"ComputerID\" value=\"$this->ComputerID\" size=\"3\" />";
 		}
 		PRINT "</td>";
 		PRINT "</tr>";
-
-		PRINT '<tr class="trackingdetail">';
-		PRINT "<td>"._("Assigned to: ");
-		Tech_list($this->Assign, "user", $readonly);
-		PRINT "</td>";
-		PRINT "</tr>";
-
-		PRINT "</table>";
-
-		$this->displayFollowups();
 		
+		PRINT "</table>";
+	}
+
+	function displayKnowledgeBaseCheckBox(){
 		//Display Knowledgebase checkbox
-		if (!$readonly)	{
-			PRINT "<table>";
+		if (!$this->readonly)	{
+			PRINT "<table class=followup>";
 			PRINT "<tr>";
 			PRINT "<th>" . _("Knowledge Base System") . "</th>";
 			PRINT "</tr>";
 
 			PRINT '<tr class="trackingdetail">';
-			PRINT "<td><input type=checkbox name=addtoknowledgebase value=yes />";
-			__("If tracking is marked as complete, should it be used to add something to the knowledgebase?");
+			PRINT "<td>";
+			PRINT "<input type=checkbox name=addtoknowledgebase value=yes />";
+			PRINT _("If tracking is marked as complete, should it be used to add something to the knowledgebase?");
 			PRINT "</td>";
-			PRINT "</tr>\n";
-
-			PRINT "</table>";
-			PRINT "<input type=hidden name=tID value=$this->ID />";
-			PRINT '<input type=submit VALUE="' . _("Update Tracking"). '" />';
-			PRINT "</form>";
-			PRINT "<br />\n";
+			PRINT "</tr>";
+			PRINT "</table>\n";
 		}
 
+	}
+
+	function displaySubmit(){
+		if (!$this->readonly)	{
+			PRINT "<table class=followup">		
+			PRINT "</table>\n";
+		}
+
+	}
+
+	function displayDetail($readonly = true)
+	{
+		$this->readonly = $readonly;
+		$this->deviceSelection();
+		$DB = Config::Database();
+		$result = $DB->getRow($this->query);
+		$computername = $result["name"];
+		$userbase = Config::AbsLoc('users');
+		$user = new User();
+		$authExists = $user->exists($this->Author);
+		if($authExists) {
+			$user2 = new User($this->Author);
+			$this->fullname = $user2->getFullname();
+		} else {
+			$this->fullname = $this->Author;
+		}
+
+		if (!$this->ComputerID)	{
+			PRINT "<b>"._("This Tracking Entry Does Not Exist, or is missing critical details.")."</b><br />";
+			$this->ComputerID = "99999";
+		}
+	
+		commonHeader(_("Tracking") ." - " . _("More Information"));
+		PRINT "<hr noshade />";
+		PRINT '<form method="post" action="tracking-update.php">';
+	
+		PRINT "<table class=followup> ";
+		PRINT "<tr>";
+		PRINT "<th colspan=2>"._("Job Number "). $this->ID . "</th>";
+		print "</tr>\n";
+		
+		PRINT "<tr>";
+		PRINT "<td colspan=2 align=center>";
+		PRINT "<input type=hidden name=tID value=$this->ID />";
+		PRINT '<input type=submit VALUE="' . _("Update Tracking"). '" />';
+		PRINT "</td>";
+		PRINT "</tr>";
+
+		PRINT "<tr>";
+		PRINT "<td valign=top>";
+		$this->displayRequestDetail();	
+		$this->displayKnowledgeBaseCheckbox();
+		PRINT "</td>";		
+
+		PRINT "<td valign=top>";
+		$this->displayFollowups();
+		$this->displaySubmit();
+		PRINT "</td>";
+
+		PRINT "</tr>";
+		PRINT "</table>";
+
+		PRINT "</form>";
 		$files = new Files();	
 		$files->setDeviceType("tracking");
 		$files->setDeviceID($this->ID);
@@ -1080,7 +1115,10 @@ class Tracking Extends IRMMain
 		$numFollowups = sizeof($this->Followups);
 
 		Followup::displayHeader();
-		
+		if (!$this->readonly) {
+			Followup::displayAddForm();
+		}
+	
 		if($numFollowups > 0) {
 			for($i=0; $i < $numFollowups; $i++) {
 				$this->Followups[$i]->display();
@@ -1089,9 +1127,6 @@ class Tracking Extends IRMMain
 			PRINT "<tr><td colspan=3>"._("No Followups on this request")."</td></tr>\n";
 		}
 
-		if (!$readonly) {
-			Followup::displayAddForm();
-		}
 		Followup::displayFooter();
 	}
 	
