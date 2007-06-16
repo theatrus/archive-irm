@@ -67,8 +67,8 @@ class setupFastTrack{
 	function add(){
 		AuthCheck("tech");
 		$templname = htmlspecialchars($_REQUEST['templname']);
-		$contents = htmlspecialchars($_REQUEST['contents']);
-		$solution = htmlspecialchars($_REQUEST['solution']);
+		$contents = $_REQUEST['contents'];
+		$solution = $_REQUEST['solution'];
 		$vals = array(
 			'name' => $templname,
 			'priority' => $_REQUEST['priority'],

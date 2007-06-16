@@ -78,7 +78,8 @@ function helpFastTrack(){
 		{
 			PRINT '<tr class="trackingdetail">';
 
-			$urlLocation = Config::AbsLoc("users/tracking-fasttrack.php?AUTOFILL=" . $result['ID']);
+			#$urlLocation = Config::AbsLoc("users/tracking-fasttrack.php?AUTOFILL=" . $result['ID']);
+			$urlLocation = Config::AbsLoc("users/tracking-index.php?action=fasttrack&amp;autofill=" . $result['ID']);
 
 			PRINT '<td><a href="' . $urlLocation . '">' . $result['name'] . "</a>";
 			PRINT "</td>\n";

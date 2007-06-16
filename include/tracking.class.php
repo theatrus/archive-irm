@@ -72,9 +72,170 @@ class Tracking Extends IRMMain
 			case "update";
 				$this->update();
 				break;
+			case "fasttrack";
+				$this->fasttrack();
+				break;
 			default:
 				break;
 		}
+	}
+
+	function fasttrack(){
+		AuthCheck("post-only");
+		$AUTOFILL = $_REQUEST['autofill'];
+
+		$query = "select * from fasttracktemplates where (ID=$AUTOFILL)";
+		$DB = Config::Database();
+		$result = $DB->getRow($query);
+		$name = $result["name"];
+		$priority = $result["priority"];
+		$request = $result["request"];
+		$response = $result["response"];
+		$user = new User($IRMName);
+		$uemail = $user->getEmail();
+		$ufname = $user->getFullname();
+		$this->priorities();
+		$this->status_list();
+
+		commonHeader(_("FastTrack"));
+		__("Welcome to IRM FastTrack.  This is where tracking can be entered, assigned, and given a specific status all on one page.  Simply fill in the form below:"); 
+		__("Enter the IRM ID");
+		if(Config::Get('groups')){
+			__("or group.  Make sure that you have selected the proper button to the left as well to indicate which identifier you are providing.");
+			PRINT "\n<br />";
+		}
+		PRINT "<hr />\n";
+
+		PRINT '<FORM METHOD=get ACTION="'.Config::AbsLoc('users/tracking-fasttrack-add.php').'">';
+
+		PRINT "<table>";
+		# Computer/Group Information
+		PRINT "<tr>";
+		PRINT "<th>";
+		__("Computer");
+		if(Config::Get('groups')){
+			PRINT "/";
+			__("Group");
+		}
+		__(" Information");
+		PRINT "</th>";
+		PRINT "</tr>";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+		PRINT "<INPUT TYPE=\"RADIO\" NAME=\"IDTYPE\" value=\"IRMID\" />";
+		PRINT "<strong>" . _("IRM ID: ") . "</strong>";
+		PRINT "<INPUT TYPE=text NAME=ID SIZE=10 />&nbsp;&nbsp;\n";
+		PRINT "<br />\n";
+		if(Config::Get('groups'))
+		{
+			PRINT "<INPUT TYPE=\"RADIO\" NAME=\"IDTYPE\" value=\"GROUP\" /> ";
+			PRINT "<strong>";
+			__("Select a group:");
+			PRINT "</strong>";
+			Dropdown_groups("groups", "gID");
+		}
+		PRINT "</td>";
+		PRINT "</tr>\n";
+
+		# User Information
+		PRINT "<tr>";
+		PRINT "<th>" . _("User Information") . "</th>";
+		PRINT "</tr>\n";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+		PRINT "<strong>" . _("User's Name:") . "</strong>\n";
+		PRINT "<input type=text size=15 name=ufname value=\"$ufname\" />";
+		PRINT "</td>";
+		PRINT "</tr>\n";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+		PRINT "<strong>" . _("User's E-Mail:") . "</strong>\n";
+		PRINT "<input type=text name=uemail size=19 value=\"$uemail\" />";
+		PRINT "</td>";
+		PRINT "</tr>\n";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+		PRINT "<strong>" . _("Other E-Mail:") . "</strong>\n";
+		PRINT "<input type=text name=oemail size=19 value=\"\" />";
+		PRINT "</td>";
+		PRINT "</tr>\n";
+
+		PRINT "<tr>";
+		PRINT "<th>" . _("Work Request Information") . "</th>";
+		PRINT "</tr>\n";
+
+		# Tracking Detail
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+		PRINT "<strong>" . _("Priority:") . "</strong>";
+
+		PRINT '<select name="priority" size="1">'."\n";
+		PRINT select_options($this->priorities, $priority);
+		PRINT '</select>'."\n";
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+
+		PRINT "<strong>" . _("Describe the problem:") . "</strong>\n";
+		PRINT "<br />\n";
+		fckeditor("contents",$request);
+		PRINT "</td>";
+		PRINT "</tr>";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+
+		PRINT "<strong>" . _("Describe the solution (will be added as a followup):") . "</strong>\n";
+		PRINT "<br />\n";
+		fckeditor("solution",$response);
+		PRINT "</td>\n";
+		PRINT "</tr>\n";
+
+		#Additional Information
+		PRINT "<tr>";
+		PRINT "<th>" . _("Additional Information") . "</th>";
+		PRINT "</tr>";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+		PRINT "<strong>" . _("Assign to:") . "</strong>\n";
+		Tech_list("","user");
+		PRINT "</td>";
+		PRINT "</tr>";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+		PRINT "<strong>" . _("Set Status to:") . "</strong>\n";
+
+		PRINT "<select name=status size=1>";
+		PRINT select_options($this->status_list, $this->Status);
+		PRINT "</select>";
+		PRINT "</td>";
+		PRINT "</tr>";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+		PRINT "<strong>" . _("Time Spent:") . "</strong>\n";
+		PRINT "<input type=text name=minspent size=19 value=\"0\" />";
+		PRINT "</td>\n";
+		PRINT "</tr>\n";
+
+		PRINT '<tr class="trackingdetail">';
+		PRINT "<td>";
+		PRINT "<input type=checkbox name=addtoknowledgebase value=yes />";
+		__("If tracking is marked as complete, should it be used to add something to the knowledgebase?");
+		PRINT "</td>";
+		PRINT "</tr>";
+		
+		PRINT '<tr class="trackingupdate">';
+		PRINT "<td><input type=submit value=\"". _("Submit") ."\" /></td>";
+		PRINT "</tr>";
+		PRINT "</table>";
+		PRINT "</form>";
+		commonFooter();
 	}
 
 	function rss(){
