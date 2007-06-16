@@ -69,6 +69,9 @@ class Tracking Extends IRMMain
 				$this->retrieve();
 				$this->displayDetail($this->readonly);
 				break;
+			case "update";
+				$this->update();
+				break;
 			default:
 				break;
 		}
@@ -1010,6 +1013,129 @@ class Tracking Extends IRMMain
 		PRINT "</table>";
 	}
 
+	function update(){
+		global $IRMName;
+		AuthCheck("post-only");
+		$this->setID($_REQUEST['tID']);
+		$this->retrieve();
+
+		$status 	= $_REQUEST['status'];
+		$tID		= $_REQUEST['tID'];
+		$ComputerID	= $_REQUEST['ComputerID'];
+		$priority	= $_REQUEST['priority'];
+		$workrequest	= $_REQUEST['workrequest'];
+		$original	= $_REQUEST['original'];
+		$newfollowup	= $_REQUEST['newfollowup'];
+		$public		= $_REQUEST['public'];
+		$newminspent	= $_REQUEST['newminspent'];
+		$user		= $_REQUEST['user'];
+
+		$badperms = false;
+		$datenow = date("Y-m-d H:i:s");
+		$user2 = new User($IRMName);
+		$type = $user2->getType();
+		$permissions = $user2->permissionCheck("tech");
+		$isStat = $this->isStatus($status);
+		$isAssign = $this->isAssign(@$user);
+
+		if($permissions)
+		{
+			$this->setComputerID($ComputerID);
+			if(!$isStat)
+			{
+				$this->setStatus($status);
+				$follow = new Followup();
+				$follow->setAuthor($IRMName);
+				$follow->setFollowupInfo(_("Status was changed to : ") .  $status);
+				$follow->setDateEntered(date('Y-m-d H:i:s'));
+				$follow->setPublic(@$public);
+				$follow->setMinSpent(@$newminspent);
+				$this->addFollowup($follow);
+			}
+			if(!$isAssign)
+			{
+				$this->setAssign($user);
+				$follow = new Followup();
+				$follow->setAuthor($IRMName);
+				$follow->setFollowupInfo(_("Request was assigned to : ") .  $user);
+				$follow->setDateEntered(date('Y-m-d H:i:s'));
+				$follow->setPublic(@$public);
+				$follow->setMinSpent(@$newminspent);
+				$this->addFollowup($follow);
+			}
+			if (!$this->isPriority($priority))
+			{
+				$this->setPriority($priority);
+				$follow = new Followup();
+				$follow->setAuthor($IRMName);
+				$follow->setFollowupInfo(_("Priority was changed to : ") .  $priority);
+				$follow->setDateEntered(date('Y-m-d H:i:s'));
+				$follow->setPublic(@$public);
+				$follow->setMinSpent(@$newminspent);
+				$this->addFollowup($follow);
+			}
+			if ($workrequest)
+			{
+				$this->setWorkRequest($workrequest);
+			}
+		} else {
+			if((!$isStat) || (!$isAssign))
+			{
+				$badperms = true;
+			}
+		}
+
+		$trimmedFollowup = trim($newfollowup);
+
+		if($trimmedFollowup != "")
+		{
+			$follow = new Followup();
+			$follow->setAuthor($IRMName);
+			$follow->setFollowupInfo($newfollowup);
+			$follow->setDateEntered(date('Y-m-d H:i:s'));
+			$follow->setPublic(@$public);
+			$follow->setMinSpent(@$newminspent);
+			$this->addFollowup($follow);
+		}
+
+		if($workrequest != $original)
+		{
+			$follow = new Followup();
+			$follow->setAuthor($IRMName);
+			$follow->setFollowupInfo(_("Work Request was changed from : ") .  $original);
+			$follow->setDateEntered(date('Y-m-d H:i:s'));
+			$follow->setPublic(@$public);
+			$follow->setMinSpent(@$newminspent);
+			$this->addFollowup($follow);
+		}
+
+
+		$this->commit();
+
+		$DB = Config::Database();
+
+		$close = $DB->getOne("SELECT closed FROM tracking_status WHERE status=".$DB->getTextValue($status));
+
+		if($close && $addtoknowledgebase == "yes" && $permissions)
+		{
+			header("Location: ".Config::AbsLoc("users/knowledgebase-index.php?action=from_tracking&trackingID=$tID"));
+		} else {
+			commonHeader(_("Tracking") . " - " . _("Update Information"));
+			PRINT "<a href=\"".$_SESSION['_sess_pagehistory']->Previous()."\">" . _("Go Back") . "</a><hr noshade><br>";
+			if($badperms){
+				__("Since you are not a technician or administrator, you can not change the status of this work request, nor who it is assigned to.");
+				PRINT "<br />";
+				printf(_("You are %s"), $IRMName);
+			}
+			PRINT "<h4>";
+			printf(_("Tracking %s has been updated"),$tID);
+			PRINT "</h4>\n";
+			commonFooter();
+		}
+
+		logevent($tID, _("computers"), 4, _("tracking"), _("Tracking job modified"));
+	}
+
 	function displayKnowledgeBaseCheckBox(){
 		//Display Knowledgebase checkbox
 		if (!$this->readonly)	{
@@ -1061,8 +1187,8 @@ class Tracking Extends IRMMain
 	
 		commonHeader(_("Tracking") ." - " . _("More Information"));
 		PRINT "<hr noshade />";
-		PRINT '<form method="post" action="tracking-update.php">';
-	
+		PRINT '<form method="post" action="tracking-index.php">';
+		PRINT "<input type=hidden name=action value=update>";
 		PRINT "<table class=followup> ";
 		PRINT "<tr>";
 		PRINT "<th colspan=2>"._("Job Number "). $this->ID . "</th>";
@@ -1541,6 +1667,17 @@ class Tracking Extends IRMMain
 			return(FALSE);
 		}
 	}
+
+	function isPriority($priority)
+	{
+		if($this->Priority == $priority)
+		{
+			return(TRUE);
+		} else {
+			return(FALSE);
+		}
+	}
+
 }
 
 
