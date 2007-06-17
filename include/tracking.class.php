@@ -90,6 +90,7 @@ class Tracking Extends IRMMain
 		$ufname = $_REQUEST['ufname'];
 		$uemail = $_REQUEST['uemail'];
 		$gID = $_REQUEST['gID'];
+		$ID = $_REQUEST['ID'];
 		$priority = $_REQUEST['priority'];
 		$contents = $_REQUEST['contents'];
 		$solution = $_REQUEST['solution'];
@@ -335,13 +336,6 @@ class Tracking Extends IRMMain
 		PRINT "</td>\n";
 		PRINT "</tr>\n";
 
-		PRINT '<tr class="trackingdetail">';
-		PRINT "<td>";
-		PRINT "<input type=checkbox name=addtoknowledgebase value=yes />";
-		__("If tracking is marked as complete, should it be used to add something to the knowledgebase?");
-		PRINT "</td>";
-		PRINT "</tr>";
-		
 		PRINT '<tr class="trackingupdate">';
 		PRINT "<td><input type=submit value=\"". _("Submit") ."\" /></td>";
 		PRINT "</tr>";
