@@ -75,10 +75,122 @@ class Tracking Extends IRMMain
 			case "fasttrack";
 				$this->fasttrack();
 				break;
+			case "fasttrackadd":
+				$this->fasttrackadd();
+				break;
 			default:
 				break;
 		}
 	}
+
+	function fasttrackadd(){
+		AuthCheck("post-only");
+		global $IRMName;;
+		$IDTYPE = $_REQUEST['IDTYPE'];
+		$ufname = $_REQUEST['ufname'];
+		$uemail = $_REQUEST['uemail'];
+		$gID = $_REQUEST['gID'];
+		$priority = $_REQUEST['priority'];
+		$contents = $_REQUEST['contents'];
+		$solution = $_REQUEST['solution'];
+		$status = $_REQUEST['status'];
+		$user = $_REQUEST['user'];
+		$minspent = $_REQUEST['minspent'];
+
+		$DB = Config::Database();
+
+		if($IDTYPE != "IRMID" && $IDTYPE != "GROUP")
+		{
+			commonHeader(_("Tracking") . " - " . _("No IRM ID or Group name was selected"));
+			__("ERROR: You forgot to select a computer or a group.\n");
+			commonFooter();
+			exit();
+		}
+
+		if($ufname == "")
+		{
+			commonHeader(_("Tracking") . " - " . _("User's name was not entered"));
+			__("ERROR: You did not enter the User's Name.");
+			commonFooter();
+			exit();
+		}
+
+		if($uemail == "")
+		{
+			commonHeader(_("Tracking") . " - " ._("User's email address was not entered"));
+			__("ERROR: You did not enter the User's email address.");
+			commonFooter();
+			exit();
+		}
+
+		if($IDTYPE == "IRMID")
+		{
+			$query = "select COUNT(*) from computers where (ID=$ID)";
+			if ($DB->getOne($query) != 1)
+			{
+				commonHeader(_("Tracking") . " - " . _("Bad IRM ID Number"));
+				__("It appears that you have enetered an invalid IRM computer ID");
+				commonFooter();
+				exit();
+			}
+		}
+
+		commonHeader(_("Tracking") . " - " . _("Added"));
+
+		$opendate = date("Y-m-d H:i:s");
+
+		if(Config::Get('userupdates'))
+		{
+			$emailupdates = "yes";
+		} else {
+			$emailupdates = "no";
+		}
+
+		if($DB->getOne("SELECT closed FROM tracking_status WHERE status=".$DB->getTextValue($status)))
+		{
+			$closedate = date("Y-m-d H:i:s");
+			$emailupdates = "no";
+		}
+
+		if($IDTYPE == "IRMID")
+		{
+			$is_group = "no";
+		} else if($IDTYPE == "GROUP") {
+			$is_group = "yes";
+			$ID = $gID;
+		}
+
+		$contents = sprintf("%s $ufname ($uemail)\n", _("By:")) . $contents;
+		$this->setDateEntered($opendate);
+		$this->setCloseDate(@$closedate);
+		$this->setStatus($status);
+		$this->setAuthor($IRMName);
+		$auth = $this->getAuthor();
+		$this->setAssign($user);
+		$this->setComputerID($ID);
+		$this->setWorkRequest($contents);
+		$this->setPriority($priority);
+		$this->setIsGroup($is_group);
+		$this->setAuthorEmail($uemail);
+		$this->setOtherEmails($oemail);
+		$this->setEmailUpdatesToAuthor($emailupdates);
+		$this->add();
+
+		if($solution != "")
+		{
+			$follow = new Followup();
+			$follow->setTrackingID($this->ID);
+			$follow->setDateEntered($opendate);
+			$follow->setAuthor($IRMName);
+			$follow->setFollowupInfo($solution);
+			$follow->setMinSpent($minspent);
+			$follow->add();
+		}
+
+		logevent($this->ID, _("computers"), 4, _("tracking"), _("New tracking job opened")); 
+		__("That tracking job has been placed into the database.");
+		commonFooter();
+	}	
 
 	function fasttrack(){
 		AuthCheck("post-only");
@@ -106,8 +218,8 @@ class Tracking Extends IRMMain
 		}
 		PRINT "<hr />\n";
 
-		PRINT '<FORM METHOD=get ACTION="'.Config::AbsLoc('users/tracking-fasttrack-add.php').'">';
-
+		PRINT '<form method=post action="'.Config::AbsLoc('users/tracking-index.php').'">';
+		PRINT "<input type=hidden name=action value=fasttrackadd />";
 		PRINT "<table>";
 		# Computer/Group Information
 		PRINT "<tr>";
@@ -1387,6 +1499,7 @@ class Tracking Extends IRMMain
 	}
 
 	function dateClosed(){
+		$DB = Config::Database();
 		$text = "";
 		if(($this->CloseDate != "0000-00-00 00:00:00") && ($this->CloseDate != "")) {
 			$query = "SELECT SEC_TO_TIME(UNIX_TIMESTAMP('$this->CloseDate') - UNIX_TIMESTAMP('$this->DateEntered'))";
@@ -1695,6 +1808,7 @@ class Tracking Extends IRMMain
 			PRINT _("Error committing Work Request. ") . _("Status has not been set.")."<BR>\n";
 			return (0);
 		}
+
 		if(!isset($this->ComputerID))
 		{
 			PRINT _("Error committing Work Request. ") . _("  ComputerID has not been set.")."<BR>\n";
@@ -1751,14 +1865,6 @@ class Tracking Extends IRMMain
 			);
 			
 		$DB->InsertQuery('tracking', $vals);
-		
-/*		$numFollowups = sizeof($this->Followups);
-		for($i=0;$i<$numFollowups;$i++)
-		{
-			$this->Followups[$i]->setTrackingID($this->ID);
-			$this->Followups[$i]->add();
-		}
-*/
 		$this->sendEmail();
 	}
 
