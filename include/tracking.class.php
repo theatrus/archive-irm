@@ -1184,6 +1184,8 @@ class Tracking Extends IRMMain
 	}
 
 	function displayRequestDetail(){
+		$userbase = Config::AbsLoc('users');
+
 		PRINT '<table class="followup">';
 		PRINT '<tr><th>' . _("Request Details") . '</th></tr>';
 		
