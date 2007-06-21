@@ -238,7 +238,7 @@ function buildTree(){
 	}
   
 	// Software section
-	$query="SELECT * from software";
+	$query="SELECT * from software order by name";
 	$data = $DB->getAll($query);
     $menu_software->addItem(new HTML_TreeNode(array(
         	  'text'=>_('Add Software') . '...',
