@@ -150,9 +150,9 @@ function buildTree(){
 	$list=implode(',',$data);
 	if ($list != "")
 	{
-		$query="SELECT id,name from computers where id not in ($list)";
+		$query="SELECT id,name from computers where id not in ($list) order by name";
 	} else {
-		$query="SELECT id,name from computers";
+		$query="SELECT id,name from computers order by name";
 	}
 	$data = $DB->getAll($query);
 	if (!count($data))
