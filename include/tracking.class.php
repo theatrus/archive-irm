@@ -2030,8 +2030,8 @@ function displayDeviceGroups($ID)
 		$DB = Config::Database();
 		$qID = $DB->getTextValue($ID);
 
-		$query = "SELECT * FROM comp_group where comp_id = $qID";
-		$data = $DB->opentracking = $tracking->getAll($query);
+		$query = "SELECT * FROM comp_group where comp_id = $ID";
+		$data = $DB->getAll($query);
 		foreach ($data as $result)
 		{
 			$gID = $result["group_id"];
