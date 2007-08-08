@@ -1098,7 +1098,7 @@ class Tracking Extends IRMMain
 				PRINT "<a href=\"$userbase/computers-index.php?action=info&amp;ID=$this->ComputerID\">";
 				break;
 			default:	
-				PRINT "<a href=\"$userbase/device-info.php?ID=$this->ComputerID&amp;evicetype=$this->DeviceType\">";
+				PRINT "<a href=\"$userbase/device-info.php?ID=$this->ComputerID&amp;devicetype=$this->DeviceType\">";
 			}
 		}
 		PRINT $this->DeviceType . " : ";
