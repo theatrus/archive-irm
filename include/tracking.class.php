@@ -1177,7 +1177,7 @@ class Tracking Extends IRMMain
 					$DB = Config::Database();
 					$result = $DB->getRow($this->query);
 					if(count($result) >= 1){
-						$this->query = "SELECT name,location FROM $this->DeviceType WHERE (ID = $this->DeviceID)";
+						$this->query = "SELECT name,'' FROM $this->DeviceType WHERE (ID = $this->DeviceID)";
 					}
 			}
 		} 
