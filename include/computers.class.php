@@ -320,7 +320,7 @@ function showComputer($ID, $expand)
 	<td colspan=2>
 	<?php
 	if ($expand == 1){
-		PRINT "<strong>$name ($ID)</strong>";
+		PRINT "<strong>$name ($ID)</strong> ";
 		PRINT "<a href=\"$userbase/helper-index.php?action=add&ID=$ID&is_group=no&deviceType=computers\">"._("Add Tracking")."</a>$snmp_link";
 	} else if ($expand == 0) {
 		PRINT "<strong>";

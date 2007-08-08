@@ -297,7 +297,7 @@ class networking
 		PRINT "<input type=hidden name=action value=update>";
 		PRINT '<tr class="networkingheader">';
 		PRINT '<td colspan=2>';
-		PRINT "$ip : ";
+		PRINT "$ip  ";
 		PRINT SnmpStatus($ip,$ID, "networking");
 		PRINT "<strong>$name ($ID)</strong></td>";
 		PRINT "</tr>";
