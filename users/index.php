@@ -153,7 +153,7 @@ if($type == "admin" || $type == "tech")
 	$notClosedSize = sizeof($notClosed);
 
 	# Show Tracking
-	echo '<table class="tracking-assigned">';
+	echo '<table>';
 	PRINT "<tr><th>";
 	__("Tracking");
 	PRINT "</th></tr>\n";

@@ -307,7 +307,7 @@ a:hover
 .followup
 {
 	border: 1px solid;
-	width: 100%;
+
 }
 
 .followupdetail
@@ -424,7 +424,7 @@ a:hover
 /* Tracking Display */
 .tracking
 {
-	width:100%;
+
 	border: 1px solid;
 }
 
@@ -525,7 +525,7 @@ table.sortable a.sortheader
 {
 	-moz-border-radius: 8px;
 	border: 2px;
-    	width:100%;
+
 	background-color:#eee;
 	color:#666666;
 	font-weight: bold;
