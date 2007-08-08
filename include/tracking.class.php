@@ -1101,8 +1101,12 @@ class Tracking Extends IRMMain
 				PRINT "<a href=\"$userbase/device-info.php?ID=$this->ComputerID&amp;devicetype=$this->DeviceType\">";
 			}
 		}
-		PRINT $this->DeviceType . " : ";
-
+		if ($this->IsGroup == "yes") {
+		        PRINT "Group: ";
+		} else {
+		   	PRINT $this->DeviceType . " : ";
+		}
+		$this->setComputerName($this->ComputerID);
 		PRINT $this->ComputerName;
 		if($this->IsGroup != "yes")
 		{
