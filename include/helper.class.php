@@ -265,13 +265,12 @@ function helpAdd(){
 
 		$query = "SELECT DISTINCT tracking.ID, LEFT(tracking.contents, 120) as contents";
 		$query .= " FROM tracking, comp_group";
-	//	$query .= " WHERE comp_group.comp_id=tracking.computer";
-//		$query .= " AND comp_group.group_id=$groupID";
 		$query .= " WHERE comp_group.group_id=$groupID";
 		$query .= " AND tracking.is_group='yes'";
 		$query .= " AND tracking.status <> 'complete'";
+		$query .= " AND comp_group.group_id = tracking.computer";
 	} else {
-		$query = "SELECT ID, LEFT(contents, 120) as contents FROM tracking";
+		$query = "SELECT DISTINCT ID, LEFT(contents, 120) as contents FROM tracking";
 		$query .= " WHERE status <> 'complete'";
 		
 		if(!$_REQUEST['ID'] == null)
