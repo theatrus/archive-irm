@@ -524,7 +524,7 @@ function _upgrade_from_1_5_8($DB)
 	$DB->popErrorHandling();
 
 	$qrylist[] = "DELETE FROM config WHERE variable='dbver'";
-	$qrylist[] = "INSERT INTO config (variable, value) VALUES ('dbver', '1.5.8')";
+	$qrylist[] = "INSERT INTO config (variable, value) VALUES ('dbver', '1.6.0')";
 	$qrylist[] = "INSERT INTO tracking_status (status, closed) VALUES ('duplicate', 1)";
 	
 	$qrylist[] = "ALTER TABLE networking_ports ADD device_on int(11) DEFAULT '0' NOT NULL AFTER ID";
