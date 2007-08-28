@@ -101,8 +101,6 @@ function portsTableHead()
 	PRINT "<th>"._("IP Address")."</th>";
 	PRINT "<th>"._("MAC/Network Address")."</th>";
 
-	PRINT Config::Get('mrtg');
-
 	if(Config::Get('mrtg')== "1"){
 		PRINT "<th>"._("MRTG Graph")."</th>";
 	}
