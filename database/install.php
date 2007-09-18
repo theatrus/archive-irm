@@ -430,7 +430,11 @@ $INSTALL[] = "CREATE TABLE users (
 	comments text,
 	PRIMARY KEY(name),
 	KEY (type))";
-		
+
+$adminpassword = $_POST['adminpassword'];
+if ($adminpassword == ""){
+   $adminpassword = "admin";
+   }		
 $INSTALL[] = "INSERT INTO users
 	(name, password, fullname, email,
 	 location, phone, type)
