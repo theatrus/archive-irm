@@ -43,7 +43,6 @@ body {
 	background:#fff;
 	position: absolute;
 	left: 199px;
-	top: 75px;
 	
 
 }
@@ -51,11 +50,11 @@ body {
 
 #centerlogincontent {
 	-moz-border-radius: 8px;
-	border: 1px;
+	border: 2px;
 	background:#fff;
 	position: absolute;
 	left: 210px;
-	top: 120px;
+	margin-right: 10px;
 	
 
 }
