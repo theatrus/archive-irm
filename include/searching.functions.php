@@ -20,7 +20,7 @@
 ################################################################################
 function groupBatch($deviceType,$field,$newcontains)
 {
-	deviceQuery($deviceType,$field,$newcontains);
+	$query = deviceQuery($deviceType,$field,$newcontains);
 
 	if ($deviceType == "computer")
 	{

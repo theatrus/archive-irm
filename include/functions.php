@@ -1102,7 +1102,7 @@ function compsoftShow($showID)
 		
 		PRINT '<tr class="softwaredetail">';
 		PRINT "<td>";
-		PRINT '<i><a href="'.Config::AbsLoc("users/software-info.php?ID=$sID").'">';
+		PRINT '<i><a href="'.Config::AbsLoc("users/software-index.php?devicetype=software&action=info&ID=$sID").'">';
 		PRINT "$name</A></i>, ".sprintf(_("%s license(s)."), $slots)."</td>\n";
 		PRINT "<td>$key</td>\n";
 		PRINT "<td>";

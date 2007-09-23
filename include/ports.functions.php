@@ -166,6 +166,7 @@ function showPortRow($data, $ip)
 			$pID = $farend["ID"];
 			$pNum = $farend["logical_number"];
 			$pOn = $farend["device_on"];
+			$pName = $farend["name"];
 			$pType = $farend["device_type"];
 			$qOn = $DB->getTextValue($pOn);
 
@@ -181,7 +182,7 @@ function showPortRow($data, $ip)
 				$portOnDeviceType = $pType;
 			}
 	
-			$nquery = "SELECT ID,name FROM $portOnDeviceType WHERE (ID = $qOn)";
+			$nquery = "SELECT ID,name FROM $portOnDeviceType WHERE (ID = $qOn) order by name";
 			
 			$nresult = $DB->getRow($nquery);
 			$nname = $nresult["name"];
@@ -224,21 +225,21 @@ function showPortRow($data, $ip)
 			{
 			case "1": 
 				PRINTF(_("Connected to port %s on computer %s"),
-					"<a href=\"$userbase/networking-port.php?ID=$pID\">$pNum</a>\n",
+					"<a href=\"$userbase/networking-port.php?ID=$pID\">$pNum ($pName)</a>\n",
 					"<a href=\"$userbase/computers-index.php?action=info&ID=$nID\">$nname ($nID)</a>\n"
 					);
 				PRINT " | <a href=\"$userbase/networking-port-discon.php?ID=$ID\">"._("Disconnect")."</a>.\n";
 				break;
 			case "2":	
 				PRINTF(_("Connected to port %s on network device %s"),
-					"<a href=\"$userbase/networking-port.php?ID=$pID\">$pNum</a>\n",
+					"<a href=\"$userbase/networking-port.php?ID=$pID\">$pNum ($pName)</a>\n",
 					"<a href=\"$userbase/networking-index.php?devicetype=networking&action=info&ID=$nID\">$nname ($nID)</a>\n"
 					);
 				PRINT " | <a href=\"$userbase/networking-port-discon.php?ID=$ID\">"._("Disconnect")."</a>.\n";
 				break;
 			default:
 				PRINTF(_("Connected to port %s on %s device %s"),
-					"<a href=\"$userbase/networking-port.php?ID=$pID\">$pNum</a>\n",
+					"<a href=\"$userbase/networking-port.php?ID=$pID\">$pNum $pName</a>\n",
 					$pType,
 					"<a href=\"$userbase/device-info.php?ID=$nID&devicetype=$pType\">$nname ($nID)</a>\n"
 					);

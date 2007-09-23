@@ -22,7 +22,7 @@ require_once 'lib/Config.php';
 require_once 'include/i18n.php';
 
 $outquery = stripslashes(stripslashes($outquery));
-echo $outquery;
+
 AuthCheck("tech");
 commonHeader(_("Computers") . " - " . _("Add to Group Completed"));
 
