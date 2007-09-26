@@ -182,14 +182,14 @@ class networking
 			);
 		$DB->InsertQuery('networking', $vals);
 
-		for ($i = 1; $i <= $numports; $i++)
+		for ($i = 1; $i <= $_REQUEST['numports']; $i++)
 		{
 			$vals = array(
 				'device_on' => $ID,
 				'device_type' => 2,
-				'iface' => $ifacetype,
-				'ifaddr' => $ip,
-				'ifmac' => $mac,
+				'iface' => $_REQIEST['ifacetype'],
+				'ifaddr' => $_REQUEST['ip'],
+				'ifmac' => $_REQUEST['mac'],
 				'logical_number' => $i,
 				'name' => "Port $i"
 				);
