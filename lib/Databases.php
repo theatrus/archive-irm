@@ -25,7 +25,6 @@ class Databases
 			
 			$rv[$id] = $name;
 		}
-
 		return $rv;
 	}
 

@@ -283,17 +283,26 @@ class admin
 		<img src="images/irm-jr1.jpg" alt="IRM Logo" />
 		<br />
 		<?
-		PRINT "<a href=" . Config::Absloc("index.php") . ">" . _("Go to login page") . "</a>";
+		PRINT "<a href=" . Config::Absloc("index.php") . ">" . _("Go to login page") . "</a><br>";
 		if(@$this->RUNMSG)
 		{
 			print '<p id="warning">' . $this->RUNMSG . "<p>";
 		}
 
-		$this->configCheck();
-		$this->osCheck();
-		$this->healthCheck();
-		$this->installUnitialised();
-		$this->upgradeNotAtVersion();
+		if(Config::ReadConfig('database') != false){
+			$this->configCheck();
+			$this->osCheck();
+			$this->healthCheck();
+			$this->installUnitialised();
+			$this->upgradeNotAtVersion();
+		} else {
+			print "<br>";
+			print _("Please create a database and update the database.ini file");
+			print "<br>";
+			print _("In the config directory there is a file called database.ini.dist,");
+			print "<br>";
+			print _("please copy this to database.ini and enter your database connection settings");
+		}
 		PRINT "</center>";
 		commonFooter();
 	}
