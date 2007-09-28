@@ -197,7 +197,7 @@ class Config
 		} else {
 			if ($errlevel)			
 			{
-				if ($DEV == false){
+				if (@$DEV == false){
 					printf(_("config file %s not found"), "config/${type}.ini");
 				} else {
 					trigger_error(sprintf(_("config file %s not found"), "config/${type}.ini"), $errlevel);
