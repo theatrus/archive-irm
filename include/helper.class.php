@@ -101,8 +101,10 @@ function helpRequest()
 	//	$this->helpRequestUser();	
 		$this->helpRequestDevice();	
 	}
-
-	$this->helpRequestSoftware();	
+	if(Config::Get('softwaretrack'))
+	{
+		$this->helpRequestSoftware();	
+	}
 
 	if(Config::Get('groups'))
 	{

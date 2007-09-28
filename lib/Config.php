@@ -3,6 +3,7 @@
 // Default system configuration.  Also defines the possible configuration
 // variables.
 $DEFAULT_CONFIG = array(
+		'softwaretrack' => false,
 		'dbver' => NULL,
 		'notifyassignedbyemail' => true,
 		'notifynewtrackingbyemail' => false,

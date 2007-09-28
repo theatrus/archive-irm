@@ -438,6 +438,7 @@ function irmSetup()
 	$notifyassignedbyemail = Checked($sysconfig['notifyassignedbyemail']);
 	$notifynewtrackingbyemail = Checked($sysconfig['notifynewtrackingbyemail']);
 	$groups = Checked($sysconfig['groups']);
+	$softwaretrack = Checked($sysconfig['softwaretrack']);
 	$usenamesearch = Checked($sysconfig['usenamesearch']);
 	$userupdates = Checked($sysconfig['userupdates']);
 	$sendexpire = Checked($sysconfig['sendexpire']);
@@ -485,6 +486,45 @@ function irmSetup()
 	fckeditor("status",$status);
 	PRINT "</td>\n";
 	PRINT "</tr>\n";
+
+	/*
+	 *  Help Request Section 
+	 */
+
+	irmSetupSection(_("Request Help Options"));
+	PRINT '<tr class="setupdetail">';
+	PRINT "<td>";
+	PRINT "<input type=checkbox name=anonymous value=\"1\" $anonymous>";
+	PRINT "<input type=hidden name=anon_faq value=\"1\" $anon_faq>";
+	PRINT "<input type=hidden name=anon_req value=\"1\" $anon_req>";
+	PRINT _("Do you wish to enable anonymous actions? (Submit ticket, read FAQ, etc).");
+	PRINT "</td>\n";
+	PRINT "</tr>\n";
+
+	PRINT '<tr class="setupdetail">';
+	PRINT "<td><input type=checkbox name=groups value=\"1\" $groups>";
+	__("Select this option if you would like to be able to group computers together.  This is valuable if you would like people to be able to submit work requests against large numbers of computers, such as a computer lab.");
+	PRINT "</td>\n";
+	PRINT "</tr>\n";
+
+	PRINT '<tr class="setupdetail">';
+	PRINT "<td><input type=checkbox name=usenamesearch value=\"1\" $usenamesearch>";
+	__("If this option is selected, users will be able to search for their computer by name instead of being forced to type in an IRM ID to enter a work request.");
+	PRINT "</td>\n";
+	PRINT "</tr>\n";
+
+	PRINT '<tr class="setupdetail">';
+	PRINT "<td><input type=checkbox name=fasttrack value=\"1\" $fasttrack>";
+	__("Would you like to use the FastTrack capability?");
+	PRINT "</td>\n";
+	PRINT "</tr>\n";
+
+	PRINT '<tr class="setupdetail">';
+	PRINT "<td><input type=checkbox name=softwaretrack value=\"1\" $softwaretrack>";
+	__("Would you like 'Track requests on Software' capability?");
+	PRINT "</td>\n";
+	PRINT "</tr>\n";
+
 	
 	/*
 	 *  Setup Outgoing Email Options 
@@ -585,17 +625,6 @@ function irmSetup()
 	PRINT "</td>\n";
 	PRINT "</tr>\n";
 
-	PRINT '<tr class="setupdetail">';
-	PRINT "<td><input type=checkbox name=groups value=\"1\" $groups>";
-	__("Select this option if you would like to be able to group computers together.  This is valuable if you would like people to be able to submit work requests against large numbers of computers, such as a computer lab.");
-	PRINT "</td>\n";
-	PRINT "</tr>\n";
-
-	PRINT '<tr class="setupdetail">';
-	PRINT "<td><input type=checkbox name=usenamesearch value=\"1\" $usenamesearch>";
-	__("If this option is selected, users will be able to search for their computer by name instead of being forced to type in an IRM ID to enter a work request.");
-	PRINT "</td>\n";
-	PRINT "</tr>\n";
 
 	PRINT '<tr class="setupdetail">';
 	PRINT "<td><input type=checkbox name=sendexpire value=\"1\" $sendexpire>";
@@ -634,12 +663,6 @@ function irmSetup()
 	PRINT '<tr class="setupdetail">';
 	PRINT "<td><input type=checkbox name=knowledgebase value=\"1\" $knowledgebase>";
 	__("Would you like to use the Knowledge Base system that is now built in to IRM?");
-	PRINT "</td>\n";
-	PRINT "</tr>\n";
-
-	PRINT '<tr class="setupdetail">';
-	PRINT "<td><input type=checkbox name=fasttrack value=\"1\" $fasttrack>";
-	__("Would you like to use the the FastTrack capability?");
 	PRINT "</td>\n";
 	PRINT "</tr>\n";
 
@@ -695,15 +718,6 @@ function irmSetup()
 	 *  Setup Interface Options 
 	 */
 	irmSetupSection(_("Interface options"));
-
-	PRINT '<tr class="setupdetail">';
-	PRINT "<td>";
-	PRINT "<input type=checkbox name=anonymous value=\"1\" $anonymous>";
-	PRINT "<input type=hidden name=anon_faq value=\"1\" $anon_faq>";
-	PRINT "<input type=hidden name=anon_req value=\"1\" $anon_req>";
-	PRINT _("Do you wish to enable anonymous actions? (Submit ticket, read FAQ, etc).");
-	PRINT "</td>\n";
-	PRINT "</tr>\n";
 
 	PRINT '<tr class="setupdetail">';
 	PRINT "	<td>";
