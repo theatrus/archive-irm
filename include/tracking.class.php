@@ -1632,7 +1632,13 @@ class Tracking Extends IRMMain
 		$sender = $currentUser->getEmail();
 
 		// What are we going to tell them?
-		$body = strip_tags($this->mailBody());
+		$body = $this->mailBody();
+		$body = str_replace("<br>", "\n", $body);
+		$body = str_replace("<p>", "\n\n", $body);
+		$body = str_replace("<br />" , "\n", $body);
+
+
+		$body = strip_tags($body);
 
 		if($mod == "no"){
 			$subject = sprintf(_("IRM: New Job %s has been ADDED to the work request system."), $this->ID);
