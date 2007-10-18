@@ -187,7 +187,7 @@ class networking
 			$vals = array(
 				'device_on' => $ID,
 				'device_type' => 2,
-				'iface' => $_REQIEST['ifacetype'],
+				'iface' => $_REQUEST['ifacetype'],
 				'ifaddr' => $_REQUEST['ip'],
 				'ifmac' => $_REQUEST['mac'],
 				'logical_number' => $i,
@@ -297,10 +297,14 @@ class networking
 		PRINT "<input type=hidden name=action value=update>";
 		PRINT '<tr class="networkingheader">';
 		PRINT '<td colspan=2>';
-		PRINT "$ip  ";
+		PRINT "<strong>$name ($ID)</strong>";
+		if ($ip == "" || is_null($ip)){
+			PRINT " | ";
+		} else {
+			PRINT " | $ip | ";
+		}
 		PRINT SnmpStatus($ip,$ID, "networking");
-		PRINT "<strong>$name ($ID)</strong></td>";
-		PRINT "</tr>";
+		PRINT "</td></tr>";
 
 		$this->networkingForm("show", $result);	
 

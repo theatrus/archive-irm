@@ -931,7 +931,7 @@ function SnmpStatus($ip,$ID,$devicetype)
 	if (Config::Get('snmp'))
 	{
 		$hstatus = SnmpPing($ip);	
-		$snmp_link = " | <a href=\"$userbase/snmp-stat.php?ID=$ID&amp;evice=$devicetype\">"._("Runtime Information (SNMP)")."</a> $hstatus";
+		$snmp_link = "<a href=\"$userbase/snmp-stat.php?ID=$ID&amp;device=$devicetype\">"._("Runtime Information (SNMP)")."</a> $hstatus";
 	}
 	else
 	{

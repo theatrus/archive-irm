@@ -132,14 +132,14 @@ function add(){
 		
 	logevent($ID, _("computers"), 4, _("database"), sprintf(_('%s added record'), $IRMName)); 
 
-	if ($iface_do == "yes") 
+	if ($_REQUEST['iface_do'] == "yes") 
 	{
 		$vals = array(
 			'device_on' => $ID,
 			'device_type' => 1,
-			'iface' => $iface,
-			'ifaddr' => $ip,
-			'ifmac' => $mac,
+			'iface' => $_REQUEST['iface'],
+			'ifaddr' => $_REQUEST['ip'],
+			'ifmac' => $_REQUEST['mac'],
 			'logical_number' => 1,
 			'name' => 'Port 1'
 			);

@@ -128,7 +128,7 @@ class IRMMain
 
 	function deviceSelect()
 	{
-		$query = "SELECT id,name FROM $this->device_type";
+		$query = "SELECT id,name FROM $this->device_type ORDER BY name ASC";
 		$DB = Config::Database();
 		$data = $DB->getAll($query);
 		foreach($data as $device){
