@@ -222,7 +222,7 @@ class admin
 
 			PRINT "<tr class=setupdetail>";
 			PRINT "<td>" . _("Insert Sample Data?") .  "</td>";
-			PRINT '<td><input type="checkbox" name="sample_data" value="1">\n<br /></td>';
+			PRINT '<td><input type="checkbox" name="sample_data" value="1"><br /></td>';
 			PRINT "</tr>";
 
 			PRINT "<tr class=setupdetail>";
