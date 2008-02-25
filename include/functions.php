@@ -497,31 +497,31 @@ function irmSetup()
 	PRINT "<input type=checkbox name=anonymous value=\"1\" $anonymous>";
 	PRINT "<input type=hidden name=anon_faq value=\"1\" $anon_faq>";
 	PRINT "<input type=hidden name=anon_req value=\"1\" $anon_req>";
-	PRINT _("Do you wish to enable anonymous actions? (Submit ticket, read FAQ, etc).");
+	PRINT _("Enable anonymous actions? (Submit ticket, read FAQ, etc).");
 	PRINT "</td>\n";
 	PRINT "</tr>\n";
 
 	PRINT '<tr class="setupdetail">';
 	PRINT "<td><input type=checkbox name=groups value=\"1\" $groups>";
-	__("Select this option if you would like to be able to group computers together.  This is valuable if you would like people to be able to submit work requests against large numbers of computers, such as a computer lab.");
+	__("Enable grouping computers together.  Enables work requests against groups of computers");
 	PRINT "</td>\n";
 	PRINT "</tr>\n";
 
 	PRINT '<tr class="setupdetail">';
 	PRINT "<td><input type=checkbox name=usenamesearch value=\"1\" $usenamesearch>";
-	__("If this option is selected, users will be able to search for their computer by name instead of being forced to type in an IRM ID to enter a work request.");
+	__("Enable searching for computer by name.");
 	PRINT "</td>\n";
 	PRINT "</tr>\n";
 
 	PRINT '<tr class="setupdetail">';
 	PRINT "<td><input type=checkbox name=fasttrack value=\"1\" $fasttrack>";
-	__("Would you like to use the FastTrack capability?");
+	__("Enable the FastTrack capability?");
 	PRINT "</td>\n";
 	PRINT "</tr>\n";
 
 	PRINT '<tr class="setupdetail">';
 	PRINT "<td><input type=checkbox name=softwaretrack value=\"1\" $softwaretrack>";
-	__("Would you like 'Track requests on Software' capability?");
+	__("Enalbe tracking on software");
 	PRINT "</td>\n";
 	PRINT "</tr>\n";
 

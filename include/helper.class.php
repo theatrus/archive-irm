@@ -159,7 +159,7 @@ function helpRequestDevice(){
 	PRINT "</tr>\n";
 }
 
-// requesting help for a device like network, printer, etc.
+// requesting help for a software.
 function helpRequestSoftware(){
 	PRINT '<form method=get action="'.Config::AbsLoc('users/helper-index.php').'">';
 	PRINT '<tr class="trackingheader">';

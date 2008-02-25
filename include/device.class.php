@@ -635,6 +635,7 @@ class Device
 
 		showPortsOnDevice($this->ID, $this->devicetype);
 	
+		compsoftShow($this->ID);
 		$files = new Files();	
 		$files->setDeviceType($this->devicetype);
 		$files->setDeviceID($this->ID);
