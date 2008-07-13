@@ -250,7 +250,8 @@ function kbdisplayfullarticle($ID)
 	$categoryID = $result["categoryID"];
 	
 	PRINT "<h2>".sprintf(_("Question (%s):"), $this->kbcategoryname($categoryID))."</h2>";
-	PRINT $result['question'];
+	$question = nl2br($result['question']);
+	PRINT html_entity_decode($question);
 	PRINT "<hr />\n";
 	PRINT "<h2>"._("Answer:")."</h2>\n";
 	PRINT $result['answer'];
